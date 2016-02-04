@@ -10,11 +10,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
+public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview {
+
 	private File root;
 
-	public FilesystemStatsOverviewImpl(File root)
-	{
+	public FilesystemStatsOverviewImpl(File root) {
 		this.root = root;
 	}
 
