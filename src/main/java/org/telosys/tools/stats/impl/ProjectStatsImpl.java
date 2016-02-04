@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
-import org.telosys.tools.helper.FileAccessors;
 import org.telosys.tools.helper.FileUnit;
 import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.ProjectStats;
@@ -42,14 +41,14 @@ public class ProjectStatsImpl implements ProjectStats {
 
 	@Override
 	public int getBundlesCount() {
-		File templatesDir = new File(FileAccessors.getTemplatesDirPath(dir));
+		File templatesDir = new File(this.getTemplatesDirPath());
 		int count = templatesDir.listFiles(File::isDirectory).length;
 		return count;
 	}
 
 	@Override
 	public List<String> getBundlesNames() {
-		File templatesDir = new File(FileAccessors.getTemplatesDirPath(dir));
+		File templatesDir = new File(this.getTemplatesDirPath());
 		return asList(templatesDir.listFiles(File::isDirectory))
 				.stream()
 				.map(File::getName)
@@ -58,13 +57,13 @@ public class ProjectStatsImpl implements ProjectStats {
 
 	@Override
 	public int getModelsCount() {
-		File telosysDir = new File(FileAccessors.getTelosysDirPath(dir));
+		File telosysDir = new File(this.getTelosysDirPath());
 		return telosysDir.listFiles(f -> f.getName().endsWith(MODEL_EXT)).length;
 	}
 
 	@Override
 	public List<String> getModelsNames() {
-		File telosysDir = new File(FileAccessors.getTelosysDirPath(dir));
+		File telosysDir = new File(this.getTelosysDirPath());
 		return asList(telosysDir.listFiles(f -> f.getName().endsWith(MODEL_EXT)))
 				.stream()
 				.map(f -> f.getName().replace(MODEL_EXT, ""))
@@ -92,6 +91,14 @@ public class ProjectStatsImpl implements ProjectStats {
 	public int getGenerationsCount() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	private String getTelosysDirPath() {
+		return this.dir.getAbsolutePath() + File.separator + Configuration.getTelosysDir();
+	}
+
+	private String getTemplatesDirPath() {
+		return this.getTelosysDirPath() + File.separator + "templates";
 	}
 
 }

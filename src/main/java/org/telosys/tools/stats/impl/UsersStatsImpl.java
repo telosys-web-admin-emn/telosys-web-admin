@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-import org.telosys.tools.helper.FileAccessors;
+import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.UserStats;
 
 public class UsersStatsImpl implements UserStats {
@@ -51,14 +51,13 @@ public class UsersStatsImpl implements UserStats {
 
 	@Override
 	public int getProjectsCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return new File(this.getUserDirPath()).listFiles(File::isDirectory).length;
 	}
 
 	@Override
 	public List<String> getProjectsNames() {
-		File telosysDir = new File(FileAccessors.getTelosysDirPath(root));
-		return asList(telosysDir.listFiles())
+		File userDir = new File(this.getUserDirPath());
+		return asList(userDir.listFiles())
 				.stream()
 				.map(f -> f.getName())
 				.collect(toList());
@@ -66,7 +65,6 @@ public class UsersStatsImpl implements UserStats {
 
 	@Override
 	public int getModelsCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -75,7 +73,7 @@ public class UsersStatsImpl implements UserStats {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	@Override
 	public List<String> getBundlesNames() {
 		// TODO Auto-generated method stub
@@ -92,6 +90,10 @@ public class UsersStatsImpl implements UserStats {
 	public int getGenerationsCount() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	private String getUserDirPath() {
+		return this.root.getAbsolutePath() + File.separator + this.user;
 	}
 
 }
