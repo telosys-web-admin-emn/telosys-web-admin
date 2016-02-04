@@ -47,7 +47,7 @@ public interface ProjectStats {
 	 * Origin : all the project files in the filesystem
 	 * @return
 	 */
-	int getDiskUsage();
+	long getDiskUsage();
 	
 	//------------------------------------------------------------------------------
 	// DATES

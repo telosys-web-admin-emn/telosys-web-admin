@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FileUtils;
 import org.telosys.tools.helper.FileUnit;
 import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.ProjectStats;
@@ -70,8 +71,8 @@ public class ProjectStatsImpl implements ProjectStats {
 	}
 
 	@Override
-	public int getDiskUsage() {
-		return (int) (this.dir.length() / FileUnit.MEGABYTE);
+	public long getDiskUsage() {
+		return FileUtils.sizeOfDirectory(this.dir);
 	}
 
 	@Override
