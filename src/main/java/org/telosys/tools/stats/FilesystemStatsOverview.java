@@ -30,6 +30,6 @@ public interface FilesystemStatsOverview {
 	 * Return the total disk usage for all the users
 	 * @return
 	 */
-	public int getDiskUsage() ;
+	public long getDiskUsage() ;
 	
 }
