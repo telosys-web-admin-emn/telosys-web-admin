@@ -8,7 +8,14 @@ public class Configuration
 	private final static String telosysSaasLocation = "../telosys-saas/";
 
 	private final static String TELOSYS_DIR = "TelosysTools";
+	
+	private final static String MODEL_EXTENSION = ".model";
 
+	public static String getModelExtension()
+	{
+		return MODEL_EXTENSION;
+	}
+	
 	public static String getTelosysSaasLocation()
 	{
 		return telosysSaasLocation;

@@ -1,5 +1,6 @@
 package org.telosys.tools.stats;
 
+import java.io.IOException;
 import java.util.Date;
 
 public interface ModelStats {
@@ -24,8 +25,9 @@ public interface ModelStats {
 	 * Origin : model file OS info 
 	 *  see : Files.readAttributes + attr.lastModifiedTime() (OK in Windows and Linux)
 	 * @return
+	 * @throws IOException 
 	 */
-	Date getLastModifiedDate() ;
+	Date getLastModifiedDate() throws IOException ;
 	
 //	/**
 //	 * Returns the creation date of the model file <br> 
