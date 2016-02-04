@@ -6,6 +6,12 @@ import java.util.List;
 import org.telosys.tools.stats.UserStats;
 
 public class UsersStatsImpl implements UserStats {
+	private String user;
+
+	public UsersStatsImpl(String user)
+	{
+		this.user = user;
+	}
 
 	@Override
 	public String getLogin() {
