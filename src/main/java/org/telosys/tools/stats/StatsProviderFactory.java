@@ -9,9 +9,7 @@ public class StatsProviderFactory {
 	public static final StatsProvider getStatsProvider() {
 		
 		// get root folder : to be implemented at the end
-		File root = new File("/aaa/bbb/ccc");
-		
-
+		File root = new File(Configuration.getTelosysSaasLocation() + File.separator + "fs");
 		return new StatsProviderImpl(root) ;
 	}
 }

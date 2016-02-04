@@ -10,10 +10,11 @@ import org.telosys.tools.stats.ProjectStats;
 import org.telosys.tools.stats.StatsProvider;
 import org.telosys.tools.stats.StatsProviderFactory;
 import org.telosys.tools.stats.UserStats;
+import org.telosys.tools.stats.exception.ProjectNotFoundException;
 
 public class AppDemo {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ProjectNotFoundException {
 		
 		StatsProvider statsProvider = StatsProviderFactory.getStatsProvider() ;
 
@@ -22,7 +23,7 @@ public class AppDemo {
 		FilesystemStatsOverview filesystemStatsOverview = statsProvider.getFilesystemStatsOverview();
 		
 		//--- User 
-		String userId = "toto";
+		String userId = "admin";
 		UserStats userStats = statsProvider.getUserStats(userId);
 		
 		//--- Projects stats
@@ -46,9 +47,9 @@ public class AppDemo {
 		List<BundleStats>  bundlesStats  = statsProvider.getBundlesStats(userId);
 		
 		//--- Specific stats
-		ProjectStats projectStats = statsProvider.getProjectStats("toto", "project1");
+		ProjectStats projectStats = statsProvider.getProjectStats("admin", "barbapapa");
 		
-		ModelStats modelStats = statsProvider.getModelStats("toto", "project1", "model1");
+		ModelStats modelStats = statsProvider.getModelStats("admin", "barbapapa", "Machin");
 		
 		BundleStats bundleStats = statsProvider.getBundleStats("toto", "project1", "bundle2");
 	}

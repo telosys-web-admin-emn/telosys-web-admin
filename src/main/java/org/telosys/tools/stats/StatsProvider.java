@@ -1,5 +1,7 @@
 package org.telosys.tools.stats;
 
+import org.telosys.tools.stats.exception.ProjectNotFoundException;
+
 import java.io.File;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public interface StatsProvider {
 	 * @param projectName
 	 * @return
 	 */
-	ProjectStats getProjectStats(String userId, String projectName) ;
+	ProjectStats getProjectStats(String userId, String projectName) throws ProjectNotFoundException;
 	
 	/**
 	 * Returns the model stats for the given model name

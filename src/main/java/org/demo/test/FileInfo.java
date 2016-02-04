@@ -11,7 +11,6 @@ public class FileInfo {
 	public static void main(String[] args) {
 		
 		Path file = Paths.get("D:/TMP", "foo.txt");
-		
 		BasicFileAttributes attr;
 		try {
 			// File info 

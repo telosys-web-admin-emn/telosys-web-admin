@@ -1,5 +1,6 @@
 package org.telosys.tools.stats;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -56,13 +57,13 @@ public interface ProjectStats {
 	 * Origin : creation date file ( ".date" file)
 	 * @return
 	 */
-	Date getCreationDate() ;
+	Date getCreationDate() throws IOException;
 	
 	/**
 	 * The max date retrieved from all the ".date" files of the project
 	 * @return
 	 */
-	Date getLastGenerationDate() ;
+	Date getLastGenerationDate() throws IOException;
 	
 	//------------------------------------------------------------------------------
 	// COUNTERS
