@@ -6,6 +6,7 @@ import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.stats.services.FilesystemUtil;
 
 import java.io.*;
+import java.util.List;
 
 public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	private File root;
@@ -55,8 +56,17 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 
 	@Override
 	public int getModelsCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int somme = 0;
+		try {
+			this.readUsersFile();
+			for(int i=0; i<this.users.numberOfLines(); ++i) {
+				UsersStatsImpl usersStats = new UsersStatsImpl(this.users.getColumn(i,0));
+				somme += usersStats.getModelsCount();
+			}
+			return somme;
+		} catch (IOException e) {
+			return -1;
+		}
 	}
 
 	@Override
