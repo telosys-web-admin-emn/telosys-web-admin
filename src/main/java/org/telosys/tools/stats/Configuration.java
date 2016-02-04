@@ -11,13 +11,11 @@ public class Configuration
 	
 	private final static String MODEL_EXTENSION = ".model";
 
-	public static String getModelExtension()
-	{
+	public static String getModelExtension() {
 		return MODEL_EXTENSION;
 	}
 	
-	public static String getTelosysSaasLocation()
-	{
+	public static String getTelosysSaasLocation() {
 		return telosysSaasLocation;
 	}
 
