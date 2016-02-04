@@ -18,8 +18,7 @@ public class ModelStatsImpl implements ModelStats {
 	private String modelName;
 	private String projectName;
 
-	public ModelStatsImpl(File root, String userId, String modelName, String projectName)
-	{
+	public ModelStatsImpl(File root, String userId, String modelName, String projectName) {
 		this.root = root;
 		this.userId = userId;
 		this.modelName = modelName;
