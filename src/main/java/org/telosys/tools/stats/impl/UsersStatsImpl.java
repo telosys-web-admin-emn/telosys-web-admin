@@ -1,22 +1,28 @@
 package org.telosys.tools.stats.impl;
 
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import org.telosys.tools.helper.FileAccessors;
 import org.telosys.tools.stats.UserStats;
 
 public class UsersStatsImpl implements UserStats {
 	private String user;
+	private File root;
 
-	public UsersStatsImpl(String user)
+	public UsersStatsImpl(File root, String user)
 	{
 		this.user = user;
+		this.root = root;
 	}
 
 	@Override
 	public String getLogin() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.user;
 	}
 
 	@Override
@@ -51,8 +57,11 @@ public class UsersStatsImpl implements UserStats {
 
 	@Override
 	public List<String> getProjectsNames() {
-		// TODO Auto-generated method stub
-		return null ;
+		File telosysDir = new File(FileAccessors.getTelosysDirPath(root));
+		return asList(telosysDir.listFiles())
+				.stream()
+				.map(f -> f.getName())
+				.collect(toList());
 	}
 
 	@Override

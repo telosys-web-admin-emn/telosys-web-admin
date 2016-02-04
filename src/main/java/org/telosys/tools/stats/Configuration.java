@@ -10,6 +10,8 @@ public class Configuration
 	private final static String TELOSYS_DIR = "TelosysTools";
 	
 	private final static String MODEL_EXTENSION = ".model";
+	
+	private final static String TEMPLATE_DIR = "templates";
 
 	public static String getModelExtension() {
 		return MODEL_EXTENSION;
@@ -21,5 +23,9 @@ public class Configuration
 
 	public static String getTelosysDir() {
 		return TELOSYS_DIR;
+	}
+
+	public static String getTemplateDir() {
+		return TEMPLATE_DIR;
 	}
 }

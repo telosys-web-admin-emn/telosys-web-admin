@@ -44,7 +44,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 		try {
 			this.readUsersFile();
 			for(int i=0; i<this.users.numberOfLines(); ++i) {
-				UsersStatsImpl usersStats = new UsersStatsImpl(this.users.getColumn(i,0));
+				UsersStatsImpl usersStats = new UsersStatsImpl(root, this.users.getColumn(i,0));
 				somme += usersStats.getProjectsCount();
 			}
 			return somme;
@@ -60,7 +60,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 		try {
 			this.readUsersFile();
 			for(int i=0; i<this.users.numberOfLines(); ++i) {
-				UsersStatsImpl usersStats = new UsersStatsImpl(this.users.getColumn(i,0));
+				UsersStatsImpl usersStats = new UsersStatsImpl(root, this.users.getColumn(i,0));
 				somme += usersStats.getModelsCount();
 			}
 			return somme;

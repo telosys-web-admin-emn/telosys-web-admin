@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import org.telosys.tools.helper.FileAccessors;
 import org.telosys.tools.stats.BundleStats;
 import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.stats.ModelStats;
@@ -40,7 +41,7 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public ProjectStats getProjectStats(String userId, String projectName) throws ProjectNotFoundException {
-		File projectDir = new File(this.projectDirPath(userId, projectName));
+		File projectDir = new File(FileAccessors.getProjectDirPath(root,userId, projectName));
 		if(!projectDir.exists()) {
 			throw new ProjectNotFoundException(projectName);
 		}
@@ -75,15 +76,6 @@ public class StatsProviderImpl implements StatsProvider {
 	public List<BundleStats> getBundlesStats(String userId) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-
-	private String userDirPath(String userId) {
-		return this.root.getPath() + File.separator + userId;
-	}
-
-	private String projectDirPath(String userId, String projectId) {
-		return this.userDirPath(userId) + File.separator + projectId;
 	}
 
 
