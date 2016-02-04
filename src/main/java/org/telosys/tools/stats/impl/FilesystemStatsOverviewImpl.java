@@ -20,21 +20,17 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 
 	@Override
 	public int getUsersCount() {
-		FileReader user_file = new FileReader(this.root.getAbsolutePath()+"/fs/users.csv");
-		BufferedReader buffer = new BufferedReader(user_file);
-		StringBuffer res = new StringBuffer();
-
-		try
-		{
-			for(String line = buffer.readLine(); line != null; line = buffer.readLine())
-			{
+		try {
+			FileReader user_file = new FileReader(this.root.getAbsolutePath()+"/fs/users.csv");
+			BufferedReader buffer = new BufferedReader(user_file);
+			StringBuffer res = new StringBuffer();
+			for(String line = buffer.readLine(); line != null; line = buffer.readLine()) {
 				res.append(line + "\n");
 			}
 			CSVReader csv = new CSVReader(res.toString());
 			return csv.numberOfLines();
 		}
-		catch (IOException e)
-		{
+		catch (IOException e) {
 			return -1;
 		}
 	}
