@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
 
+import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.ModelStats;
 
 public class ModelStatsImpl implements ModelStats {
@@ -17,8 +18,7 @@ public class ModelStatsImpl implements ModelStats {
 	private String modelName;
 	private String projectName;
 
-	public ModelStatsImpl(File root, String userId, String modelName, String projectName)
-	{
+	public ModelStatsImpl(File root, String userId, String modelName, String projectName) {
 		this.root = root;
 		this.userId = userId;
 		this.modelName = modelName;
@@ -38,7 +38,7 @@ public class ModelStatsImpl implements ModelStats {
 	@Override
 	public Date getLastModifiedDate() throws IOException {
 		String s = File.separator;
-		Path file = Paths.get(this.root.getAbsolutePath()+s+this.userId+s+this.projectName+s+"TelosysTools", this.modelName+".model");
+		Path file = Paths.get(this.root.getAbsolutePath()+s+this.userId+s+this.projectName+s+Configuration.getTelosysDir(), this.modelName+Configuration.getModelExtension());
 		BasicFileAttributes attr;
 		// File info 
 		attr = Files.readAttributes(file, BasicFileAttributes.class);

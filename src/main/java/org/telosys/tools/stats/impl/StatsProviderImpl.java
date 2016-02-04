@@ -49,8 +49,7 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public ModelStats getModelStats(String userId, String projectName, String modelName) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ModelStatsImpl(this.root, userId, modelName, projectName);
 	}
 
 	@Override
