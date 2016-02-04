@@ -1,21 +1,26 @@
 package org.telosys.tools.stats.impl;
 
+import java.io.File;
 import java.util.Date;
 
 import org.telosys.tools.stats.BundleStats;
 
 public class BundleStatsImpl implements BundleStats {
 
+	private String name;
+
+	private String projectName;
+
+	private File dir;
+
 	@Override
 	public String getProjectName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.projectName;
 	}
 
 	@Override
 	public String getBundleName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.name;
 	}
 
 	@Override

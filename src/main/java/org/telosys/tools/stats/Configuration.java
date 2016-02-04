@@ -13,6 +13,8 @@ public class Configuration
 	
 	private final static String TEMPLATE_DIR = "templates";
 
+	private final static String CSV_USERS = "users.csv";
+
 	public static String getModelExtension() {
 		return MODEL_EXTENSION;
 	}
@@ -28,4 +30,10 @@ public class Configuration
 	public static String getTemplateDir() {
 		return TEMPLATE_DIR;
 	}
+
+	public static String getUsersCsv() {
+		return CSV_USERS;
+	}
+
+
 }

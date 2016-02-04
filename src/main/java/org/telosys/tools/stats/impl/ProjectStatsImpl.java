@@ -3,8 +3,10 @@ package org.telosys.tools.stats.impl;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.rmi.UnexpectedException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,18 +22,15 @@ import static java.util.stream.Collectors.toList;
 // TODO handle exceptions
 public class ProjectStatsImpl implements ProjectStats {
 
-	private final static String MODEL_EXT = ".model";
+	private final static String MODEL_EXT = Configuration.getModelExtension();
 
-	private File dir;
+	private Path dir;
 
 	private String name;
 
-	private String user;
-
-	public ProjectStatsImpl(File dir, String name, String user) {
+	public ProjectStatsImpl(Path dir, String name) {
 		this.dir = dir;
 		this.name = name;
-		this.user = user;
 	}
 
 	@Override
@@ -41,9 +40,7 @@ public class ProjectStatsImpl implements ProjectStats {
 
 	@Override
 	public int getBundlesCount() {
-		File templatesDir = new File(this.getTemplatesDirPath());
-		int count = templatesDir.listFiles(File::isDirectory).length;
-		return count;
+		return this.getBundlesNames().size();
 	}
 
 	@Override
@@ -57,8 +54,7 @@ public class ProjectStatsImpl implements ProjectStats {
 
 	@Override
 	public int getModelsCount() {
-		File telosysDir = new File(this.getTelosysDirPath());
-		return telosysDir.listFiles(f -> f.getName().endsWith(MODEL_EXT)).length;
+		return this.getModelsNames().size();
 	}
 
 	@Override
@@ -72,29 +68,33 @@ public class ProjectStatsImpl implements ProjectStats {
 
 	@Override
 	public long getDiskUsage() {
-		return FileUtils.sizeOfDirectory(this.dir);
+		try {
+			return Files.size(dir);
+		} catch(IOException e) {
+			throw new IllegalStateException("The folder should exist !");
+		}
 	}
 
 	@Override
 	public Date getCreationDate() throws IOException {
-		BasicFileAttributes attributes = Files.readAttributes(Paths.get(dir.getAbsolutePath()), BasicFileAttributes.class);
+		BasicFileAttributes attributes = Files.readAttributes(dir, BasicFileAttributes.class);
 		return new Date(attributes.creationTime().toMillis());
 	}
 
 	@Override
 	public Date getLastGenerationDate() throws IOException {
-		BasicFileAttributes attributes = Files.readAttributes(Paths.get(dir.getAbsolutePath()), BasicFileAttributes.class);
+		BasicFileAttributes attributes = Files.readAttributes(dir, BasicFileAttributes.class);
 		return new Date(attributes.lastModifiedTime().toMillis());
 	}
 
 	@Override
 	public int getGenerationsCount() {
-		// TODO Auto-generated method stub
+		// TODO how to find it ?
 		return 0;
 	}
 
 	private String getTelosysDirPath() {
-		return this.dir.getAbsolutePath() + File.separator + Configuration.getTelosysDir();
+		return this.dir + File.separator + Configuration.getTelosysDir();
 	}
 
 	private String getTemplatesDirPath() {

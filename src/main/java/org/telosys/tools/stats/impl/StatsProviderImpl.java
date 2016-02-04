@@ -2,27 +2,26 @@ package org.telosys.tools.stats.impl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.List;
 
-import org.telosys.tools.stats.BundleStats;
-import org.telosys.tools.stats.FilesystemStatsOverview;
-import org.telosys.tools.stats.ModelStats;
-import org.telosys.tools.stats.ProjectStats;
-import org.telosys.tools.stats.StatsProvider;
-import org.telosys.tools.stats.UserStats;
+import org.telosys.tools.stats.*;
+import org.telosys.tools.stats.exception.BadInputException;
 import org.telosys.tools.stats.exception.ProjectNotFoundException;
+import org.telosys.tools.stats.exception.UserNotFoundException;
+import org.telosys.tools.stats.model.User;
 
 public class StatsProviderImpl implements StatsProvider {
 
-	private final File root ;
+	private final Path root ;
 
-	public StatsProviderImpl(File root) {
+	public StatsProviderImpl(Path root) {
 		super();
 		this.root = root;
 	}
 
 	@Override
-	public File getRoot() {
+	public Path getRoot() {
 		return root ;
 	}
 
@@ -32,25 +31,32 @@ public class StatsProviderImpl implements StatsProvider {
 		return null;
 	}
 
+	public UserStats getUserStats(String login) throws BadInputException, UserNotFoundException {
+		User userInfo = this.getUsersStats().getUser(login);
+		return new UserStatsImpl(this, root.resolve(login), userInfo);
+	};
+
 	@Override
-	public UserStats getUserStats(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public UsersStats getUsersStats() {
+		return new UsersStatsImpl(this);
 	}
+
 
 	@Override
 	public ProjectStats getProjectStats(String userId, String projectName) throws ProjectNotFoundException {
-		File projectDir = new File(this.projectDirPath(userId, projectName));
-		if(!projectDir.exists()) {
-			throw new ProjectNotFoundException(projectName);
-		}
-		return new ProjectStatsImpl(projectDir, projectName, userId);
+		return this.getProjectsStats(userId)
+				.stream()
+				.filter(ps -> ps.getProjectName().equals(projectName))
+				.findAny()
+				.orElseThrow(() -> new ProjectNotFoundException(projectName));
 	}
 
 	@Override
-	public ModelStats getModelStats(String userId, String projectName, String modelName) {
-		// TODO Auto-generated method stub
-		return null;
+	public ModelStats getModelStats(String userId, String projectName, String modelName) throws ProjectNotFoundException{
+		ProjectStats projectStats = this.getProjectStats(userId, projectName);
+		return projectStats.getModelsNames()
+				.stream()
+				.map(m -> new ModelStatsImpl())
 	}
 
 	@Override
@@ -78,12 +84,4 @@ public class StatsProviderImpl implements StatsProvider {
 		return null;
 	}
 
-
-	private String userDirPath(String userId) {
-		return this.root.getPath() + File.separator + userId;
-	}
-
-	private String projectDirPath(String userId, String projectId) {
-		return this.userDirPath(userId) + File.separator + projectId;
-	}
 }

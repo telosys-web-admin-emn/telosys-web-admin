@@ -1,5 +1,6 @@
 package org.telosys.tools.stats;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface UserStats {
 	
 	String getMail();
 	
-	Date getCreationDate(); // to be added in User
+	Date getCreationDate() throws IOException; // to be added in User
 	
 	String getCountry(); // to be added in User
 	
@@ -36,7 +37,7 @@ public interface UserStats {
 	 * Returns all the projects names for the user
 	 * @return
 	 */
-	List<String> getProjectsNames() ;
+	List<String> getProjectsNames() throws IOException;
 	
 	/**
 	 * The number of models <br>
@@ -63,7 +64,7 @@ public interface UserStats {
 	 * Origin : disk usage for all the user's files in the filesystem
 	 * @return
 	 */
-	int getDiskUsage();
+	long getDiskUsage() throws IOException;
 	
 	//------------------------------------------------------------------------------
 	// From ".counter" files

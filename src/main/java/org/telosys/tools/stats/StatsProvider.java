@@ -1,31 +1,39 @@
 package org.telosys.tools.stats;
 
+import com.google.inject.Singleton;
+import org.telosys.tools.stats.exception.BadInputException;
 import org.telosys.tools.stats.exception.ProjectNotFoundException;
+import org.telosys.tools.stats.exception.UserNotFoundException;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
+@Singleton
 public interface StatsProvider {
 
 	/**
 	 * Returns the root folder for the current StatsProvider
 	 * @return
 	 */
-	File getRoot();
+	Path getRoot();
 	
 	/**
 	 * Returns the global stats overview
 	 * @return
 	 */
 	FilesystemStatsOverview getFilesystemStatsOverview() ;
-	
+
 	/**
-	 * Returns the user stats for the given user
-	 * 
-	 * @param userId
+	 * Returns this stats for a specific login of the application
 	 * @return
 	 */
-	UserStats getUserStats(String userId) ;
+	UserStats getUserStats(String login) throws BadInputException, UserNotFoundException;
+
+	/**
+	 * Returns the stats of all users
+	 */
+	UsersStats getUsersStats();
 	
 	/**
 	 * Returns the project stats for the given project name
