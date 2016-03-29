@@ -32,8 +32,9 @@ public class UsersCsvParser {
 	public List<User> parse() throws IOException {
 		List<User> users = new ArrayList<>();
 		CsvMapper mapper = new CsvMapper();
+		CsvSchema schema = CsvSchema.emptySchema().withColumnSeparator(';');
 		mapper.enable(CsvParser.Feature.WRAP_AS_ARRAY);
-		Iterator<String[]> it = mapper.readerFor(String[].class).readValues(file);
+		Iterator<String[]> it = mapper.readerFor(String[].class).with(schema).readValues(file);
 		while(it.hasNext()) {
 			String[] row = it.next();
 			users.add(new User(row[0], row[2]));
