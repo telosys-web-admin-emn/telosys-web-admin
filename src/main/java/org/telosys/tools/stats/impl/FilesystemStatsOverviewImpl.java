@@ -1,72 +1,66 @@
 package org.telosys.tools.stats.impl;
 
 import org.apache.commons.io.FileUtils;
-import org.telosys.tools.helper.CSVReader;
+import org.telosys.tools.entities.User;
+import org.telosys.tools.helper.UsersCsvParser;
 import org.telosys.tools.stats.FilesystemStatsOverview;
-import org.telosys.tools.stats.services.FilesystemUtil;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	private File root;
-	private CSVReader users;
+	private UsersCsvParser usersCsv;
 
 
 	public FilesystemStatsOverviewImpl(File root) {
 		this.root = root;
-	}
-
-	private void readUsersFile() throws IOException {
-		FileReader user_file = new FileReader(this.root.getAbsolutePath()+"/users.csv");
-		BufferedReader buffer = new BufferedReader(user_file);
-		StringBuilder res = new StringBuilder();
-		for(String line = buffer.readLine(); line != null; line = buffer.readLine()) {
-			res.append(line).append("\n");
-		}
-		this.users = new CSVReader(res.toString());
+		this.usersCsv = new UsersCsvParser(new File(this.root.getAbsolutePath() + "/users.csv"));
 	}
 
 	@Override
 	public int getUsersCount() {
 		try {
-			this.readUsersFile();
-			return this.users.numberOfLines();
-		}
-		catch (IOException e) {
+			return this.usersCsv.parse().size();
+		} catch (IOException e) {
+			e.printStackTrace();
 			return -1;
 		}
 	}
 
 	@Override
 	public int getProjectsCount() {
-		int somme = 0;
+		List<User> users;
 		try {
-			this.readUsersFile();
-			for(int i=0; i<this.users.numberOfLines(); ++i) {
-				UsersStatsImpl usersStats = new UsersStatsImpl(root, this.users.getColumn(i,0));
-				somme += usersStats.getProjectsCount();
-			}
-			return somme;
-		} catch (IOException e) {
+			users = usersCsv.parse();
+		} catch(IOException e) {
 			return -1;
 		}
 
+		int somme = 0;
+		for (User user : users) {
+			UsersStatsImpl stats = new UsersStatsImpl(root, user.getUsername());
+			somme += stats.getProjectsCount();
+		}
+		return somme;
 	}
 
 	@Override
 	public int getModelsCount() {
-		int somme = 0;
+		List<User> users;
 		try {
-			this.readUsersFile();
-			for(int i=0; i<this.users.numberOfLines(); ++i) {
-				UsersStatsImpl usersStats = new UsersStatsImpl(root, this.users.getColumn(i,0));
-				somme += usersStats.getModelsCount();
-			}
-			return somme;
-		} catch (IOException e) {
+			users = usersCsv.parse();
+		} catch(IOException e) {
 			return -1;
 		}
+
+		int somme = 0;
+		for (User user : users) {
+			UsersStatsImpl stats = new UsersStatsImpl(root, user.getUsername());
+			somme += stats.getModelsCount();
+		}
+		return somme;
 	}
 
 	@Override

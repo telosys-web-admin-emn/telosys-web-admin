@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import org.telosys.tools.entities.User;
 import org.telosys.tools.stats.BundleStats;
 import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.stats.ModelStats;
@@ -34,7 +35,7 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public UserStats getUserStats(String userId) {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 

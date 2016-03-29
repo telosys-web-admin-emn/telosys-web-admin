@@ -29,7 +29,7 @@ public class UsersCsvParser {
 	}
 
 
-	private List<User> parse() throws IOException {
+	public List<User> parse() throws IOException {
 		List<User> users = new ArrayList<>();
 		CsvMapper mapper = new CsvMapper();
 		mapper.enable(CsvParser.Feature.WRAP_AS_ARRAY);
