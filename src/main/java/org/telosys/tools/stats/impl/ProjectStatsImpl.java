@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,8 +50,7 @@ public class ProjectStatsImpl implements ProjectStats {
 	@Override
 	public List<String> getBundlesNames() {
 		File templatesDir = new File(this.getTemplatesDirPath());
-		return asList(templatesDir.listFiles(File::isDirectory))
-				.stream()
+		return Arrays.stream(templatesDir.listFiles(File::isDirectory))
 				.map(File::getName)
 				.collect(toList());
 	}
@@ -64,8 +64,7 @@ public class ProjectStatsImpl implements ProjectStats {
 	@Override
 	public List<String> getModelsNames() {
 		File telosysDir = new File(this.getTelosysDirPath());
-		return asList(telosysDir.listFiles(f -> f.getName().endsWith(MODEL_EXT)))
-				.stream()
+		return Arrays.stream(telosysDir.listFiles(f -> f.getName().endsWith(MODEL_EXT)))
 				.map(f -> f.getName().replace(MODEL_EXT, ""))
 				.collect(toList());
 	}
