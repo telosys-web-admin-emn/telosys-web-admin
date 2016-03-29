@@ -7,6 +7,7 @@ import org.telosys.tools.stats.FilesystemStatsOverview;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
@@ -20,7 +21,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	}
 
 	@Override
-	public int getUsersCount() {
+	public int getUsersCount() throws ParseException {
 		try {
 			return this.usersCsv.parse().size();
 		} catch (IOException e) {
@@ -30,7 +31,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	}
 
 	@Override
-	public int getProjectsCount() {
+	public int getProjectsCount() throws IOException, ParseException {
 		List<User> users;
 		try {
 			users = usersCsv.parse();
@@ -40,14 +41,14 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 
 		int somme = 0;
 		for (User user : users) {
-			UsersStatsImpl stats = new UsersStatsImpl(root, user.getUsername());
+			UsersStatsImpl stats = new UsersStatsImpl(user, root);
 			somme += stats.getProjectsCount();
 		}
 		return somme;
 	}
 
 	@Override
-	public int getModelsCount() {
+	public int getModelsCount() throws ParseException, IOException {
 		List<User> users;
 		try {
 			users = usersCsv.parse();
@@ -57,7 +58,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 
 		int somme = 0;
 		for (User user : users) {
-			UsersStatsImpl stats = new UsersStatsImpl(root, user.getUsername());
+			UsersStatsImpl stats = new UsersStatsImpl(user, root);
 			somme += stats.getModelsCount();
 		}
 		return somme;

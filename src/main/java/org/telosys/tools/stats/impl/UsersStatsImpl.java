@@ -4,17 +4,22 @@ import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.telosys.tools.entities.User;
+import org.telosys.tools.helper.UsersCsvParser;
 import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.UserStats;
 
 public class UsersStatsImpl implements UserStats {
-	private String user;
+	private User user;
 	private File root;
 
-	public UsersStatsImpl(File root, String user)
+	public UsersStatsImpl(User user, File root) throws IOException, ParseException
 	{
 		this.user = user;
 		this.root = root;
@@ -22,31 +27,27 @@ public class UsersStatsImpl implements UserStats {
 
 	@Override
 	public String getLogin() {
-		return this.user;
+		return this.user.getUsername();
 	}
 
 	@Override
 	public String getMail() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.user.getEmail();
 	}
 
 	@Override
 	public Date getCreationDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.user.getCreationDate();
 	}
 
 	@Override
 	public String getCountry() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.user.getCountry();
 	}
 
 	@Override
 	public String getLanguage() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.user.getLanguage();
 	}
 
 	@Override
@@ -91,9 +92,14 @@ public class UsersStatsImpl implements UserStats {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	/**
+	 * Get the path of the user
+	 * @return string
+	 */
 	private String getUserDirPath() {
-		return this.root.getAbsolutePath() + File.separator + this.user;
+		// TODO : check path exists
+		return this.root.getAbsolutePath() + File.separator + this.user.getUsername();
 	}
 
 }
