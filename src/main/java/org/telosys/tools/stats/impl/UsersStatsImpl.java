@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -61,8 +62,7 @@ public class UsersStatsImpl implements UserStats {
 		return asList(this.userDir.listFiles())
 			.stream()
 			.map(File::getName)
-			.collect(toList())
-		;
+			.collect(toList());
 	}
 
 	@Override
@@ -89,19 +89,20 @@ public class UsersStatsImpl implements UserStats {
 
 	@Override
 	public List<String> getBundlesNames() {
-		List<String> bundlesNames = new ArrayList<String>();
-
+		List<String> bundlesNames = new ArrayList<>();
 		for(File project:this.userDir.listFiles()){
 			File templatesDir = new File(project.getAbsolutePath() + "/TelosysTools/templates");
-			bundlesNames.addAll(asList(templatesDir.listFiles(File::isDirectory)).stream().map(File::getName).collect(toList()));
-			
+			bundlesNames.addAll(asList(templatesDir.listFiles(File::isDirectory))
+					.stream()
+					.map(File::getName)
+					.collect(toList()));
 		}
 		return bundlesNames;
 	}
 
 	@Override
 	public long getDiskUsage() {
-		return (FileUtils.sizeOfDirectory(this.userDir));
+		return FileUtils.sizeOfDirectory(this.userDir);
 	}
 
 	@Override
