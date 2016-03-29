@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import org.telosys.tools.entities.User;
 import org.telosys.tools.stats.BundleStats;
 import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.stats.ModelStats;
@@ -23,18 +24,17 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public File getRoot() {
-		return root ;
+		return root;
 	}
 
 	@Override
 	public FilesystemStatsOverview getFilesystemStatsOverview() {
-		// TODO Auto-generated method stub
-		return null;
+		return new FilesystemStatsOverviewImpl(root);
 	}
 
 	@Override
 	public UserStats getUserStats(String userId) {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 
@@ -49,7 +49,8 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public ModelStats getModelStats(String userId, String projectName, String modelName) {
-		return new ModelStatsImpl(this.root, userId, modelName, projectName);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -85,6 +86,4 @@ public class StatsProviderImpl implements StatsProvider {
 	private String projectDirPath(String userId, String projectId) {
 		return this.userDirPath(userId) + File.separator + projectId;
 	}
-
-
 }
