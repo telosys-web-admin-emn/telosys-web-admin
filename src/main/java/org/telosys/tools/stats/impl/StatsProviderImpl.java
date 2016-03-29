@@ -29,8 +29,7 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public FilesystemStatsOverview getFilesystemStatsOverview() {
-		// TODO Auto-generated method stub
-		return null;
+		return new FilesystemStatsOverviewImpl(root);
 	}
 
 	@Override

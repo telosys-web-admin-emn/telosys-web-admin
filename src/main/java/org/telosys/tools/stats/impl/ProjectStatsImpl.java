@@ -43,8 +43,7 @@ public class ProjectStatsImpl implements ProjectStats {
 	@Override
 	public int getBundlesCount() {
 		File templatesDir = new File(this.getTemplatesDirPath());
-		int count = templatesDir.listFiles(File::isDirectory).length;
-		return count;
+		return templatesDir.listFiles(File::isDirectory).length;
 	}
 
 	@Override
