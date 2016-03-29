@@ -73,8 +73,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	public long getDiskUsage() {
 		try
 		{
-			long size = FileUtils.sizeOfDirectory(new File(root.getCanonicalFile() + "/fs"));
-			return size;
+			return FileUtils.sizeOfDirectory(new File(root.getCanonicalFile() + "/fs"));
 		}
 		catch(IOException e)
 		{

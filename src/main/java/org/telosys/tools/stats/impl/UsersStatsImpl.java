@@ -59,7 +59,7 @@ public class UsersStatsImpl implements UserStats {
 		File userDir = new File(this.getUserDirPath());
 		return asList(userDir.listFiles())
 				.stream()
-				.map(f -> f.getName())
+				.map(File::getName)
 				.collect(toList());
 	}
 
