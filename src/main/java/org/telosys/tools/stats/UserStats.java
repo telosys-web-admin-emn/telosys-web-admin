@@ -63,7 +63,7 @@ public interface UserStats {
 	 * Origin : disk usage for all the user's files in the filesystem
 	 * @return
 	 */
-	int getDiskUsage();
+	long getDiskUsage();
 	
 	//------------------------------------------------------------------------------
 	// From ".counter" files

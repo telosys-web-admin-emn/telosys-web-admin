@@ -23,7 +23,7 @@ public class TestXavier {
 		User user = parser.parse().stream().filter(u -> u.getUsername().equals("admin")).findAny().get();
 		UsersStatsImpl imp = new UsersStatsImpl(user, f);
 		System.out.println(imp.getProjectsCount());
-		System.out.println(imp.getMail());
+		System.out.println(imp.getDiskUsage());
 	}
 
 }
