@@ -23,7 +23,7 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public File getRoot() {
-		return root ;
+		return root;
 	}
 
 	@Override

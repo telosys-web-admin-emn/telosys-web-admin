@@ -1,9 +1,7 @@
 package org.telosys.tools.helper;
 
-import java.io.BufferedInputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Helper classe to parse CSV file.
@@ -19,7 +17,7 @@ public class CSVReader
 	public CSVReader(String text)
 	{
 		this.text = text;
-		this.datas = new LinkedList<List<String>>();
+		this.datas = new LinkedList<>();
 		this.parse_data();
 	}
 
@@ -31,7 +29,7 @@ public class CSVReader
 			String[] values = line.split(";");
 			if(values.length > 0)
 			{
-				LinkedList value_list = new LinkedList<String>();
+				LinkedList<String> value_list = new LinkedList<>();
 				for(String value : values)
 					value_list.add(value);
 				this.datas.add(value_list);

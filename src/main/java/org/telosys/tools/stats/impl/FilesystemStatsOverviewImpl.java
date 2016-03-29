@@ -20,9 +20,9 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	private void readUsersFile() throws IOException {
 		FileReader user_file = new FileReader(this.root.getAbsolutePath()+"/users.csv");
 		BufferedReader buffer = new BufferedReader(user_file);
-		StringBuffer res = new StringBuffer();
+		StringBuilder res = new StringBuilder();
 		for(String line = buffer.readLine(); line != null; line = buffer.readLine()) {
-			res.append(line + "\n");
+			res.append(line).append("\n");
 		}
 		this.users = new CSVReader(res.toString());
 	}
