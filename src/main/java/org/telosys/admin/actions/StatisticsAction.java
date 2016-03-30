@@ -8,11 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by alexa on 30/03/2016.
  */
-public class WelcomeAction extends GenericAction {
+public class StatisticsAction extends GenericAction {
 
     @Override
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        System.out.println("WORKS");
-        return "users";
+        return "statistics";
     }
 }
