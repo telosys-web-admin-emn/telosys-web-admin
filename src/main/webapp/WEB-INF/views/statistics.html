@@ -1,66 +1,71 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-        <link rel="stylesheet" href="materialize/css/materialize.css"/>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
-        <script type="text/javascript" src="materialize/js/materialize.js"></script>
-        <link rel="stylesheet" href="css/main.css"/>
+<html>
+<head>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" href="materialize/css/materialize.css"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <script type="text/javascript" src="materialize/js/materialize.js"></script>
+    <link rel="stylesheet" href="css/main.css"/>
 
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
 
-    <body>
-	<nav id="appbar" class="light-blue darken-3 nav-wrapper">
-   <!-- Dropdown Structure -->
-   <div class="light-blue darken-3 nav-wrapper">
-      <a href="#!" class="brand-logo left logo-telosys-min" style="position: relative; margin-left: 20px; margin-top: 5px;"></a><a href="#!" class="brand-logo left" style="position: relative; margin-right: 20px; ">
-	  <img src="../img/logo.svg">Telosys</a>
-      <ul id="nav-mobile" class="hide-on-med-and-down left">
-         
-         <li><a href="#" >Settings</a></li>
-         <li><a href="#" >Templates</a></li>
-         <li><a href="#" >Download</a></li>
-      </ul>
-   </div>
+<body>
+<nav id="appbar" class="light-blue darken-3 nav-wrapper">
+    <!-- Dropdown Structure -->
+    <div class="light-blue darken-3 nav-wrapper">
+        <a href="#!" class="brand-logo left logo-telosys-min"
+           style="position: relative; margin-left: 20px; margin-top: 5px;"></a><a href="#!" class="brand-logo left"
+                                                                                  style="position: relative; margin-right: 20px; ">
+        <img src="../img/logo.svg">Telosys</img></a>
+        <ul id="nav-mobile" class="hide-on-med-and-down left">
+
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Templates</a></li>
+            <li><a href="#">Download</a></li>
+        </ul>
+    </div>
 </nav>
-	<div class="container">
-		<div class="row">
+<div class="container">
+    <div class="row">
         <div class="col s12 m12">
-          <div class="card">
-            <div class="card-content">
-              <span class="card-title">Statistics</span>
-              <p><strong>Users :</strong> {$usersCount}</p>
-			  <p><strong>Projects : </strong>  {$projectsCount}</p>
-			  <p><strong>Models : </strong> {$modelsCount}</p>
-			  <p><strong>Disk space used : </strong>  {$usersCount}</p>
-			  <p><strong>Average number of projects/users : </strong>  {$avgProjects}</p>
-			  <p><strong>Average number of models/users : </strong>  {$avgModels}</p>
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Statistics</span>
+                    <p><strong>Users :</strong> {$usersCount}</p>
+                    <p><strong>Projects : </strong> {$projectsCount}</p>
+                    <p><strong>Models : </strong> {$modelsCount}</p>
+                    <p><strong>Disk space used : </strong> {$usersCount}</p>
+                    <p><strong>Average number of projects/users : </strong> {$avgProjects}</p>
+                    <p><strong>Average number of models/users : </strong> {$avgModels}</p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-	  <div class="row">
+    </div>
+    <div class="row">
         <div class="col s12 m12">
             <div class="card-panel">
-			<p class="flow-text">Historic per month </p>
-				<div> <a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose an historic</a></div>
-				<!--<canvas id="historic-chart" width="600" height="400"></canvas>-->
-				<img src="../img/ChartJS.png"/>
-				
-			</div>
+                <p class="flow-text">Historic per month </p>
+                <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
+                    an historic</a></div>
+                <!--<canvas id="historic-chart" width="600" height="400"></canvas>-->
+                <img src="../img/ChartJS.png"/>
+
+            </div>
         </div>
-        </div>
-      </div>
-	<ul id='historic-choices' class='dropdown-content'>
-		<li><a href="#!" onclick="changeHistoric('Number of users')" class='historic-choice'>Number of users</a></li>
-		<li><a href="#!" onclick="changeHistoric('Number of generations')"  class='historic-choice'>Number of generations</a></li>
-		<li><a href="#!" onclick="changeHistoric('Number of created projects')"  class='historic-choice'>Number of created projects</a></li>
-	</ul>
-        
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script>
-	  	  <script type="text/javascript" src="js/Chart.js"></script>
-	  <script type="text/javascript" src="js/main.js"></script>
-    </body>
-  </html>
+    </div>
+</div>
+<ul id='historic-choices' class='dropdown-content'>
+    <li><a href="#!" onclick="changeHistoric('Number of users')" class='historic-choice'>Number of users</a></li>
+    <li><a href="#!" onclick="changeHistoric('Number of generations')" class='historic-choice'>Number of generations</a>
+    </li>
+    <li><a href="#!" onclick="changeHistoric('Number of created projects')" class='historic-choice'>Number of created
+        projects</a></li>
+</ul>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/Chart.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

@@ -13,21 +13,24 @@ import java.util.Map;
 /**
  * Created by alexa on 30/03/2016.
  */
-public class TelosysProvider extends SpecificActionProvider {
+public class TelosysProvider extends SpecificActionProvider
+{
 
-    private final static Map<String, Class<? extends Action>> map = new HashMap<>();
+	private final static Map<String, Class<? extends Action>> map = new HashMap<>();
 
-    //--- Define actions here
-    static {
-        map.put("",         WelcomeAction.class   ) ;
-        map.put("welcome",         WelcomeAction.class   ) ;
-        map.put("users", UsersAction.class ) ;
-        map.put("user",     UserAction.class ) ;
-        map.put("statistics",  StatisticsAction.class ) ;
-    }
+	//--- Define actions here
+	static
+	{
+		map.put("", WelcomeAction.class);
+		map.put("welcome", WelcomeAction.class);
+		map.put("users", UsersAction.class);
+		map.put("user", UserAction.class);
+		map.put("statistics", StatisticsAction.class);
+	}
 
-    public TelosysProvider() {
-        super(map);
-    }
+	public TelosysProvider()
+	{
+		super(map);
+	}
 
 }
