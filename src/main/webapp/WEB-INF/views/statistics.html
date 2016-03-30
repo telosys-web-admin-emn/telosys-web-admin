@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link rel="stylesheet" href="materialize/css/materialize.css"/>
+    <link rel="stylesheet" th:href="@{~/materialize/css/materialize.css}"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
-    <script type="text/javascript" src="materialize/js/materialize.js"></script>
-    <link rel="stylesheet" href="css/main.css"/>
+    <script type="text/javascript" th:src="@{/materialize/js/materialize.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
@@ -17,7 +17,7 @@
         <a href="#!" class="brand-logo left logo-telosys-min"
            style="position: relative; margin-left: 20px; margin-top: 5px;"></a><a href="#!" class="brand-logo left"
                                                                                   style="position: relative; margin-right: 20px; ">
-        <img src="../img/logo.svg">Telosys</img></a>
+        <img src="../img/logo.svg"/>Telosys</a>
         <ul id="nav-mobile" class="hide-on-med-and-down left">
 
             <li><a href="#">Settings</a></li>
@@ -63,9 +63,6 @@
         projects</a></li>
 </ul>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/Chart.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
