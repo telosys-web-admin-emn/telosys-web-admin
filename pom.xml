@@ -7,6 +7,11 @@
   <artifactId>telosys-web-admin</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
+    <properties>
+        <telosys.version>3.0.0</telosys.version>
+        <nanoj.version>0.8.1-SNAPSHOT</nanoj.version>
+    </properties>
+
 	<dependencies>
 	
         <!-- FOR TESTS -->
@@ -29,7 +34,17 @@
 			<version>2.7.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.telosys.tools</groupId>
+			<artifactId>telosys-tools-api</artifactId>
+			<version>${telosys.version}</version>
+		</dependency>
 
+        <dependency>
+            <groupId>nanoj</groupId>
+            <artifactId>nanoj-web</artifactId>
+            <version>${nanoj.version}</version>
+        </dependency>
 
 	</dependencies>  
   
