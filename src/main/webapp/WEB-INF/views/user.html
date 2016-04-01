@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="materialize/css/materialize.css"/>
@@ -16,49 +16,47 @@
     <table class="bordered user-info">
         <tr>
             <td>Login</td>
-            <td>Arthur</td>
+            <td th:text="${user.login}"></td>
         </tr>
         <tr>
             <td>Mail</td>
-            <td>arthur@foo.fr</td>
+            <td th:text="${user.mail}"></td>
         </tr>
         <tr>
             <td>Creation date</td>
-            <td>2016-02-23</td>
+            <td th:text="${user.creationDate}"></td>
         </tr>
         <tr>
             <td>Country (origin browser)</td>
-            <td>FR</td>
+            <td th:text="${user.country}"></td>
         </tr>
         <tr>
             <td>Language (origin browser)</td>
-            <td>FR</td>
+            <td th:text="${user.language}"></td>
         </tr>
         <tr>
             <td>Last login</td>
-            <td>2016-03-26</td>
-
-
+            <td></td>
         </tr>
         <tr>
             <td>Generations count</td>
-            <td>14</td>
+            <td>0</td>
         </tr>
         <tr>
             <td>Disk space used</td>
-            <td>27MB</td>
+            <td>0 MB</td>
         </tr>
         <tr>
             <td>Projects count</td>
-            <td>3</td>
+            <td>0</td>
         </tr>
         <tr>
             <td>Models count</td>
-            <td>5</td>
+            <td>0</td>
         </tr>
         <tr>
             <td>Bundles count</td>
-            <td>12</td>
+            <td>0</td>
         </tr>
     </table>
 
