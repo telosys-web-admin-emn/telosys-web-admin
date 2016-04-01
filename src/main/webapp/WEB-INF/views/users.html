@@ -12,7 +12,6 @@
 
 <div class="container">
 
-
         <h1>Users list</h1>
 
         <table class="bordered striped responsive-table">
@@ -29,49 +28,16 @@
                 <th>Generations count</th>
             </tr>
             </thead>
-            <tr>
-                <td><a href="user.html">xela85</a></td>
-                <td>Yesterday</td>
-                <td>Today</td>
-                <td><i class="material-icons">add</i> Yes </td>
-                <td><a href="mailto:alex.3385@hotmail.fr">alex.3385@hotmail.fr</a></td>
-                <td>100MB</td>
-                <td>5</td>
-                <td>100</td>
-                <td>1000</td>
-            </tr>
-            <tr>
-                <td><a href="user.html">rodolpho44</a></td>
-                <td>2015/01/01</td>
-                <td>2015-01-05</td>
-                <td>No</td>
-                <td><a href="mailto:rodolpho44@hotmail.fr">rodolpho44@hotmail.fr</a></td>
-                <td>152MB</td>
-                <td>1</td>
-                <td>10</td>
-                <td>100</td>
-            </tr>
-            <tr>
-                <td><a href="user.html">cfaouzi</a></td>
-                <td>2016-01-15</td>
-                <td>2016-01-16</td>
-                <td>No</td>
-                <td><a href="mailto:cfaouzi@hotmail.fr">cfaouzi@hotmail.fr</a></td>
-                <td>100MB</td>
-                <td>5</td>
-                <td>100</td>
-                <td>1000</td>
-            </tr>
-            <tr>
-                <td><a href="user.html">maeln</a></td>
-                <td>2016-01-15</td>
-                <td>2016-01-16</td>
-                <td>No</td>
-                <td><a href="mailto:cfaouzi@hotmail.fr">mael.naccache@gmail.com</a></td>
-                <td>100MB</td>
-                <td>5</td>
-                <td>100</td>
-                <td>1000</td>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.login}"></td>
+                <td th:text="${user.creationDate}">Yesterday</td>
+                <td>osef</td>
+                <td>Yes</td>
+                <td th:text="${user.mail}"></td>
+                <td th:text="${user.diskUsage}"></td>
+                <td th:text="${user.projectsCount}"></td>
+                <td >5</td>
+                <td th:text="${user.generationsCount}">1000</td>
             </tr>
         </table>
 </div>
