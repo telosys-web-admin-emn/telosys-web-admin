@@ -20,9 +20,9 @@ public class TestXavier {
 		System.out.println(imp.getModelName());
 		System.out.println(imp.getProjectName());*/
 		UsersCsvParser parser = new UsersCsvParser(usersCsv);
-		User user = parser.parse().stream().filter(u -> u.getUsername().equals("admin")).findAny().get();
+		User user = parser.parse().stream().filter(u -> u.getUsername().equals("user1")).findAny().get();
 		UsersStatsImpl imp = new UsersStatsImpl(user, f);
-		System.out.println(imp.getProjectsCount());
+		System.out.println(imp.getModelsCount());
 		System.out.println(imp.getDiskUsage());
 	}
 
