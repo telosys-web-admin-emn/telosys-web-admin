@@ -25,7 +25,7 @@ public class UsersService {
 	public List<UsersStatsImpl> getUsers() throws IOException, ParseException
 	{
 		List<UsersStatsImpl> users = new ArrayList<UsersStatsImpl>();
-    	File root = new File(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
+    	File root = new File(Configuration.getTelosysSaasLocation()+"/fs");
 		UsersFileDAO dao = new UsersFileDAO(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
 		for(Map.Entry<String, User> entry : dao.loadAllUsers().entrySet()) {
 			users.add(new UsersStatsImpl(entry.getValue(), root));
