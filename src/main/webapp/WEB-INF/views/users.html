@@ -28,7 +28,7 @@
                 <th>Generations count</th>
             </tr>
             </thead>
-            <tr th:each="user : ${users}">
+            <tr th:each="user : ${#lists.sort(users, comparator)}">
                 <td><a th:text="${user.login}" th:href="@{/user(username=${user.login})}">${user.login}</a></td>
                 <td th:text="${user.creationDate}">Yesterday</td>
                 <td>osef</td>
