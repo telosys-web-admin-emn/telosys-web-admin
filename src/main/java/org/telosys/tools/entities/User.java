@@ -1,5 +1,6 @@
 package org.telosys.tools.entities;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,16 +8,12 @@ import java.util.Date;
 /**
  * Created by alexa on 29/03/2016.
  */
-public class User {
-
+public class User implements Serializable
+{
     private String username;
-
     private String email;
-    
     private Date creationDate;
-    
     private String country;
-    
     private String language;
 
 	public User(String username, String email, String creationDate, String country, String language) throws ParseException {
