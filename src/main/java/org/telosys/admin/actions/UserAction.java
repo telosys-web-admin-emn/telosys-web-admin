@@ -21,11 +21,15 @@ public class UserAction extends GenericAction {
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 	    try
 	    {
-		    UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
-		    UsersManager users = UsersManager.getInstance();
-		    User m_user = users.getUserByLogin("maeln");
-		    UserStats m_userstat = new UsersStatsImpl(m_user, new File(Configuration.getTelosysSaasLocation()+"/fs"));
-		    httpServletRequest.setAttribute("user", m_user);
+		    String userName = httpServletRequest.getParameter("username");
+		    if (userName != null) {
+		    	UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
+			    UsersManager users = UsersManager.getInstance();
+			    User myUser = users.getUserByLogin("maeln");
+			    UserStats myUserstat = new UsersStatsImpl(myUser, new File(Configuration.getTelosysSaasLocation()+"/fs"));
+			    httpServletRequest.setAttribute("user", myUser);
+		        User mu = users.getUserByLogin(userName);
+		    }
 	    } catch(IOException e)
 	    {
 		    e.printStackTrace();
