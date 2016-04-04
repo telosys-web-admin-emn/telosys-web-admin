@@ -38,30 +38,73 @@
         </tr>
         <tr>
             <td>Generations count</td>
-            <td th:text="${user_stat.generationsCount}"></td>
+            <td th:text="${userStats.generationsCount}"></td>
         </tr>
         <tr>
             <td>Disk space used</td>
-            <td th:text="${user_stat.diskUsage}"></td>
+            <td th:text="${userStats.diskUsage}"></td>
         </tr>
         <tr>
             <td>Projects count</td>
-            <td th:text="${user_stat.projectsCount}"></td>
+            <td th:text="${userStats.projectsCount}"></td>
         </tr>
         <tr>
             <td>Models count</td>
-            <td th:text="${user_stat.modelsCount}"></td>
+            <td th:text="${userStats.modelsCount}"></td>
         </tr>
         <tr>
             <td>Bundles count</td>
-            <td th:text="${user_stat.bundlesCount}"></td>
+            <td th:text="${userStats.bundlesCount}"></td>
         </tr>
     </table>
 
-    <div class="row">
-    <a class="btn waves-effect waves-light">Remove</a>
+    <br/>
 
-    </div>
+    <table class="bordered striped responsive-table">
+        <thead>
+        <tr>
+            <td>Project Name</td>
+            <td>Creation Date</td>
+            <td>Last generation date</td>
+            <td># Generations</td>
+            <td># Bundles</td>
+            <td>Disk Spaces</td>
+        </tr>
+        </thead>
+
+        <tbody>
+
+
+        <tr th:each="project : ${#projectStats}">
+            <p>coucou</p>
+        </tr>
+
+        <tr>
+            <td>Project1</td>
+            <td>2016-02-26</td>
+            <td>2016-02-26</td>
+            <td>12</td>
+            <td>2</td>
+            <td>12 mb</td>
+        </tr>
+        <tr>
+            <td>Project2</td>
+            <td>2016-02-26</td>
+            <td>2016-02-26</td>
+            <td>12</td>
+            <td>2</td>
+            <td>12 mb</td>
+        </tr>
+        <tr>
+            <td>Project3</td>
+            <td>2016-02-26</td>
+            <td>2016-02-26</td>
+            <td>12</td>
+            <td>2</td>
+            <td>12 mb</td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 
