@@ -132,7 +132,6 @@ public class UsersStatsImpl implements UserStats {
 	 * @return string
 	 */
 	private String getUserDirPath() {
-		// TODO : check if the path exists
 		return this.root.getAbsolutePath() + File.separator + this.user.getLogin();
 	}
 
