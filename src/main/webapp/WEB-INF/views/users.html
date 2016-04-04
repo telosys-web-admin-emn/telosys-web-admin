@@ -11,23 +11,22 @@
 <div class="container">
 
         <h1>Users list</h1>
-
         <table class="bordered striped responsive-table">
             <thead>
             <tr>
-                <th>Login (id)</th>
-                <th>Creation date</th>
+                <th><a th:href="@{/users(filter=login, order=((${param.order[0]} == 'ASC' and ${param.filter[0]} == 'login') ? 'DESC' : 'ASC' ))}">Login (id)</a></th>
+                <th><a th:href="@{/users(filter=creationDate)}">CreationDate</a></th>
                 <th>Last login date</th>
                 <th>Connected</th>
-                <th>Mail</th>
-                <th>Disk space</th>
-                <th>Projects count</th>
-                <th>Models count</th>
-                <th>Generations count</th>
+                <th><a th:href="@{/users(filter=mail)}">Mail</a></th>
+                <th><a th:href="@{/users(filter=diskUsage)}">Disk space</a></th>
+                <th><a th:href="@{/users(filter=projectsCount)}">Projects count</a></th>
+                <th><a th:href="@{/users(filter=modelsCount)}">Models count</a></th>
+                <th><a th:href="@{/users(filter=generationsCount)}">Generations count</a></th>
             </tr>
             </thead>
             <tr th:each="user : ${#lists.sort(users, comparator)}">
-                <td><a th:text="${user.login}" th:href="@{/user(username=${user.login})}">${user.login}</a></td>
+                <td><a th:text="${user.login}" th:href="@{/user(username=${user.login})}"></a></td>
                 <td th:text="${user.creationDate}">Yesterday</td>
                 <td>osef</td>
                 <td>Yes</td>
