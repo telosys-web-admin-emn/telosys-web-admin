@@ -67,12 +67,12 @@ public class UsersStatsImpl implements UserStats {
 
 	@Override
 	public int getModelsCount() {
-		// TODO : corriger cette fonction
 		int count = 0;
 		for(File project:this.userDir.listFiles()){
 			File telosysToolsDir = new File(project.getAbsolutePath() + "/TelosysTools");
-			count += telosysToolsDir.listFiles(f -> f.getName().toLowerCase().endsWith(".model")).length;
-			
+			if (telosysToolsDir.isDirectory()) {
+				count += telosysToolsDir.listFiles(f -> f.getName().toLowerCase().endsWith(".model")).length;
+			}			
 		}
 		return count;
 	}
