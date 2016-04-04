@@ -1,9 +1,10 @@
 package org.telosys.tools.stats.impl;
 
 import org.apache.commons.io.FileUtils;
-import org.telosys.tools.entities.User;
-import org.telosys.tools.helper.UsersCsvParser;
+import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.FilesystemStatsOverview;
+import org.telosys.tools.users.User;
+import org.telosys.tools.users.UsersFileDAO;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,36 +12,25 @@ import java.text.ParseException;
 import java.util.List;
 
 public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
+	private final List<User> users;
 	private File root;
-	private UsersCsvParser usersCsv;
 
 
 	public FilesystemStatsOverviewImpl(File root) {
 		this.root = root;
-		this.usersCsv = new UsersCsvParser(new File(this.root.getAbsolutePath() + "/users.csv"));
+		UsersFileDAO dao = new UsersFileDAO(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
+		this.users = (List<User>) dao.loadAllUsers().values();
 	}
 
 	@Override
 	public int getUsersCount() throws ParseException {
-		try {
-			return this.usersCsv.parse().size();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return -1;
-		}
+		return this.users.size();
 	}
 
 	@Override
 	public int getProjectsCount() throws IOException, ParseException {
-		List<User> users;
-		try {
-			users = usersCsv.parse();
-		} catch(IOException e) {
-			return -1;
-		}
-
 		int somme = 0;
-		for (User user : users) {
+		for (User user : this.users) {
 			UsersStatsImpl stats = new UsersStatsImpl(user, root);
 			somme += stats.getProjectsCount();
 		}
@@ -49,15 +39,8 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 
 	@Override
 	public int getModelsCount() throws ParseException, IOException {
-		List<User> users;
-		try {
-			users = usersCsv.parse();
-		} catch(IOException e) {
-			return -1;
-		}
-
 		int somme = 0;
-		for (User user : users) {
+		for (User user : this.users) {
 			UsersStatsImpl stats = new UsersStatsImpl(user, root);
 			somme += stats.getModelsCount();
 		}

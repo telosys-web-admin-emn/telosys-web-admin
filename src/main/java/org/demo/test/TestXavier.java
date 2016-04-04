@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 
-import org.telosys.tools.entities.User;
-import org.telosys.tools.helper.UsersCsvParser;
-import org.telosys.tools.stats.impl.ModelStatsImpl;
+import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
+import org.telosys.tools.users.User;
+import org.telosys.tools.users.UsersFileDAO;
 
 public class TestXavier {
 
@@ -19,8 +19,8 @@ public class TestXavier {
 		System.out.println(imp.getLastModifiedDate());
 		System.out.println(imp.getModelName());
 		System.out.println(imp.getProjectName());*/
-		UsersCsvParser parser = new UsersCsvParser(usersCsv);
-		User user = parser.parse().stream().filter(u -> u.getUsername().equals("user1")).findAny().get();
+		UsersFileDAO dao = new UsersFileDAO(Configuration.getTelosysSaasLocation()+"/fs/user.cvs");
+		User user = dao.loadAllUsers().get("user1");
 		UsersStatsImpl imp = new UsersStatsImpl(user, f);
 		System.out.println(imp.getModelsCount());
 		System.out.println(imp.getDiskUsage());

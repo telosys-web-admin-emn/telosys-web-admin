@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.telosys.tools.entities.User;
-import org.telosys.tools.helper.UsersCsvParser;
+import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
+import org.telosys.tools.users.User;
+import org.telosys.tools.users.UsersFileDAO;
+import org.telosys.tools.users.UsersFileName;
+import org.telosys.tools.users.UsersManager;
 
 public class UsersService {
 	private File usersCsvFile;
@@ -20,12 +24,11 @@ public class UsersService {
 				
 	public List<UsersStatsImpl> getUsers() throws IOException, ParseException
 	{
-		UsersCsvParser uCP = new UsersCsvParser(this.usersCsvFile);
 		List<UsersStatsImpl> users = new ArrayList<UsersStatsImpl>();
-		String s = File.separator;
-    	File root = new File("C:"+s+"Users"+s+"Xavier"+s+"git"+s+"telosys-saas"+s+"fs"+s);
-		for(User u:uCP.parse()) {
-			users.add(new UsersStatsImpl(u, root));
+    	File root = new File(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
+		UsersFileDAO dao = new UsersFileDAO(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
+		for(Map.Entry<String, User> entry : dao.loadAllUsers().entrySet()) {
+			users.add(new UsersStatsImpl(entry.getValue(), root));
 		}
 		
 		return users;
