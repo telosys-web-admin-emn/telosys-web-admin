@@ -11,9 +11,6 @@ import org.telosys.web.services.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Created by alexa on 30/03/2016.
- */
 public class UsersAction extends GenericAction {
 
     @Override
