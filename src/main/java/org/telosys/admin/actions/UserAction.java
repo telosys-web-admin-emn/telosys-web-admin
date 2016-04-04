@@ -25,7 +25,7 @@ public class UserAction extends GenericAction {
 		    if (userName != null) {
 		    	UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
 			    UsersManager users = UsersManager.getInstance();
-			    User myUser = users.getUserByLogin("maeln");
+			    User myUser = users.getUserByLogin(userName);
 			    UserStats myUserstat = new UsersStatsImpl(myUser, new File(Configuration.getTelosysSaasLocation()+"/fs"));
 			    httpServletRequest.setAttribute("user", myUser);
 		        User mu = users.getUserByLogin(userName);
