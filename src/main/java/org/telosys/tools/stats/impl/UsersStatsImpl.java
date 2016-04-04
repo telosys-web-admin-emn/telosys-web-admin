@@ -7,13 +7,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.telosys.tools.entities.User;
 import org.telosys.tools.stats.UserStats;
+import org.telosys.tools.users.User;
 
 public class UsersStatsImpl implements UserStats {
 	private User user;
@@ -29,12 +28,12 @@ public class UsersStatsImpl implements UserStats {
 
 	@Override
 	public String getLogin() {
-		return this.user.getUsername();
+		return this.user.getLogin();
 	}
 
 	@Override
 	public String getMail() {
-		return this.user.getEmail();
+		return this.user.getMail();
 	}
 
 	@Override
@@ -117,8 +116,8 @@ public class UsersStatsImpl implements UserStats {
 	 * @return string
 	 */
 	private String getUserDirPath() {
-		// TODO : check path exists
-		return this.root.getAbsolutePath() + File.separator + this.user.getUsername();
+		// TODO : check if the path exists
+		return this.root.getAbsolutePath() + File.separator + this.user.getLogin();
 	}
 
 }

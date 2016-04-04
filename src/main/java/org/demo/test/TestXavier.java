@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 
-import org.telosys.tools.entities.User;
-import org.telosys.tools.helper.UsersCsvParser;
-import org.telosys.tools.stats.impl.ModelStatsImpl;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
 
 public class TestXavier {

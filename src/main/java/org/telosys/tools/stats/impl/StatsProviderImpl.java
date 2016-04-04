@@ -1,10 +1,8 @@
 package org.telosys.tools.stats.impl;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 
-import org.telosys.tools.entities.User;
 import org.telosys.tools.stats.BundleStats;
 import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.stats.ModelStats;

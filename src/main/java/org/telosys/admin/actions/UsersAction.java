@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import org.nanoj.web.tinymvc.GenericAction;
+import org.telosys.tools.stats.Configuration;
 import org.telosys.web.services.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +18,7 @@ public class UsersAction extends GenericAction {
 
     @Override
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-    	String s = File.separator;
-		String usersFilePath = "C:"+s+"Users"+s+"Xavier"+s+"git"+s+"telosys-saas"+s+"fs"+s+"users.csv"+s;
+		String usersFilePath = Configuration.getTelosysSaasLocation() + "/fs/user.csv";
     	UsersService usersService = new UsersService(usersFilePath);
     	try {
 			httpServletRequest.setAttribute("users", usersService.getUsers());
