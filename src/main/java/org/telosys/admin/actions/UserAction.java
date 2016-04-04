@@ -28,6 +28,7 @@ public class UserAction extends GenericAction {
 			    User myUser = users.getUserByLogin(userName);
 			    UserStats myUserstat = new UsersStatsImpl(myUser, new File(Configuration.getTelosysSaasLocation()+"/fs"));
 			    httpServletRequest.setAttribute("user", myUser);
+			    httpServletRequest.setAttribute("user_stat", myUserstat);
 		    }
 	    } catch(IOException e)
 	    {

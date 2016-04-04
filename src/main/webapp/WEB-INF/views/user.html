@@ -38,23 +38,23 @@
         </tr>
         <tr>
             <td>Generations count</td>
-            <td>0</td>
+            <td th:text="${user_stat.generationsCount}"></td>
         </tr>
         <tr>
             <td>Disk space used</td>
-            <td>0 MB</td>
+            <td th:text="${user_stat.diskUsage}"></td>
         </tr>
         <tr>
             <td>Projects count</td>
-            <td>0</td>
+            <td th:text="${user_stat.projectsCount}"></td>
         </tr>
         <tr>
             <td>Models count</td>
-            <td>0</td>
+            <td th:text="${user_stat.modelsCount}"></td>
         </tr>
         <tr>
             <td>Bundles count</td>
-            <td>0</td>
+            <td th:text="${user_stat.bundlesCount}"></td>
         </tr>
     </table>
 
