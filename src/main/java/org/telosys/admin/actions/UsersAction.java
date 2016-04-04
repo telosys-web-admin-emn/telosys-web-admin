@@ -51,6 +51,7 @@ public class UsersAction extends GenericAction {
 						break;
 					case "mail":
 						compared =  u1.getMail().compareTo(u2.getMail());
+						break;
 					case "diskUsage":
 						compared = Double.compare(u1.getDiskUsage(), u2.getDiskUsage());
 						break;
