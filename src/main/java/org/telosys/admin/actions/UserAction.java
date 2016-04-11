@@ -26,8 +26,6 @@ public class UserAction extends GenericAction {
 	public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 		try
 		{
-
-
 			String userName = httpServletRequest.getParameter("username");
 			if (userName != null) {
 				// Step 1 : retrieve user project stats

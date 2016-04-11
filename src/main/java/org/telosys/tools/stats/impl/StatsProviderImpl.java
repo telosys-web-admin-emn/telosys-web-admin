@@ -1,15 +1,15 @@
 package org.telosys.tools.stats.impl;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
-import org.telosys.tools.stats.BundleStats;
-import org.telosys.tools.stats.FilesystemStatsOverview;
-import org.telosys.tools.stats.ModelStats;
-import org.telosys.tools.stats.ProjectStats;
-import org.telosys.tools.stats.StatsProvider;
-import org.telosys.tools.stats.UserStats;
+import org.telosys.tools.stats.*;
 import org.telosys.tools.stats.exception.ProjectNotFoundException;
+import org.telosys.tools.users.User;
+import org.telosys.tools.users.UsersFileName;
+import org.telosys.tools.users.UsersManager;
 
 public class StatsProviderImpl implements StatsProvider {
 
@@ -32,8 +32,16 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public UserStats getUserStats(String userId) {
-		// TODO
-		return null;
+		try {
+			UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation() + "/fs/users.csv");
+			UsersManager users = UsersManager.getInstance();
+			User myUser = users.getUserByLogin(userId);
+			return new UsersStatsImpl(myUser, new File(Configuration.getTelosysSaasLocation() + "/fs/" + userId));
+		} catch(ParseException e) {
+			return null;
+		} catch(IOException e) {
+			return null;
+		}
 	}
 
 	@Override
