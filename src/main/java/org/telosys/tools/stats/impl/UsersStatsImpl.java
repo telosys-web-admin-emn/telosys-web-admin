@@ -23,7 +23,10 @@ public class UsersStatsImpl implements UserStats {
 	{
 		this.user = user;
 		this.root = root;
-		this.userDir = new File(this.getUserDirPath());
+		String userDir = this.getUserDirPath();
+		if(userDir == null)
+			throw new IOException("The user doesn't have a directeory.");
+		this.userDir = new File(userDir);
 	}
 
 	@Override
@@ -132,6 +135,8 @@ public class UsersStatsImpl implements UserStats {
 	 * @return string
 	 */
 	private String getUserDirPath() {
+		if(this.user == null)
+			return null;
 		return this.root.getAbsolutePath() + File.separator + this.user.getLogin();
 	}
 

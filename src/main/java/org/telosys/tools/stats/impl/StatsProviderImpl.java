@@ -1,23 +1,17 @@
 package org.telosys.tools.stats.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.sun.xml.internal.bind.v2.TODO;
-import org.telosys.tools.commons.FileUtil;
 import org.telosys.tools.stats.*;
 import org.telosys.tools.stats.exception.ProjectNotFoundException;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileName;
 import org.telosys.tools.users.UsersManager;
 
-import static java.util.Arrays.stream;
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class StatsProviderImpl implements StatsProvider {
 
@@ -44,7 +38,8 @@ public class StatsProviderImpl implements StatsProvider {
 			UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation() + "/fs/users.csv");
 			UsersManager users = UsersManager.getInstance();
 			User myUser = users.getUserByLogin(userId);
-			return new UsersStatsImpl(myUser, new File(Configuration.getTelosysSaasLocation() + "/fs/"));
+			UserStats userStats = new UsersStatsImpl(myUser, new File(Configuration.getTelosysSaasLocation() + "/fs/"));
+			return userStats;
 		} catch(ParseException e) {
 			return null;
 		} catch(IOException e) {
