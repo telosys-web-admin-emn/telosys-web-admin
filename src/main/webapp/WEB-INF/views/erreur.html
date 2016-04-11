@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/WEB-CONTENT/materialize/css/materialize.css"/>
+    <link rel="stylesheet" href="/WEB-CONTENT/css/main.css"/>
+    <title>Erreur !</title>
+</head>
+<body>
+
+<div th:include="header :: hnav"></div>
+
+<div class="container">
+    <h3>ERREUR :</h3>
+    <p th:text="${erreur}"></p>
+</div>
+
+<div th:include="footer :: foot"></div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script type="text/javascript" src="/WEB-CONTENT/materialize/js/materialize.js"></script>
+</body>
+</html>

@@ -1,7 +1,8 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link rel="stylesheet" href="/WEB-CONTENT/materialize/css/materialize.css"/>
     <link rel="stylesheet" href="/WEB-CONTENT/css/main.css"/>
     <title>Users</title>
@@ -40,7 +41,7 @@
             </tr>
         </table>
         <ul class="pagination">
-        	<li th:class="${currentPage} == 1 ? disabled : waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li> 
+        	<li th:class="${currentPage} == 1 ? disabled : waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
 		    <li th:class="${i} == ${currentPage} ? active : waves-effect" th:each="i : ${#numbers.sequence(1, maxPage)}"><a th:href="@{''(page=${i})}" th:text="${i}"></a></li>
 		    <li th:class="${maxPage} == ${currentPage} ? disabled : waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
 		</ul>
