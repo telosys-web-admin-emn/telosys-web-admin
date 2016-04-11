@@ -3,14 +3,21 @@ package org.telosys.tools.stats.impl;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.sun.xml.internal.bind.v2.TODO;
+import org.telosys.tools.commons.FileUtil;
 import org.telosys.tools.stats.*;
 import org.telosys.tools.stats.exception.ProjectNotFoundException;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileName;
 import org.telosys.tools.users.UsersManager;
+
+import static java.util.Arrays.stream;
 
 public class StatsProviderImpl implements StatsProvider {
 
@@ -62,8 +69,7 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public BundleStats getBundleStats(String userId, String projectName, String bundleName) {
-		// TODO Auto-generated method stub
-		return null;
+		return new BundleStatsImpl(root, userId, bundleName, projectName);
 	}
 
 
@@ -93,14 +99,22 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public List<ModelStats> getModelsStats(String userId) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public List<BundleStats> getBundlesStats(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<BundleStats> bundles = new ArrayList<>();
+		File userDir = new File(userDirPath(userId));
+		File[] projectDirs = userDir.listFiles();
+		for (File projectDir : projectDirs) {
+			File telosysDir = new File(projectDir.getPath() + File.separator + "TelosysTools" + File.separator + "templates");
+			for (File file : telosysDir.listFiles()) {
+				bundles.add(this.getBundleStats(userId, projectDir.getName(), file.getName()));
+			}
+		}
+		return bundles;
 	}
 
 

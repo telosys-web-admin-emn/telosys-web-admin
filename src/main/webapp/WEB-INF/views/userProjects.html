@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="materialize/css/materialize.css"/>
@@ -8,6 +8,8 @@
     <title>User's project</title>
 </head>
 <body>
+
+<div th:include="header :: hnav"></div>
 
 <table class="bordered striped responsive-table">
     <thead>
@@ -49,6 +51,7 @@
     </tbody>
 </table>
 
+<div th:include="footer :: foot"></div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script type="text/javascript" src="materialize/js/materialize.js"></script>
