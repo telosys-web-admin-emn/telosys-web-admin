@@ -25,7 +25,7 @@
                 <th><a th:href="@{/do/users(filter=generationsCount, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'generationsCount') ? 'DESC' : 'ASC' ))}">Generations count</a></th>
             </tr>
             </thead>
-            <tr th:each="user : ${#lists.sort(users, comparator)}">
+            <tr th:each="user : ${users}">
                 <td><a th:text="${user.login}" th:href="@{/do/user(username=${user.login})}"></a></td>
                 <td th:text="${user.creationDate}">Yesterday</td>
                 <td>osef</td>
@@ -37,6 +37,11 @@
                 <td th:text="${user.generationsCount}"></td>
             </tr>
         </table>
+        <ul class="pagination">
+        	<li th:class="${currentPage} == 1 ? disabled : waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li> 
+		    <li th:class="${i} == ${currentPage} ? active : waves-effect" th:each="i : ${#numbers.sequence(1, maxPage)}"><a th:href="@{''(page=${i})}" th:text="${i}"></a></li>
+		    <li th:class="${maxPage} == ${currentPage} ? disabled : waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+		</ul>
 </div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>

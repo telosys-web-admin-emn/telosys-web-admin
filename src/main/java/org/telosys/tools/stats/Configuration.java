@@ -5,6 +5,7 @@ package org.telosys.tools.stats;
  */
 public class Configuration
 {
+	private final static int usersPerPage = 20;
 	private final static String telosysSaasLocation = "../telosys-saas/";
 
 	private final static String TELOSYS_DIR = "TelosysTools";
@@ -12,7 +13,12 @@ public class Configuration
 	private final static String MODEL_EXTENSION = ".model";
 	
 	private final static String TEMPLATE_DIR = "templates";
-
+	
+	public static int getUsersPerPage()
+	{
+		return usersPerPage;
+	}
+	
 	public static String getModelExtension() {
 		return MODEL_EXTENSION;
 	}
