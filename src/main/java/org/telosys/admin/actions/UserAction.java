@@ -27,6 +27,10 @@ public class UserAction extends GenericAction {
 				UsersManager users = UsersManager.getInstance();
 				User myUser = users.getUserByLogin(userName);
 				UserStats usersStats = provider.getUserStats(userName);
+				if(myUser == null || usersStats == null) {
+					httpServletRequest.setAttribute("erreur", "Impossible de trouver l'utilisateur.");
+					return "erreur";
+				}
 				httpServletRequest.setAttribute("user", myUser);
 				httpServletRequest.setAttribute("userStats", usersStats);
 
@@ -40,7 +44,8 @@ public class UserAction extends GenericAction {
 			}
 		} catch(ProjectNotFoundException e)
 		{
-			e.printStackTrace();
+			httpServletRequest.setAttribute("erreur", e.getCause());
+			return "erreur";
 		}
 
 		return "user";

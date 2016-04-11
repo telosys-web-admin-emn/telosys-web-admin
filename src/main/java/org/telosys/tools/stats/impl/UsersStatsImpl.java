@@ -68,7 +68,7 @@ public class UsersStatsImpl implements UserStats {
 				.map(File::getName)
 				.collect(toList());
 		}
-		return new ArrayList<>();
+		return new ArrayList<String>();
 	}
 
 	@Override
