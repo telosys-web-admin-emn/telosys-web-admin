@@ -75,33 +75,13 @@
         <tbody>
 
 
-        <tr th:each="project : ${#projectStats}">
-            <p>coucou</p>
-        </tr>
-
-        <tr>
-            <td>Project1</td>
-            <td>2016-02-26</td>
-            <td>2016-02-26</td>
-            <td>12</td>
-            <td>2</td>
-            <td>12 mb</td>
-        </tr>
-        <tr>
-            <td>Project2</td>
-            <td>2016-02-26</td>
-            <td>2016-02-26</td>
-            <td>12</td>
-            <td>2</td>
-            <td>12 mb</td>
-        </tr>
-        <tr>
-            <td>Project3</td>
-            <td>2016-02-26</td>
-            <td>2016-02-26</td>
-            <td>12</td>
-            <td>2</td>
-            <td>12 mb</td>
+        <tr th:each="project : ${projectStats}">
+            <td th:text="${project.projectName}"></td>
+            <td th:text="${project.creationDate}"></td>
+            <td th:text="${project.lastGenerationDate}"></td>
+            <td th:text="${project.generationsCount}"></td>
+            <td th:text="${project.bundlesCount}"></td>
+            <td th:text="${project.diskUsage}"></td>
         </tr>
         </tbody>
     </table>
