@@ -3,6 +3,7 @@ package org.telosys.tools.stats.impl;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.telosys.tools.stats.*;
@@ -36,7 +37,7 @@ public class StatsProviderImpl implements StatsProvider {
 			UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation() + "/fs/users.csv");
 			UsersManager users = UsersManager.getInstance();
 			User myUser = users.getUserByLogin(userId);
-			return new UsersStatsImpl(myUser, new File(Configuration.getTelosysSaasLocation() + "/fs/" + userId));
+			return new UsersStatsImpl(myUser, new File(Configuration.getTelosysSaasLocation() + "/fs/"));
 		} catch(ParseException e) {
 			return null;
 		} catch(IOException e) {
@@ -68,8 +69,26 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public List<ProjectStats> getProjectsStats(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		try
+		{
+			UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation() + "/fs/users.csv");
+			UsersManager users = UsersManager.getInstance();
+			User myUser = users.getUserByLogin(userId);
+			String userRoot = Configuration.getTelosysSaasLocation() + "/fs/";
+			UserStats userStats = new UsersStatsImpl(myUser, new File(userRoot));
+			List<String> projects = userStats.getProjectsNames();
+			LinkedList<ProjectStats> projectsStats = new LinkedList<>();
+			for(String s: projects)
+			{
+				projectsStats.add(new ProjectStatsImpl(new File(userRoot+userId+"/"+s), s, userId));
+			}
+			return projectsStats;
+		} catch(IOException e) {
+			//TODO log exception.
+			return null;
+		} catch(ParseException e) {
+			return null;
+		}
 	}
 
 	@Override
