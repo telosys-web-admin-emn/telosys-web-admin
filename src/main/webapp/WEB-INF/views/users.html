@@ -14,15 +14,15 @@
         <table class="bordered striped responsive-table">
             <thead>
             <tr>
-                <th><a th:href="@{/users(filter=login, order=((${param.order[0]} == 'ASC' and ${param.filter[0]} == 'login') ? 'DESC' : 'ASC' ))}">Login (id)</a></th>
-                <th><a th:href="@{/users(filter=creationDate, order=((${param.order[0]} == 'ASC' and ${param.filter[0]} == 'creationDate') ? 'DESC' : 'ASC' ))}">CreationDate</a></th>
+                <th><a th:href="@{/do/users(filter=login, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'login') ? 'DESC' : 'ASC' ))}">Login (id)</a></th>
+                <th><a th:href="@{/do/users(filter=creationDate, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'creationDate') ? 'DESC' : 'ASC' ))}">CreationDate</a></th>
                 <th>Last login date</th>
                 <th>Connected</th>
-                <th><a th:href="@{/users(filter=mail, order=((${param.order[0]} == 'ASC' and ${param.filter[0]} == 'mail') ? 'DESC' : 'ASC' ))}">Mail</a></th>
-                <th><a th:href="@{/users(filter=diskUsage, order=((${param.order[0]} == 'ASC' and ${param.filter[0]} == 'diskUsage') ? 'DESC' : 'ASC' ))}">Disk space</a></th>
-                <th><a th:href="@{/users(filter=projectsCount, order=((${param.order[0]} == 'ASC' and ${param.filter[0]} == 'projectsCount') ? 'DESC' : 'ASC' ))}">Projects count</a></th>
-                <th><a th:href="@{/users(filter=modelsCount, order=((${param.order[0]} == 'ASC' and ${param.filter[0]} == 'modelsCount') ? 'DESC' : 'ASC' ))}">Models count</a></th>
-                <th><a th:href="@{/users(filter=generationsCount, order=((${param.order[0]} == 'ASC' and ${param.filter[0]} == 'generationsCount') ? 'DESC' : 'ASC' ))}">Generations count</a></th>
+                <th><a th:href="@{/do/users(filter=mail, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'mail') ? 'DESC' : 'ASC' ))}">Mail</a></th>
+                <th><a th:href="@{/do/users(filter=diskUsage, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'diskUsage') ? 'DESC' : 'ASC' ))}">Disk space</a></th>
+                <th><a th:href="@{/do/users(filter=projectsCount, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'projectsCount') ? 'DESC' : 'ASC' ))}">Projects count</a></th>
+                <th><a th:href="@{/do/users(filter=modelsCount, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'modelsCount') ? 'DESC' : 'ASC' ))}">Models count</a></th>
+                <th><a th:href="@{/do/users(filter=generationsCount, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'generationsCount') ? 'DESC' : 'ASC' ))}">Generations count</a></th>
             </tr>
             </thead>
             <tr th:each="user : ${#lists.sort(users, comparator)}">
