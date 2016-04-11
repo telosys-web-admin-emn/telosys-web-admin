@@ -9,7 +9,10 @@ import org.telosys.tools.users.UsersFileDAO;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	private final List<User> users;
@@ -17,9 +20,18 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 
 
 	public FilesystemStatsOverviewImpl(File root) {
-		this.root = root;
-		UsersFileDAO dao = new UsersFileDAO(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
-		this.users = (List<User>) dao.loadAllUsers().values();
+        this.root = root;
+        UsersFileDAO dao = null;
+        try {
+            dao = new UsersFileDAO(root.getCanonicalPath()+"/users.csv");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.users = dao.loadAllUsers().entrySet().stream()
+                .sorted(Comparator.comparing(Map.Entry::getValue))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
 	}
 
 	@Override
@@ -49,14 +61,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 
 	@Override
 	public long getDiskUsage() {
-		try
-		{
-			return FileUtils.sizeOfDirectory(new File(root.getCanonicalFile() + "/fs"));
-		}
-		catch(IOException e)
-		{
-			return -1;
-		}
+			return FileUtils.sizeOfDirectory(root);
 	}
 
 }

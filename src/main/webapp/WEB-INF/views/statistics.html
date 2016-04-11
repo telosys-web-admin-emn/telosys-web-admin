@@ -30,12 +30,15 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">Statistics</span>
-                    <p><strong>Users :</strong> {$usersCount}</p>
-                    <p><strong>Projects : </strong> {$projectsCount}</p>
-                    <p><strong>Models : </strong> {$modelsCount}</p>
-                    <p><strong>Disk space used : </strong> {$usersCount}</p>
-                    <p><strong>Average number of projects/users : </strong> {$avgProjects}</p>
-                    <p><strong>Average number of models/users : </strong> {$avgModels}</p>
+
+                    <p><strong>Users : </strong><span th:text="${usersCount}"></span> </p>
+                    <p><strong>Projects : </strong><span th:text="${projectsCount}"></span> </p>
+                    <p><strong>Models : </strong><span th:text="${modelsCount}"></span> </p>
+                    <p><strong>Disk usage : </strong><span th:text="${diskUsage}"></span> </p>
+                    <p><strong>Average number of projects/users : </strong> <span th:text="${averageProjects}"></span></p>
+                    <p><strong>Average number of models/users : </strong> <span th:text="${averageModels}"></span></p>
+                    <p><strong>Average disk usage/users : </strong> <span th:text="${averageDiskUsage}"></span></p>
+
                 </div>
             </div>
         </div>
