@@ -6,6 +6,7 @@ import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileDAO;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -13,12 +14,13 @@ import java.util.List;
 
 public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	private final List<User> users;
-	private File root;
+
+	private Configuration configuration;
 
 
-	public FilesystemStatsOverviewImpl(File root) {
-		this.root = root;
-		UsersFileDAO dao = new UsersFileDAO(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
+	public FilesystemStatsOverviewImpl(Configuration configuration) {
+		this.configuration = configuration;
+		UsersFileDAO dao = new UsersFileDAO(configuration.getCsvFile());
 		this.users = (List<User>) dao.loadAllUsers().values();
 	}
 
@@ -31,7 +33,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	public int getProjectsCount() throws IOException, ParseException {
 		int somme = 0;
 		for (User user : this.users) {
-			UsersStatsImpl stats = new UsersStatsImpl(user, root);
+			UsersStatsImpl stats = new UsersStatsImpl(user, configuration);
 			somme += stats.getProjectsCount();
 		}
 		return somme;
@@ -41,7 +43,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	public int getModelsCount() throws ParseException, IOException {
 		int somme = 0;
 		for (User user : this.users) {
-			UsersStatsImpl stats = new UsersStatsImpl(user, root);
+			UsersStatsImpl stats = new UsersStatsImpl(user, configuration);
 			somme += stats.getModelsCount();
 		}
 		return somme;
@@ -49,14 +51,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 
 	@Override
 	public long getDiskUsage() {
-		try
-		{
-			return FileUtils.sizeOfDirectory(new File(root.getCanonicalFile() + "/fs"));
-		}
-		catch(IOException e)
-		{
-			return -1;
-		}
+		return FileUtils.sizeOfDirectory(configuration.getRoot());
 	}
 
 }

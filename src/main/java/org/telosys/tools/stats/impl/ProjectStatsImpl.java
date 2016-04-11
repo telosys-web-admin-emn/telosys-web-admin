@@ -21,18 +21,16 @@ import static java.util.stream.Collectors.toList;
 // TODO handle exceptions
 public class ProjectStatsImpl implements ProjectStats {
 
-	private final static String MODEL_EXT = ".model";
-
+	private Configuration configuration;
+	private String name;
+	private String user;
 	private File dir;
 
-	private String name;
-
-	private String user;
-
-	public ProjectStatsImpl(File dir, String name, String user) {
-		this.dir = dir;
+	public ProjectStatsImpl(Configuration configuration, String name, String user) {
 		this.name = name;
 		this.user = user;
+		this.configuration = configuration;
+		this.dir = configuration.getProjectDir(user, name);
 	}
 
 	@Override
@@ -42,13 +40,13 @@ public class ProjectStatsImpl implements ProjectStats {
 
 	@Override
 	public int getBundlesCount() {
-		File templatesDir = new File(this.getTemplatesDirPath());
+		File templatesDir = configuration.getBundlesDir(user, name);
 		return templatesDir.listFiles(File::isDirectory).length;
 	}
 
 	@Override
 	public List<String> getBundlesNames() {
-		File templatesDir = new File(this.getTemplatesDirPath());
+		File templatesDir = configuration.getBundlesDir(user, name);
 		return Arrays.stream(templatesDir.listFiles(File::isDirectory))
 				.map(File::getName)
 				.collect(toList());
@@ -56,21 +54,21 @@ public class ProjectStatsImpl implements ProjectStats {
 
 	@Override
 	public int getModelsCount() {
-		File telosysDir = new File(this.getTelosysDirPath());
-		return telosysDir.listFiles(f -> f.getName().endsWith(MODEL_EXT)).length;
+		File telosysDir = configuration.getTelosysDir(user, name);
+		return telosysDir.listFiles(f -> f.getName().endsWith(Configuration.MODEL_EXTENSION)).length;
 	}
 
 	@Override
 	public List<String> getModelsNames() {
-		File telosysDir = new File(this.getTelosysDirPath());
-		return Arrays.stream(telosysDir.listFiles(f -> f.getName().endsWith(MODEL_EXT)))
-				.map(f -> f.getName().replace(MODEL_EXT, ""))
+		File telosysDir = configuration.getTelosysDir(user, name);
+		return Arrays.stream(telosysDir.listFiles(f -> f.getName().endsWith(Configuration.MODEL_EXTENSION)))
+				.map(f -> f.getName().replace(Configuration.MODEL_EXTENSION, ""))
 				.collect(toList());
 	}
 
 	@Override
 	public long getDiskUsage() {
-		return FileUtils.sizeOfDirectory(this.dir);
+		return FileUtils.sizeOfDirectory(dir);
 	}
 
 	@Override
@@ -91,12 +89,5 @@ public class ProjectStatsImpl implements ProjectStats {
 		return 0;
 	}
 
-	private String getTelosysDirPath() {
-		return this.dir.getAbsolutePath() + File.separator + Configuration.getTelosysDir();
-	}
-
-	private String getTemplatesDirPath() {
-		return this.getTelosysDirPath() + File.separator + "templates";
-	}
 
 }
