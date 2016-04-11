@@ -4,20 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections.MapUtils;
 import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileDAO;
-import org.telosys.tools.users.UsersFileName;
-import org.telosys.tools.users.UsersManager;
 
 public class UsersService {
 	private File usersCsvFile;

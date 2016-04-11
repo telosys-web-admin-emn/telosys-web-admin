@@ -24,6 +24,7 @@ public class UsersAction extends GenericAction {
 			httpServletRequest.setAttribute("users", users);
 			httpServletRequest.setAttribute("currentPage", page);
 			httpServletRequest.setAttribute("maxPage", this.getMaxPage(allUsers.size()));
+			httpServletRequest.setAttribute("currentUri", httpServletRequest.getRequestURL()+"?"+httpServletRequest.getQueryString());
     	} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
