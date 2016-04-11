@@ -1,17 +1,16 @@
 package org.telosys.admin.actions;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Comparator;
 
-import org.nanoj.web.tinymvc.GenericAction;
-import org.telosys.tools.stats.impl.UsersStatsImpl;
-import org.telosys.tools.stats.Configuration;
-import org.telosys.web.services.UsersService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.nanoj.web.tinymvc.GenericAction;
+import org.telosys.tools.stats.Configuration;
+import org.telosys.tools.stats.impl.UsersStatsImpl;
+import org.telosys.web.services.UsersService;
 
 public class UsersAction extends GenericAction {
 
