@@ -16,11 +16,12 @@ import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileDAO;
 
 public class UsersService {
+
 	private Configuration configuration;
 	
-	public UsersService(Configuration configuration)
+	public UsersService()
 	{
-		this.configuration = configuration;
+		this.configuration = Configuration.getInstance();
 	}
 				
 	public List<UsersStatsImpl> getUsers() throws IOException, ParseException

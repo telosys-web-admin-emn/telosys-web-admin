@@ -33,7 +33,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	public int getProjectsCount() throws IOException, ParseException {
 		int somme = 0;
 		for (User user : this.users) {
-			UsersStatsImpl stats = new UsersStatsImpl(user, configuration);
+			UsersStatsImpl stats = new UsersStatsImpl(configuration, user);
 			somme += stats.getProjectsCount();
 		}
 		return somme;
@@ -43,7 +43,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	public int getModelsCount() throws ParseException, IOException {
 		int somme = 0;
 		for (User user : this.users) {
-			UsersStatsImpl stats = new UsersStatsImpl(user, configuration);
+			UsersStatsImpl stats = new UsersStatsImpl(configuration, user);
 			somme += stats.getModelsCount();
 		}
 		return somme;

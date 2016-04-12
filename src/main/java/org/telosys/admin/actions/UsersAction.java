@@ -15,6 +15,14 @@ import org.telosys.web.services.UsersService;
 
 public class UsersAction extends GenericAction {
 
+
+	private Configuration configuration;
+
+	public UsersAction() {
+		super();
+		this.configuration = Configuration.getInstance();
+	}
+
     @Override
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
     	try {
@@ -46,7 +54,7 @@ public class UsersAction extends GenericAction {
     	// sort the list with comparator
     	allUsers.sort(comparator);
     	// finally, paginate the users
-    	return usersService.getPaginatedUsers(page, Configuration.getUsersPerPage(), allUsers);
+    	return usersService.getPaginatedUsers(page, Configuration.USERS_PER_PAGE, allUsers);
     }
     
     /**
@@ -71,7 +79,7 @@ public class UsersAction extends GenericAction {
      */
     protected int getMaxPage(int usersLength)
     {
-    	int maxUsersPerPage = Configuration.getUsersPerPage();
+    	int maxUsersPerPage = Configuration.USERS_PER_PAGE;
     	if(maxUsersPerPage != 0) {
     		return usersLength / maxUsersPerPage;
     	}
@@ -84,8 +92,7 @@ public class UsersAction extends GenericAction {
      */
     protected UsersService getUsersService()
     {
-    	String usersFilePath = Configuration.getTelosysSaasLocation() + "/fs/user.csv";
-    	UsersService usersService = new UsersService(usersFilePath);
+    	UsersService usersService = new UsersService();
     	return usersService;
     }
 

@@ -1,9 +1,6 @@
 package org.telosys.tools.stats;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collections;
 
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
@@ -14,15 +11,13 @@ import static java.util.stream.Collectors.joining;
 public class Configuration
 {
 
-	private String rootPath;
-	private File root;
+	/*****************************
+	 * CONF CONSTANTS
+	 ****************************/
 
-	public Configuration(File root) {
-		this.root = root;
-		this.rootPath = root.getPath();
-	}
+	public final static String TELOSYS_SAAS_LOCATION = "../telosys-saas/";
 
-	public final static String telosysSaasLocation = "../telosys-saas/";
+	public final static int USERS_PER_PAGE = 20;
 
 	public final static String TELOSYS_DIR = "TelosysTools";
 
@@ -30,10 +25,39 @@ public class Configuration
 
 	public final static String TEMPLATE_DIR = "templates";
 
+	/*****************************
+	 * PRIVATE MEMBERS
+	 ****************************/
 
-	public static String getTemplateDir() {
-		return TEMPLATE_DIR;
+	private String rootPath;
+	private File root;
+
+	/*****************************
+	 * SINGLETON GETTER
+	 ****************************/
+
+	public static Configuration getInstance() {
+		return instance;
 	}
+
+	/*****************************
+	 * BUILDERS
+	 ****************************/
+
+	private static Configuration instance;
+
+	static {
+		instance = new Configuration(TELOSYS_SAAS_LOCATION);
+	}
+
+	public Configuration(String rootPath) {
+		this.rootPath = rootPath;
+		this.root = new File(rootPath);
+	}
+
+	/*****************************
+	 * PATH GETTERS
+	 ****************************/
 
 	public File getUserDir(String user) {
 		return resolve(rootPath, user);
@@ -62,7 +86,6 @@ public class Configuration
 	public File getRoot() {
 		return root;
 	}
-
 
 	private File resolve(String... files) {
 		return new File(stream(files).collect(joining(File.separator)));
