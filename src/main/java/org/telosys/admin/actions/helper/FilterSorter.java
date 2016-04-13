@@ -45,6 +45,9 @@ public class FilterSorter extends UrlHelper{
 		String newOrder = ASCENDING_ORDER;
 		String orderParameter = request.getParameter(ORDER_PARAMETER);
 		String filterParameter = request.getParameter(FILTER_PARAMETER);
+		// Behavior :
+		//		* if we filter on the same filter, then we only change the direction ordering
+		//		* else if we filter on a new filter, the ordering direction is ASC by default
 		if(orderParameter != null && orderParameter.equals(ASCENDING_ORDER) && filterParameter != null && filterParameter.equals(filterName) )
 		{
 			newOrder = DESCENDING_ORDER;
@@ -63,7 +66,6 @@ public class FilterSorter extends UrlHelper{
 	{
 		// add the filter to the url
 		String urlWithFilter = this.getUrlWithFilter(fullUrl, request, filterName);
-		System.out.println("*********************** " + urlWithFilter + "***********************");
 
 		// add the sorter to the url
 		return this.getUrlWithSorter(urlWithFilter, request, filterName);
