@@ -71,7 +71,7 @@ public class Paginator {
 	 * Get the url containing a specific page
 	 * @param request
 	 * @param page
-	 * @return
+	 * @return String url with the specific page
 	 */
 	public static String getPage(HttpServletRequest request, int page)
 	{
@@ -108,19 +108,28 @@ public class Paginator {
 	 */
 	protected static String computePage(HttpServletRequest request, int newPage)
 	{
+		// the parameters of the current url in string format
 		String urlParameters = request.getQueryString();
 		boolean requestUrlHasParameters = urlParameters != null;
+		// the future returned URL
 		String paginatedUrl = "";
+		// the current URl with all parameters
 		String fullUrl = getFullUrl(request);
+		// the pattern of the page parameter in the url
+		String pagePattern = "page=";
 		if(requestUrlHasParameters) {
-			if(urlParameters.indexOf("page=") == -1) {
-				paginatedUrl = fullUrl + "&page=" + newPage;
+			// if we don't have a page parameter yet
+			if(urlParameters.indexOf(pagePattern) == -1) {
+				// we add it to the list of parameters
+				paginatedUrl = fullUrl + "&" + pagePattern + newPage;
 			} else {
-				String pagePattern = "page="+request.getAttribute(CURRENT_PAGE_ATTRIBUTE);
-				paginatedUrl = fullUrl.replace(pagePattern, "page="+newPage);
+				String pagePatternWithPageNumber = pagePattern + request.getAttribute(CURRENT_PAGE_ATTRIBUTE);
+				// else we replace it
+				paginatedUrl = fullUrl.replace(pagePatternWithPageNumber, pagePattern + newPage);
 			}
 		} else {
-			paginatedUrl = fullUrl + "?page=" + newPage;
+			// if we have no parameters, we add the page parameter as the first parameter of the URL
+			paginatedUrl = fullUrl + "?" + pagePattern + newPage;
 		}
 		return paginatedUrl;
 	}
