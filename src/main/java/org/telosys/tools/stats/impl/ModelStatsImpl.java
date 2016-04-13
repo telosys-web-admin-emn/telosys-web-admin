@@ -13,13 +13,13 @@ import org.telosys.tools.stats.ModelStats;
 
 public class ModelStatsImpl implements ModelStats {
 
-	private File root;
+	private Configuration configuration;
 	private String userId;
 	private String modelName;
 	private String projectName;
 
-	public ModelStatsImpl(File root, String userId, String modelName, String projectName) {
-		this.root = root;
+	public ModelStatsImpl(Configuration configuration, String userId, String projectName,String modelName) {
+		this.configuration = configuration;
 		this.userId = userId;
 		this.modelName = modelName;
 		this.projectName = projectName;
@@ -37,11 +37,9 @@ public class ModelStatsImpl implements ModelStats {
 
 	@Override
 	public Date getLastModifiedDate() throws IOException {
-		String s = File.separator;
-		Path file = Paths.get(this.root.getAbsolutePath()+s+this.userId+s+this.projectName+s+Configuration.getTelosysDir(), this.modelName+Configuration.getModelExtension());
-		BasicFileAttributes attr;
-		// File info 
-		attr = Files.readAttributes(file, BasicFileAttributes.class);
+		Path file = configuration.getModelFile(userId, projectName, modelName).toPath();
+		// File info
+		BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class);
 
 		// lastModifiedTime : OK / Windows and Linux
 		return new Date(attr.lastModifiedTime().toMillis());

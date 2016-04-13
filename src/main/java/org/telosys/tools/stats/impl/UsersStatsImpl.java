@@ -11,22 +11,20 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.UserStats;
 import org.telosys.tools.users.User;
 
 public class UsersStatsImpl implements UserStats {
 	private User user;
-	private File root;
 	private File userDir;
+	private Configuration configuration;
 
-	public UsersStatsImpl(User user, File root) throws IOException, ParseException
+	public UsersStatsImpl(Configuration configuration, User user) throws IOException, ParseException
 	{
 		this.user = user;
-		this.root = root;
-		String userDir = this.getUserDirPath();
-		if(userDir == null)
-			throw new IOException("The user doesn't have a directeory.");
-		this.userDir = new File(userDir);
+		this.configuration = configuration;
+		this.userDir = configuration.getUserDir(user.getLogin());
 	}
 
 	@Override
@@ -130,14 +128,4 @@ public class UsersStatsImpl implements UserStats {
 		return 0;
 	}
 	
-	/**
-	 * Get the path of the user
-	 * @return string
-	 */
-	private String getUserDirPath() {
-		if(this.user == null)
-			return null;
-		return this.root.getAbsolutePath() + File.separator + this.user.getLogin();
-	}
-
 }

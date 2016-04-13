@@ -16,20 +16,20 @@ import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileDAO;
 
 public class UsersService {
-	private File usersCsvFile;
+
+	private Configuration configuration;
 	
-	public UsersService(String usersCsvFilePath)
+	public UsersService()
 	{
-		this.usersCsvFile = new File(usersCsvFilePath);
+		this.configuration = Configuration.getInstance();
 	}
 				
 	public List<UsersStatsImpl> getUsers() throws IOException, ParseException
 	{
 		List<UsersStatsImpl> users = new ArrayList<UsersStatsImpl>();
-    	File root = new File(Configuration.getTelosysSaasLocation()+"/fs");
-		UsersFileDAO dao = new UsersFileDAO(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
+		UsersFileDAO dao = new UsersFileDAO(configuration.getCsvFile());
 		for(Map.Entry<String, User> entry : dao.loadAllUsers().entrySet()) {
-			users.add(new UsersStatsImpl(entry.getValue(), root));
+			users.add(new UsersStatsImpl(configuration, entry.getValue()));
 		}
 		
 		return users;

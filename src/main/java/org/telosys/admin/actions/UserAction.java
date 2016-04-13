@@ -16,6 +16,13 @@ public class UserAction extends GenericAction {
 
 	StatsProvider provider = StatsProviderFactory.getStatsProvider();
 
+	private Configuration configuration;
+
+	public UserAction() {
+		super();
+		this.configuration = Configuration.getInstance();
+	}
+
 	@Override
 	public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 		try
@@ -23,7 +30,7 @@ public class UserAction extends GenericAction {
 			String userName = httpServletRequest.getParameter("username");
 			if (userName != null) {
 				// User's stats.
-				UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
+				UsersFileName.setSpecificFileName(configuration.getCsvFile().getPath());
 				UsersManager users = UsersManager.getInstance();
 				User myUser = users.getUserByLogin(userName);
 				UserStats usersStats = provider.getUserStats(userName);
