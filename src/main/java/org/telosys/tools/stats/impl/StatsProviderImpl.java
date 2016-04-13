@@ -30,7 +30,7 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public FilesystemStatsOverview getFilesystemStatsOverview() {
-		return new FilesystemStatsOverviewImpl(configuration);
+		return new FilesystemStatsOverviewImpl(getRoot());
 	}
 
 	@Override
