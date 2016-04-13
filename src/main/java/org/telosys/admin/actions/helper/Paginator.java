@@ -1,8 +1,5 @@
 package org.telosys.admin.actions.helper;
 
-import java.util.Collections;
-import java.util.Enumeration;
-
 import javax.servlet.http.HttpServletRequest;
 
 public class Paginator {
@@ -45,10 +42,10 @@ public class Paginator {
 	}
 	
 	/**
-	 * Allow to compute the url in order to include / replace the page parameter
+	 * Get the url containing the previous page
 	 * @param request
 	 * @param nextPage
-	 * @return String the computed url paginated
+	 * @return String the url with the previous page
 	 */
 	public static String getPreviousPage(HttpServletRequest request)
 	{	
@@ -56,19 +53,30 @@ public class Paginator {
 		return computePage(request, previousPage);
 	}
 	
+	/**
+	 * Get the url containing the next page
+	 * @param request
+	 * @return String the url with the next page
+	 */
 	public static String getNextPage(HttpServletRequest request)
 	{
 		int nextPage = (int) request.getAttribute(NEXT_PAGE_ATTRIBUTE);
 		return computePage(request, nextPage);
 	}
 	
+	/**
+	 * Get the url containing a specific page
+	 * @param request
+	 * @param page
+	 * @return
+	 */
 	public static String getPage(HttpServletRequest request, int page)
 	{
 		return computePage(request, page);
 	}
 	
 	/**
-	 * Compute the new page according to a direction (previous or next)
+	 * Do computation to replace or include a page in the URL
 	 * @param request
 	 * @param direction
 	 * @return String
@@ -93,7 +101,7 @@ public class Paginator {
 	}
 	
 	/**
-	 * Get the page number
+	 * Get the current page number
 	 * @param request
 	 * @return int the page number
 	 */
