@@ -1,5 +1,9 @@
 package org.telosys.admin.actions.helper;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+
 import javax.servlet.http.HttpServletRequest;
 
 public abstract class AbstractParameterReplacer {
@@ -14,8 +18,15 @@ public abstract class AbstractParameterReplacer {
 	 */
 	protected String replaceParam(String fullUrl, HttpServletRequest request, String paramName, String paramValue)
 	{
-		// the parameters of the current url in string format
-		String urlParameters = request.getQueryString();
+		
+		URL url;
+		String urlParameters = null;
+		try {
+			url = new URL(fullUrl);
+			urlParameters = url.getQuery();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 		boolean requestUrlHasParameters = urlParameters != null;
 		// the future returned URL
 		String modifiedUrl = "";

@@ -16,6 +16,7 @@ public class FilterSorter extends UrlHelper{
 	 */
 	public static HttpServletRequest buildSorting(HttpServletRequest request)
 	{
+		request.setAttribute(CURRENT_URL_ATTRIBUTE, getFullUrl(request));
 		request.setAttribute(FILTER_SORTER_ATTRIBUTE, new FilterSorter());
 		return request;
 	}
@@ -33,15 +34,18 @@ public class FilterSorter extends UrlHelper{
 
 	/**
 	 * Add or replace a sorter to a URL
+	 * @param fullUrl
 	 * @param request
+	 * @param filterName
 	 * @return String
 	 */
-	public String getUrlWithSorter(String fullUrl, HttpServletRequest request)
+	public String getUrlWithSorter(String fullUrl, HttpServletRequest request, String filterName)
 	{
 		// set the future order to ASC by default
 		String newOrder = ASCENDING_ORDER;
 		String orderParameter = request.getParameter(ORDER_PARAMETER);
-		if(orderParameter != null && orderParameter == ASCENDING_ORDER)
+		String filterParameter = request.getParameter(FILTER_PARAMETER);
+		if(orderParameter != null && orderParameter.equals(ASCENDING_ORDER) && filterParameter != null && filterParameter.equals(filterName) )
 		{
 			newOrder = DESCENDING_ORDER;
 		}
@@ -59,8 +63,9 @@ public class FilterSorter extends UrlHelper{
 	{
 		// add the filter to the url
 		String urlWithFilter = this.getUrlWithFilter(fullUrl, request, filterName);
+		System.out.println("*********************** " + urlWithFilter + "***********************");
 
 		// add the sorter to the url
-		return this.getUrlWithSorter(urlWithFilter, request);
+		return this.getUrlWithSorter(urlWithFilter, request, filterName);
 	}
 }
