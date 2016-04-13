@@ -19,14 +19,14 @@
             <thead>
             <tr>
                 <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, 'login')}">Login (id)</a></th>
-                <th><a th:href="@{/do/users(filter=creationDate, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'creationDate') ? 'DESC' : 'ASC' ))}">CreationDate</a></th>
+                <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, 'creationDate')}">CreationDate</a></th>
                 <th>Last login date</th>
                 <th>Connected</th>
-                <th><a th:href="@{/do/users(filter=mail, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'mail') ? 'DESC' : 'ASC' ))}">Mail</a></th>
-                <th><a th:href="@{/do/users(filter=diskUsage, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'diskUsage') ? 'DESC' : 'ASC' ))}">Disk space</a></th>
-                <th><a th:href="@{/do/users(filter=projectsCount, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'projectsCount') ? 'DESC' : 'ASC' ))}">Projects count</a></th>
-                <th><a th:href="@{/do/users(filter=modelsCount, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'modelsCount') ? 'DESC' : 'ASC' ))}">Models count</a></th>
-                <th><a th:href="@{/do/users(filter=generationsCount, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'generationsCount') ? 'DESC' : 'ASC' ))}">Generations count</a></th>
+                <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, 'mail')}">Mail</a></th>
+                <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, 'diskUsage')}">Disk space</a></th>
+                <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, 'projectsCount')}">Projects count</a></th>
+                <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, 'modelsCount')}">Models count</a></th>
+                <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, 'generationsCount')}">Generations count</a></th>
             </tr>
             </thead>
             <tr th:each="user : ${users}">

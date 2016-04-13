@@ -18,13 +18,12 @@ public abstract class AbstractParameterReplacer {
 	 */
 	protected String replaceParam(String fullUrl, HttpServletRequest request, String paramName, String paramValue)
 	{
-		
-		URL url;
 		String urlParameters = null;
 		try {
-			url = new URL(fullUrl);
+			URL url = new URL(fullUrl);
 			urlParameters = url.getQuery();
 		} catch (MalformedURLException e) {
+			// TODO : gérer l'exception
 			e.printStackTrace();
 		}
 		boolean requestUrlHasParameters = urlParameters != null;
