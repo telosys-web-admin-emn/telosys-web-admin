@@ -15,7 +15,7 @@ public class Configuration
 	 * CONF CONSTANTS
 	 ****************************/
 
-	public final static String TELOSYS_SAAS_LOCATION = "../telosys-saas/";
+	public final static String TELOSYS_SAAS_LOCATION = "../telosys-saas/fs/";
 
 	public final static int USERS_PER_PAGE = 20;
 

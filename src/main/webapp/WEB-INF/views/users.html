@@ -31,8 +31,8 @@
             </thead>
             <tr th:each="user : ${users}">
                 <td><a th:text="${user.login}" th:href="@{/do/user(username=${user.login})}"></a></td>
-                <td th:text="${user.creationDate}">Yesterday</td>
-                <td>osef</td>
+                <td th:text="${user.creationDate}"></td>
+                <td>Date</td>
                 <td>Yes</td>
                 <td th:text="${user.mail}"></td>
                 <td th:text="${user.diskUsage}"></td>
