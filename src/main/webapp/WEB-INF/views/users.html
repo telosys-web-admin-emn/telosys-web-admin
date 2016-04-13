@@ -1,14 +1,18 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link rel="stylesheet" href="/WEB-CONTENT/materialize/css/materialize.css"/>
     <link rel="stylesheet" href="/WEB-CONTENT/css/main.css"/>
     <title>Users</title>
 </head>
 <body>
 
+<div th:include="header :: hnav"></div>
+
 <div class="container">
+    <!-- comment -->
 
         <h1>Users list</h1>
         <table class="bordered striped responsive-table">
@@ -25,10 +29,10 @@
                 <th><a th:href="@{/do/users(filter=generationsCount, order=((${param.order} != null and ${param.order[0]} == 'ASC' and ${param.filter} != null and ${param.filter[0]} == 'generationsCount') ? 'DESC' : 'ASC' ))}">Generations count</a></th>
             </tr>
             </thead>
-            <tr th:each="user : ${#lists.sort(users, comparator)}">
+            <tr th:each="user : ${users}">
                 <td><a th:text="${user.login}" th:href="@{/do/user(username=${user.login})}"></a></td>
-                <td th:text="${user.creationDate}">Yesterday</td>
-                <td>osef</td>
+                <td th:text="${user.creationDate}"></td>
+                <td>Date</td>
                 <td>Yes</td>
                 <td th:text="${user.mail}"></td>
                 <td th:text="${user.diskUsage}"></td>
@@ -37,7 +41,14 @@
                 <td th:text="${user.generationsCount}"></td>
             </tr>
         </table>
+        <ul class="pagination">
+        	<li th:class="${currentPage} == 1 ? disabled : waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+		    <li th:class="${i} == ${currentPage} ? active : waves-effect" th:each="i : ${#numbers.sequence(1, maxPage)}"><a th:href="@{${currentUri}(page=${i})}" th:text="${i}"></a></li>
+		    <li th:class="${maxPage} == ${currentPage} ? disabled : waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+		</ul>
 </div>
+
+<div th:include="footer :: foot"></div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script type="text/javascript" src="/WEB-CONTENT/materialize/js/materialize.js"></script>

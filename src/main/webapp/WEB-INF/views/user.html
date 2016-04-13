@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="/WEB-CONTENT/materialize/css/materialize.css"/>
@@ -7,11 +7,12 @@
     <title>User info</title>
 </head>
 <body>
+<div th:include="header :: hnav"></div>
 
 <div class="container">
     <h1>User info</h1>
 
-    <table class="bordered user-info">
+    <table class="bordered striped responsive-table user-info">
         <tr>
             <td>Login</td>
             <td th:text="${user.login}"></td>
@@ -63,18 +64,16 @@
     <table class="bordered striped responsive-table">
         <thead>
         <tr>
-            <td>Project Name</td>
-            <td>Creation Date</td>
-            <td>Last generation date</td>
-            <td># Generations</td>
-            <td># Bundles</td>
-            <td>Disk Spaces</td>
+            <th>Project Name</th>
+            <th>Creation Date</th>
+            <th>Last generation date</th>
+            <th># Generations</th>
+            <th># Bundles</th>
+            <th>Disk Spaces</th>
         </tr>
         </thead>
 
         <tbody>
-
-
         <tr th:each="project : ${projectStats}">
             <td th:text="${project.projectName}"></td>
             <td th:text="${project.creationDate}"></td>
@@ -87,6 +86,8 @@
     </table>
 
 </div>
+
+<div th:include="footer :: foot"></div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script type="text/javascript" src="/WEB-CONTENT/materialize/js/materialize.js"></script>

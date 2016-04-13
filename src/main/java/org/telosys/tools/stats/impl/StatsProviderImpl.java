@@ -1,43 +1,45 @@
 package org.telosys.tools.stats.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.telosys.tools.stats.*;
 import org.telosys.tools.stats.exception.ProjectNotFoundException;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileName;
 import org.telosys.tools.users.UsersManager;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class StatsProviderImpl implements StatsProvider {
 
-	private final File root ;
 
-	public StatsProviderImpl(File root) {
+	private Configuration configuration;
+
+	public StatsProviderImpl() {
 		super();
-		this.root = root;
+		this.configuration = Configuration.getInstance();
 	}
 
 	@Override
 	public File getRoot() {
-		return root;
+		return configuration.getRoot();
 	}
 
 	@Override
 	public FilesystemStatsOverview getFilesystemStatsOverview() {
-		return new FilesystemStatsOverviewImpl(root);
+		return new FilesystemStatsOverviewImpl(configuration);
 	}
 
 	@Override
 	public UserStats getUserStats(String userId) {
 		try {
-			UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation() + "/fs/users.csv");
+			UsersFileName.setSpecificFileName(configuration.getCsvFile().getPath());
 			UsersManager users = UsersManager.getInstance();
 			User myUser = users.getUserByLogin(userId);
-			return new UsersStatsImpl(myUser, new File(Configuration.getTelosysSaasLocation() + "/fs/"));
+			return new UsersStatsImpl(configuration, myUser);
 		} catch(ParseException e) {
 			return null;
 		} catch(IOException e) {
@@ -47,23 +49,22 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public ProjectStats getProjectStats(String userId, String projectName) throws ProjectNotFoundException {
-		File projectDir = new File(this.projectDirPath(userId, projectName));
+		File projectDir = configuration.getProjectDir(userId, projectName);
 		if(!projectDir.exists()) {
 			throw new ProjectNotFoundException(projectName);
 		}
-		return new ProjectStatsImpl(projectDir, projectName, userId);
+		return new ProjectStatsImpl(configuration, projectName, userId);
 	}
 
 	@Override
 	public ModelStats getModelStats(String userId, String projectName, String modelName) {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 
 	@Override
 	public BundleStats getBundleStats(String userId, String projectName, String bundleName) {
-		// TODO Auto-generated method stub
-		return null;
+		return new BundleStatsImpl(configuration.getRoot(), userId, bundleName, projectName);
 	}
 
 
@@ -71,16 +72,16 @@ public class StatsProviderImpl implements StatsProvider {
 	public List<ProjectStats> getProjectsStats(String userId) {
 		try
 		{
-			UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation() + "/fs/users.csv");
+			UsersFileName.setSpecificFileName(configuration.getCsvFile().getPath());
 			UsersManager users = UsersManager.getInstance();
 			User myUser = users.getUserByLogin(userId);
-			String userRoot = Configuration.getTelosysSaasLocation() + "/fs/";
-			UserStats userStats = new UsersStatsImpl(myUser, new File(userRoot));
+			UserStats userStats = new UsersStatsImpl(configuration, myUser);
 			List<String> projects = userStats.getProjectsNames();
 			LinkedList<ProjectStats> projectsStats = new LinkedList<>();
 			for(String s: projects)
 			{
-				projectsStats.add(new ProjectStatsImpl(new File(userRoot+userId+"/"+s), s, userId));
+				ProjectStats pStats = new ProjectStatsImpl(configuration, s, userId);
+				projectsStats.add(pStats);
 			}
 			return projectsStats;
 		} catch(IOException e) {
@@ -93,22 +94,22 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public List<ModelStats> getModelsStats(String userId) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public List<BundleStats> getBundlesStats(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<BundleStats> bundles = new ArrayList<>();
+		File userDir = configuration.getUserDir(userId);
+		File[] projectDirs = userDir.listFiles();
+		for (File projectDir : projectDirs) {
+			File telosysDir = configuration.getTelosysDir(userId, projectDir.getName());
+			for (File file : telosysDir.listFiles()) {
+				bundles.add(this.getBundleStats(userId, projectDir.getName(), file.getName()));
+			}
+		}
+		return bundles;
 	}
 
-
-	private String userDirPath(String userId) {
-		return this.root.getPath() + File.separator + userId;
-	}
-
-	private String projectDirPath(String userId, String projectId) {
-		return this.userDirPath(userId) + File.separator + projectId;
-	}
 }

@@ -11,11 +11,19 @@ import org.telosys.tools.users.UsersManager;
 
 public class UserProjectsAction extends GenericAction {
 
+
+	private Configuration configuration;
+
+	public UserProjectsAction() {
+		super();
+		this.configuration = Configuration.getInstance();
+	}
+
     @Override
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
     	String userName = httpServletRequest.getParameter("username");
     	if (userName != null) {
-    		UsersFileName.setSpecificFileName(Configuration.getTelosysSaasLocation()+"/fs/users.csv");
+    		UsersFileName.setSpecificFileName(configuration.getCsvFile().getPath());
     	    UsersManager users = UsersManager.getInstance();
     	    User mu = users.getUserByLogin(userName);
     	    httpServletRequest.setAttribute("user", mu);
