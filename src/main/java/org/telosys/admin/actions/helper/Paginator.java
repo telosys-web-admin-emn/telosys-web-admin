@@ -1,6 +1,13 @@
 package org.telosys.admin.actions.helper;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.telosys.tools.stats.impl.UsersStatsImpl;
 
 public class Paginator {
 	public final static String PAGE_PARAMETER = "page";
@@ -37,6 +44,7 @@ public class Paginator {
 		request.setAttribute(NEXT_PAGE_ATTRIBUTE, maxPage == page ? maxPage : page+1);
 		request.setAttribute(MAX_PAGE_ATTRIBUTE, maxPage);
 		request.setAttribute(CURRENT_URL_ATTRIBUTE, getFullUrl(request));
+		// we pass the paginator to the view so that we can use methods such as getPreviousPage, getNextPage, ...
 		request.setAttribute(PAGINATOR_ATTRIBUTE, new Paginator());
 		return request;
 	}
@@ -73,6 +81,28 @@ public class Paginator {
 	public static String getPage(HttpServletRequest request, int page)
 	{
 		return computePage(request, page);
+	}
+	
+	/**
+	 * Allow to get only items in an interval to fake pagination
+	 * @param page
+	 * @param maxPerPage
+	 * @param providedItems
+	 * @return List of items which index match the interval
+	 */
+	public static <T> List<T> getPaginatedItems(int page, int maxPerPage, List<T> providedItems){
+		int firstItemIndex = (page-1) * maxPerPage +1;
+		int itemIndex = 1;
+		int lastItemIndex = page * maxPerPage;
+		List<T> paginatedItems = new ArrayList<T>();
+		for(T item : providedItems){
+			if(itemIndex >= firstItemIndex && itemIndex <= lastItemIndex) {
+				paginatedItems.add(item);
+			}
+			itemIndex++;
+			
+		}
+		return paginatedItems;
 	}
 	
 	/**

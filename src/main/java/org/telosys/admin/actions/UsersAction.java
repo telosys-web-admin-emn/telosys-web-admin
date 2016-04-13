@@ -48,7 +48,7 @@ public class UsersAction extends GenericAction{
     	// sort the list with comparator
     	allUsers.sort(comparator);
     	// finally, paginate the users
-    	return usersService.getPaginatedUsers(page, Configuration.USERS_PER_PAGE, allUsers);
+    	return Paginator.getPaginatedItems(page, Configuration.USERS_PER_PAGE, allUsers);
     }
     
     /**

@@ -82,28 +82,4 @@ public class UsersService {
 		};
 		return comparator;
     }
-	
-	/**
-	 * Get the list of UsersStatsImpl users paginated
-	 * @param page
-	 * @param maxPerPage
-	 * @param providedUsers
-	 * @return
-	 * @throws IOException
-	 * @throws ParseException
-	 */
-	public List<UsersStatsImpl> getPaginatedUsers(int page, int maxPerPage, List<UsersStatsImpl> providedUsers) throws IOException, ParseException {
-		int firstUserIndex = (page-1) * maxPerPage +1;
-		int userIndex = 1;
-		int lastUserIndex = page * maxPerPage;
-		List<UsersStatsImpl> paginatedUsers = new ArrayList<UsersStatsImpl>();
-		for(UsersStatsImpl user : providedUsers){
-			if(userIndex >= firstUserIndex && userIndex <= lastUserIndex) {
-				paginatedUsers.add(user);
-			}
-			userIndex++;
-			
-		}
-		return paginatedUsers;
-	}
 }
