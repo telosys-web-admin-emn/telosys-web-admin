@@ -2,28 +2,17 @@ package org.telosys.admin.actions.helper;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
-public class Paginator {
+public class Paginator extends AbstractParameterReplacer {
 	public final static String PAGE_PARAMETER = "page";
 	public final static String CURRENT_PAGE_ATTRIBUTE = "currentPage";
 	public final static String NEXT_PAGE_ATTRIBUTE = "nextPage";
 	public final static String PREVIOUS_PAGE_ATTRIBUTE = "previousPage";
 	public final static String MAX_PAGE_ATTRIBUTE = "maxPage";
-	public final static String CURRENT_URL_ATTRIBUTE = "currentUrl";
 	public final static String PAGINATOR_ATTRIBUTE = "paginator";
 	
-	/**
-	 * Get the full URL with all parameters from request
-	 * @param request
-	 * @return String the URL
-	 */
-	public static String getFullUrl(HttpServletRequest request)
-	{
-		String baseUrl = request.getRequestURL() + "";
-    	String queryParameters = request.getQueryString();
-    	return queryParameters == null ? baseUrl : baseUrl + "?" + queryParameters;
-	}
 	
 	/**
 	 * Add the pagination attributes to the request 
@@ -38,7 +27,6 @@ public class Paginator {
 		request.setAttribute(PREVIOUS_PAGE_ATTRIBUTE, page == 1 ? 1 : page-1);
 		request.setAttribute(NEXT_PAGE_ATTRIBUTE, maxPage == page ? maxPage : page+1);
 		request.setAttribute(MAX_PAGE_ATTRIBUTE, maxPage);
-		request.setAttribute(CURRENT_URL_ATTRIBUTE, getFullUrl(request));
 		// we pass the paginator to the view so that we can use methods such as getPreviousPage, getNextPage, ...
 		request.setAttribute(PAGINATOR_ATTRIBUTE, new Paginator());
 		return request;
@@ -50,7 +38,7 @@ public class Paginator {
 	 * @param nextPage
 	 * @return String the url with the previous page
 	 */
-	public static String getPreviousPage(HttpServletRequest request)
+	public String getPreviousPage(HttpServletRequest request)
 	{	
 		int previousPage = (int) request.getAttribute(PREVIOUS_PAGE_ATTRIBUTE);
 		return computePage(request, previousPage);
@@ -61,7 +49,7 @@ public class Paginator {
 	 * @param request
 	 * @return String the url with the next page
 	 */
-	public static String getNextPage(HttpServletRequest request)
+	public String getNextPage(HttpServletRequest request)
 	{
 		int nextPage = (int) request.getAttribute(NEXT_PAGE_ATTRIBUTE);
 		return computePage(request, nextPage);
@@ -73,7 +61,7 @@ public class Paginator {
 	 * @param page
 	 * @return String url with the specific page
 	 */
-	public static String getPage(HttpServletRequest request, int page)
+	public String getPage(HttpServletRequest request, int page)
 	{
 		return computePage(request, page);
 	}
@@ -106,32 +94,9 @@ public class Paginator {
 	 * @param direction
 	 * @return String
 	 */
-	protected static String computePage(HttpServletRequest request, int newPage)
+	protected String computePage(HttpServletRequest request, int newPage)
 	{
-		// the parameters of the current url in string format
-		String urlParameters = request.getQueryString();
-		boolean requestUrlHasParameters = urlParameters != null;
-		// the future returned URL
-		String paginatedUrl = "";
-		// the current URl with all parameters
-		String fullUrl = getFullUrl(request);
-		// the pattern of the page parameter in the url
-		String pagePattern = "page=";
-		if(requestUrlHasParameters) {
-			// if we don't have a page parameter yet
-			if(urlParameters.indexOf(pagePattern) == -1) {
-				// we add it to the list of parameters
-				paginatedUrl = fullUrl + "&" + pagePattern + newPage;
-			} else {
-				String pagePatternWithPageNumber = pagePattern + request.getAttribute(CURRENT_PAGE_ATTRIBUTE);
-				// else we replace it
-				paginatedUrl = fullUrl.replace(pagePatternWithPageNumber, pagePattern + newPage);
-			}
-		} else {
-			// if we have no parameters, we add the page parameter as the first parameter of the URL
-			paginatedUrl = fullUrl + "?" + pagePattern + newPage;
-		}
-		return paginatedUrl;
+		return replaceParam(UrlHelper.getFullUrl(request), request, PAGE_PARAMETER, newPage+"");
 	}
 	
 	/**
@@ -148,4 +113,25 @@ public class Paginator {
     	}
     	return page;
     }
+
+	@Override
+	protected String handleHasNoParamPattern(String fullUrl,
+			String paramPattern, String paramValue) {
+		return fullUrl + "&" + paramPattern + paramValue;
+	}
+
+	@Override
+	protected String handleHasParamPattern(HttpServletRequest request,
+			String fullUrl, String paramPattern, String paramName,
+			String paramValue) {
+		String pagePatternWithPageNumber = paramPattern + request.getAttribute(CURRENT_PAGE_ATTRIBUTE);
+		// else we replace it
+		return fullUrl.replace(pagePatternWithPageNumber, paramPattern + paramValue);
+	}
+
+	@Override
+	protected String handleHasNoParameters(String fullUrl, String paramPattern,
+			String paramValue) {
+		return fullUrl + "?" + paramPattern + paramValue;
+	}
 }
