@@ -1,13 +1,8 @@
 package org.telosys.admin.actions.helper;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
-import org.telosys.tools.stats.impl.UsersStatsImpl;
 
 public class Paginator {
 	public final static String PAGE_PARAMETER = "page";
