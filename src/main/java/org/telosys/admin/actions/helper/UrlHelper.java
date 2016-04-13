@@ -2,6 +2,10 @@ package org.telosys.admin.actions.helper;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Provides some helpers to get the current url to provide to the views
+ * Also, allow to add or replace parameters easily to from the views
+ */
 public class UrlHelper extends AbstractParameterReplacer{
 	public final static String CURRENT_URL_ATTRIBUTE = "currentUrl";
 	

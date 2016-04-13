@@ -2,6 +2,9 @@ package org.telosys.admin.actions.helper;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Gives function to provide to the views in order to add filtering and ordering
+ */
 public class FilterSorter extends UrlHelper{
 	public final static String ASCENDING_ORDER = "ASC";
 	public final static String DESCENDING_ORDER = "DESC";

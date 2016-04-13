@@ -6,6 +6,9 @@ import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Abstract class defining how to add or replace parameters to a URL
+ */
 public abstract class AbstractParameterReplacer {
 	
 	/**

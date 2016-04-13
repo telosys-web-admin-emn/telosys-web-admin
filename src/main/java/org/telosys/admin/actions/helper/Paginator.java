@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Gives function to provide pagination to the views 
+ * and also to select a range of items server side (fake pagination)
+ */
 public class Paginator extends AbstractParameterReplacer {
 	public final static String PAGE_PARAMETER = "page";
 	public final static String CURRENT_PAGE_ATTRIBUTE = "currentPage";
