@@ -50,7 +50,7 @@ public class Configuration
 		instance = new Configuration(TELOSYS_SAAS_LOCATION);
 	}
 
-	public Configuration(String rootPath) {
+	private Configuration(String rootPath) {
 		this.rootPath = rootPath;
 		this.root = new File(rootPath);
 	}
