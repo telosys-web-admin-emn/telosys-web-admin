@@ -9,22 +9,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.nanoj.web.tinymvc.GenericAction;
+import org.telosys.tools.helper.Paginator;
 import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
 import org.telosys.web.services.UsersService;
 
-public class UsersAction extends GenericAction {
+public class UsersAction extends GenericAction{
 
     @Override
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
     	try {
     		List<UsersStatsImpl> allUsers = this.getUsersService().getUsers();
-    		int page = this.getCurrentpage(httpServletRequest);
+    		int maxPage = this.getMaxPage(allUsers.size());
+			// build the pagination parameters
+			httpServletRequest = Paginator.buildPagination(httpServletRequest, maxPage);
+			int page = (int) httpServletRequest.getAttribute(Paginator.CURRENT_PAGE_ATTRIBUTE);
     		List<UsersStatsImpl> users = this.getPaginatedUsers(allUsers, page, httpServletRequest);
-			httpServletRequest.setAttribute("users", users);
-			httpServletRequest.setAttribute("currentPage", page);
-			httpServletRequest.setAttribute("maxPage", this.getMaxPage(allUsers.size()));
-			httpServletRequest.setAttribute("currentUri", httpServletRequest.getRequestURL()+"?"+httpServletRequest.getQueryString());
+    		httpServletRequest.setAttribute("users", users);
+			
     	} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
@@ -47,21 +49,6 @@ public class UsersAction extends GenericAction {
     	allUsers.sort(comparator);
     	// finally, paginate the users
     	return usersService.getPaginatedUsers(page, Configuration.getUsersPerPage(), allUsers);
-    }
-    
-    /**
-     * Get the current page number
-     * @param httpServletRequest
-     * @return int the page number
-     */
-    protected int getCurrentpage(HttpServletRequest httpServletRequest)
-    {
-    	int page = 1;
-    	String pageStringFormat = httpServletRequest.getParameter("page");
-    	if(pageStringFormat != null) {
-    		page = Integer.parseInt(pageStringFormat);
-    	}
-    	return page;
     }
     
     /**
@@ -88,5 +75,4 @@ public class UsersAction extends GenericAction {
     	UsersService usersService = new UsersService(usersFilePath);
     	return usersService;
     }
-
 }

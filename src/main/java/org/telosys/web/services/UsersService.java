@@ -94,16 +94,12 @@ public class UsersService {
 	 */
 	public List<UsersStatsImpl> getPaginatedUsers(int page, int maxPerPage, List<UsersStatsImpl> providedUsers) throws IOException, ParseException {
 		int firstUserIndex = (page-1) * maxPerPage +1;
-		System.out.println("first index : "+firstUserIndex);
 		int userIndex = 1;
 		int lastUserIndex = page * maxPerPage;
-		System.out.println("Last user index : "+lastUserIndex);
 		List<UsersStatsImpl> paginatedUsers = new ArrayList<UsersStatsImpl>();
 		for(UsersStatsImpl user : providedUsers){
 			if(userIndex >= firstUserIndex && userIndex <= lastUserIndex) {
-				System.out.println("ajout du user "+user.getLogin());
 				paginatedUsers.add(user);
-				System.out.println("current user index : "+userIndex);
 			}
 			userIndex++;
 			
