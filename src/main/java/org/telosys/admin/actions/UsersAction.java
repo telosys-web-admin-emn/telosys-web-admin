@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.nanoj.web.tinymvc.GenericAction;
-import org.telosys.tools.helper.Paginator;
+import org.telosys.admin.actions.helper.Paginator;
 import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
 import org.telosys.web.services.UsersService;

@@ -1,4 +1,4 @@
-package org.telosys.tools.helper;
+package org.telosys.admin.actions.helper;
 
 import java.util.Collections;
 import java.util.Enumeration;
