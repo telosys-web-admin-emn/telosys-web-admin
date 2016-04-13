@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.nanoj.web.tinymvc.GenericAction;
+import org.telosys.admin.actions.helper.FilterSorter;
 import org.telosys.admin.actions.helper.Paginator;
 import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
@@ -23,6 +24,7 @@ public class UsersAction extends GenericAction{
     		int maxPage = this.getMaxPage(allUsers.size());
 			// build the pagination parameters
 			httpServletRequest = Paginator.buildPagination(httpServletRequest, maxPage);
+			httpServletRequest = FilterSorter.buildSorting(httpServletRequest);
 			int page = (int) httpServletRequest.getAttribute(Paginator.CURRENT_PAGE_ATTRIBUTE);
     		List<UsersStatsImpl> users = this.getPaginatedUsers(allUsers, page, httpServletRequest);
     		httpServletRequest.setAttribute("users", users);

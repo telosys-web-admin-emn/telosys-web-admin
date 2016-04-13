@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.telosys.admin.actions.helper.FilterSorter;
 import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
 import org.telosys.tools.users.User;
@@ -44,11 +45,11 @@ public class UsersService {
     {
     	Comparator<UsersStatsImpl> comparator = new Comparator<UsersStatsImpl>(){
 			public int compare(UsersStatsImpl u1, UsersStatsImpl u2) {
-				String filter = httpServletRequest.getParameter("filter");
+				String filter = httpServletRequest.getParameter(FilterSorter.FILTER_PARAMETER);
 		    	if(filter == null) {
 		    		filter = "login";
 		    	}
-		    	String order = httpServletRequest.getParameter("order");
+		    	String order = httpServletRequest.getParameter(FilterSorter.ORDER_PARAMETER);
 		    	// the result of the comparison
 		    	int compared = 0;
 				switch(filter){
@@ -74,7 +75,7 @@ public class UsersService {
 						compared = u1.getLogin().compareTo(u2.getLogin());
 				}
 				// check if we have to reverse the order
-				if(order != null && order.equals("DESC")) {
+				if(order != null && order.equals(FilterSorter.DESCENDING_ORDER)) {
 					compared = -compared;
 				}
 				return compared;
