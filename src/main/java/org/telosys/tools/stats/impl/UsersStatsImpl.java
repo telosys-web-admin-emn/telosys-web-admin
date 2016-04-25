@@ -11,20 +11,20 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.telosys.tools.stats.Configuration;
+import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.UserStats;
 import org.telosys.tools.users.User;
 
 public class UsersStatsImpl implements UserStats {
 	private User user;
 	private File userDir;
-	private Configuration configuration;
+	private PathHelper pathHelper;
 
-	public UsersStatsImpl(Configuration configuration, User user) throws IOException, ParseException
+	public UsersStatsImpl(PathHelper pathHelper, User user) throws IOException, ParseException
 	{
 		this.user = user;
-		this.configuration = configuration;
-		this.userDir = configuration.getUserDir(user.getLogin());
+		this.pathHelper = pathHelper;
+		this.userDir = pathHelper.getUserDir(user.getLogin());
 	}
 
 	@Override

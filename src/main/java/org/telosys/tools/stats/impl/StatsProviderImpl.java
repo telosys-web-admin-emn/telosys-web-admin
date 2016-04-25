@@ -16,16 +16,16 @@ import java.util.List;
 public class StatsProviderImpl implements StatsProvider {
 
 
-	private Configuration configuration;
+	private PathHelper pathHelper;
 
 	public StatsProviderImpl() {
 		super();
-		this.configuration = Configuration.getInstance();
+		this.pathHelper = PathHelper.getInstance();
 	}
 
 	@Override
 	public File getRoot() {
-		return configuration.getRoot();
+		return pathHelper.getRoot();
 	}
 
 	@Override
@@ -36,10 +36,10 @@ public class StatsProviderImpl implements StatsProvider {
 	@Override
 	public UserStats getUserStats(String userId) {
 		try {
-			UsersFileName.setSpecificFileName(configuration.getCsvFile().getPath());
+			UsersFileName.setSpecificFileName(pathHelper.getCsvFile().getPath());
 			UsersManager users = UsersManager.getInstance();
 			User myUser = users.getUserByLogin(userId);
-			return new UsersStatsImpl(configuration, myUser);
+			return new UsersStatsImpl(pathHelper, myUser);
 		} catch(ParseException e) {
 			return null;
 		} catch(IOException e) {
@@ -49,11 +49,11 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public ProjectStats getProjectStats(String userId, String projectName) throws ProjectNotFoundException {
-		File projectDir = configuration.getProjectDir(userId, projectName);
+		File projectDir = pathHelper.getProjectDir(userId, projectName);
 		if(!projectDir.exists()) {
 			throw new ProjectNotFoundException(projectName);
 		}
-		return new ProjectStatsImpl(configuration, projectName, userId);
+		return new ProjectStatsImpl(pathHelper, projectName, userId);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class StatsProviderImpl implements StatsProvider {
 
 	@Override
 	public BundleStats getBundleStats(String userId, String projectName, String bundleName) {
-		return new BundleStatsImpl(configuration.getRoot(), userId, bundleName, projectName);
+		return new BundleStatsImpl(pathHelper.getRoot(), userId, bundleName, projectName);
 	}
 
 
@@ -72,15 +72,15 @@ public class StatsProviderImpl implements StatsProvider {
 	public List<ProjectStats> getProjectsStats(String userId) {
 		try
 		{
-			UsersFileName.setSpecificFileName(configuration.getCsvFile().getPath());
+			UsersFileName.setSpecificFileName(pathHelper.getCsvFile().getPath());
 			UsersManager users = UsersManager.getInstance();
 			User myUser = users.getUserByLogin(userId);
-			UserStats userStats = new UsersStatsImpl(configuration, myUser);
+			UserStats userStats = new UsersStatsImpl(pathHelper, myUser);
 			List<String> projects = userStats.getProjectsNames();
 			LinkedList<ProjectStats> projectsStats = new LinkedList<>();
 			for(String s: projects)
 			{
-				ProjectStats pStats = new ProjectStatsImpl(configuration, s, userId);
+				ProjectStats pStats = new ProjectStatsImpl(pathHelper, s, userId);
 				projectsStats.add(pStats);
 			}
 			return projectsStats;
@@ -101,10 +101,10 @@ public class StatsProviderImpl implements StatsProvider {
 	@Override
 	public List<BundleStats> getBundlesStats(String userId) {
 		List<BundleStats> bundles = new ArrayList<>();
-		File userDir = configuration.getUserDir(userId);
+		File userDir = pathHelper.getUserDir(userId);
 		File[] projectDirs = userDir.listFiles();
 		for (File projectDir : projectDirs) {
-			File telosysDir = configuration.getTelosysDir(userId, projectDir.getName());
+			File telosysDir = pathHelper.getTelosysDir(userId, projectDir.getName());
 			for (File file : telosysDir.listFiles()) {
 				bundles.add(this.getBundleStats(userId, projectDir.getName(), file.getName()));
 			}

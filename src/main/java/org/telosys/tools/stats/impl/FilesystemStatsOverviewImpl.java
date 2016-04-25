@@ -1,7 +1,7 @@
 package org.telosys.tools.stats.impl;
 
 import org.apache.commons.io.FileUtils;
-import org.telosys.tools.stats.Configuration;
+import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileDAO;
@@ -43,7 +43,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	public int getProjectsCount() throws IOException, ParseException {
 		int somme = 0;
 		for (User user : this.users) {
-			UsersStatsImpl stats = new UsersStatsImpl(Configuration.getInstance(), user);
+			UsersStatsImpl stats = new UsersStatsImpl(PathHelper.getInstance(), user);
 			somme += stats.getProjectsCount();
 		}
 		return somme;
@@ -53,7 +53,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	public int getModelsCount() throws ParseException, IOException {
 		int somme = 0;
 		for (User user : this.users) {
-			UsersStatsImpl stats = new UsersStatsImpl(Configuration.getInstance(), user);
+			UsersStatsImpl stats = new UsersStatsImpl(PathHelper.getInstance(), user);
 			somme += stats.getModelsCount();
 		}
 		return somme;

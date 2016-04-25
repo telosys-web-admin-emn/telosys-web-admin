@@ -11,11 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.nanoj.web.tinymvc.GenericAction;
 import org.telosys.admin.actions.helper.FilterSorter;
 import org.telosys.admin.actions.helper.Paginator;
-import org.telosys.tools.stats.Configuration;
+import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
 import org.telosys.web.services.UsersService;
 
 public class UsersAction extends GenericAction{
+
+	private PathHelper pathHelper;
+
+	public UsersAction() {
+		this.pathHelper = PathHelper.getInstance();
+	}
 
     @Override
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
@@ -50,7 +56,7 @@ public class UsersAction extends GenericAction{
     	// sort the list with comparator
     	allUsers.sort(comparator);
     	// finally, paginate the users
-    	return Paginator.getPaginatedItems(page, Configuration.USERS_PER_PAGE, allUsers);
+    	return Paginator.getPaginatedItems(page, pathHelper.getUsersPerPage(), allUsers);
     }
     
     /**
@@ -60,7 +66,7 @@ public class UsersAction extends GenericAction{
      */
     protected int getMaxPage(int usersLength)
     {
-    	int maxUsersPerPage = Configuration.USERS_PER_PAGE;
+    	int maxUsersPerPage = pathHelper.getUsersPerPage();
     	if(maxUsersPerPage != 0) {
     		return usersLength / maxUsersPerPage;
     	}
@@ -73,8 +79,6 @@ public class UsersAction extends GenericAction{
      */
     protected UsersService getUsersService()
     {
-    	String usersFilePath = Configuration.TELOSYS_SAAS_LOCATION + "/fs/user.csv";
-    	UsersService usersService = new UsersService();
-    	return usersService;
+		return new UsersService();
     }
 }

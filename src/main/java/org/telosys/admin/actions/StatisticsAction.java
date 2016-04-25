@@ -1,17 +1,11 @@
 package org.telosys.admin.actions;
 
 import org.nanoj.web.tinymvc.GenericAction;
-import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.FilesystemStatsOverview;
-import org.telosys.tools.stats.StatsProvider;
 import org.telosys.tools.stats.StatsProviderFactory;
-import org.telosys.tools.stats.impl.FilesystemStatsOverviewImpl;
-import org.telosys.tools.stats.impl.StatsProviderImpl;
-import org.telosys.web.services.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.text.ParseException;
 import java.io.IOException;
 

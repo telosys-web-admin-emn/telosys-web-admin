@@ -1,94 +1,65 @@
 package org.telosys.tools.stats;
 
-import java.io.File;
-
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.joining;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
- * Created by maeln on 04/02/16.
+ * Created by alexa on 25/04/2016.
  */
-public class Configuration
-{
+public class Configuration {
 
-	/*****************************
-	 * CONF CONSTANTS
-	 ****************************/
+    public final static String TELOSYS_FS_LOCATION = "telosys_fs_location";
 
-	public final static String TELOSYS_SAAS_LOCATION = "../telosys-saas/fs/";
+    public final static String USERS_PER_PAGE = "users_per_page";
 
-	public final static int USERS_PER_PAGE = 20;
+    public final static String TELOSYS_DIR = "telosys_dir";
 
-	public final static String TELOSYS_DIR = "TelosysTools";
+    public final static String MODEL_EXTENSION = "model_extension";
 
-	public final static String MODEL_EXTENSION = ".model";
+    public final static String TEMPLATES_DIR = "templates_dir";
 
-	public final static String TEMPLATE_DIR = "templates";
+    /*****************************
+     * PRIVATE MEMBERS
+     ****************************/
 
-	/*****************************
-	 * PRIVATE MEMBERS
-	 ****************************/
+    private Properties properties;
 
-	private String rootPath;
-	private File root;
+    private String telosysFsLocation;
+    private int usersPerPage;
+    private String modelExtension;
+    private String templatesDir;
+    private String telosysDir;
 
-	/*****************************
-	 * SINGLETON GETTER
-	 ****************************/
 
-	public static Configuration getInstance() {
-		return instance;
-	}
+    public Configuration(InputStream fis) throws IOException {
+        this.properties = new Properties();
+        properties.load(fis);
+        this.telosysFsLocation = properties.getProperty(TELOSYS_FS_LOCATION);
+        this.usersPerPage = Integer.parseInt(properties.getProperty(USERS_PER_PAGE));
+        this.modelExtension = properties.getProperty(MODEL_EXTENSION);
+        this.templatesDir = properties.getProperty(TEMPLATES_DIR);
+        this.telosysDir = properties.getProperty(TELOSYS_DIR);
+    }
 
-	/*****************************
-	 * BUILDERS
-	 ****************************/
+    public String getTelosysFsLocation() {
+        return telosysFsLocation;
+    }
 
-	private static Configuration instance;
+    public int getUsersPerPage() {
+        return usersPerPage;
+    }
 
-	static {
-		instance = new Configuration(TELOSYS_SAAS_LOCATION);
-	}
+    public String getModelExtension() {
+        return modelExtension;
+    }
 
-	private Configuration(String rootPath) {
-		this.rootPath = rootPath;
-		this.root = new File(rootPath);
-	}
+    public String getTemplatesDir() {
+        return templatesDir;
+    }
 
-	/*****************************
-	 * PATH GETTERS
-	 ****************************/
-
-	public File getUserDir(String user) {
-		return resolve(rootPath, user);
-	}
-
-	public File getBundlesDir(String user, String project) {
-		return resolve(rootPath, user, project, TELOSYS_DIR, TEMPLATE_DIR);
-	}
-
-	public File getTelosysDir(String user, String project) {
-		return resolve(rootPath, user, project, TELOSYS_DIR);
-	}
-
-	public File getProjectDir(String user, String project) {
-		return resolve(rootPath, user, project);
-	}
-
-	public File getModelFile(String user, String project, String model) {
-		return resolve(user, project, TELOSYS_DIR, model + MODEL_EXTENSION);
-	}
-
-	public File getCsvFile() {
-		return resolve(rootPath, "users.csv");
-	}
-
-	public File getRoot() {
-		return root;
-	}
-
-	private File resolve(String... files) {
-		return new File(stream(files).collect(joining(File.separator)));
-	}
-
+    public String getTelosysDir() {
+        return telosysDir;
+    }
 }

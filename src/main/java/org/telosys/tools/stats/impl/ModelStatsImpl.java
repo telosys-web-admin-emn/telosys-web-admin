@@ -1,25 +1,23 @@
 package org.telosys.tools.stats.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
 
-import org.telosys.tools.stats.Configuration;
+import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.ModelStats;
 
 public class ModelStatsImpl implements ModelStats {
 
-	private Configuration configuration;
+	private PathHelper pathHelper;
 	private String userId;
 	private String modelName;
 	private String projectName;
 
-	public ModelStatsImpl(Configuration configuration, String userId, String projectName,String modelName) {
-		this.configuration = configuration;
+	public ModelStatsImpl(PathHelper pathHelper, String userId, String projectName, String modelName) {
+		this.pathHelper = pathHelper;
 		this.userId = userId;
 		this.modelName = modelName;
 		this.projectName = projectName;
@@ -37,7 +35,7 @@ public class ModelStatsImpl implements ModelStats {
 
 	@Override
 	public Date getLastModifiedDate() throws IOException {
-		Path file = configuration.getModelFile(userId, projectName, modelName).toPath();
+		Path file = pathHelper.getModelFile(userId, projectName, modelName).toPath();
 		// File info
 		BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class);
 

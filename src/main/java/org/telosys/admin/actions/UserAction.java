@@ -14,13 +14,13 @@ import java.util.List;
 
 public class UserAction extends GenericAction {
 
-	StatsProvider provider = StatsProviderFactory.getStatsProvider();
+	private StatsProvider provider = StatsProviderFactory.getStatsProvider();
 
-	private Configuration configuration;
+	private PathHelper pathHelper;
 
 	public UserAction() {
 		super();
-		this.configuration = Configuration.getInstance();
+		this.pathHelper = PathHelper.getInstance();
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class UserAction extends GenericAction {
 			String userName = httpServletRequest.getParameter("username");
 			if (userName != null) {
 				// User's stats.
-				UsersFileName.setSpecificFileName(configuration.getCsvFile().getPath());
+				UsersFileName.setSpecificFileName(pathHelper.getCsvFile().getPath());
 				UsersManager users = UsersManager.getInstance();
 				User myUser = users.getUserByLogin(userName);
 				UserStats usersStats = provider.getUserStats(userName);

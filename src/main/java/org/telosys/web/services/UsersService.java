@@ -1,6 +1,5 @@
 package org.telosys.web.services;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -11,26 +10,26 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.telosys.admin.actions.helper.FilterSorter;
-import org.telosys.tools.stats.Configuration;
+import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileDAO;
 
 public class UsersService {
 
-	private Configuration configuration;
+	private PathHelper pathHelper;
 	
 	public UsersService()
 	{
-		this.configuration = Configuration.getInstance();
+		this.pathHelper = PathHelper.getInstance();
 	}
 				
 	public List<UsersStatsImpl> getUsers() throws IOException, ParseException
 	{
 		List<UsersStatsImpl> users = new ArrayList<UsersStatsImpl>();
-		UsersFileDAO dao = new UsersFileDAO(configuration.getCsvFile());
+		UsersFileDAO dao = new UsersFileDAO(pathHelper.getCsvFile());
 		for(Map.Entry<String, User> entry : dao.loadAllUsers().entrySet()) {
-			users.add(new UsersStatsImpl(configuration, entry.getValue()));
+			users.add(new UsersStatsImpl(pathHelper, entry.getValue()));
 		}
 		
 		return users;
