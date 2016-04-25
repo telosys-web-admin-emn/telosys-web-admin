@@ -1,0 +1,13 @@
+#set( $_ = "$" )
+
+	<h3>
+		{{ 'welcome' | translate }}
+	</h3>
+
+	<div ng-include src="'partials/message-include.html'"></div>
+   		      
+	<ul class="entity">
+#foreach( $entity in $selectedEntities )
+        <li><a href="#/${fn.uncapitalize($entity.name)}">{{ '${entity.name}' | translate }}</a></li>
+#end
+    </ul>

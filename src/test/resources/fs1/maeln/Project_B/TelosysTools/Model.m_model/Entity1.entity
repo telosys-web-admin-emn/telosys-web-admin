@@ -1,0 +1,5 @@
+// Entity Entity1
+
+Entity1 {
+  myfield : string ; // field example 
+}

@@ -1,0 +1,17 @@
+#set( $_= "$" )
+##--------------------------------------------------------------------------------------------------------
+'use strict';
+
+/* Module for ${entity.name} */
+
+var ${fn.uncapitalize($entity.name)}Module = angular.module('${fn.uncapitalize($entity.name)}.module', ['myApp']);
+
+/**
+ * Module for ${fn.uncapitalize($entity.name)}
+ */
+${fn.uncapitalize($entity.name)}Module.config(['${_}routeProvider', function(${_}routeProvider) {
+    // Pages routes
+    ${_}routeProvider.when('/${fn.uncapitalize($entity.name)}',    {templateUrl: 'partials/${entity.name.toLowerCase()}/${entity.name.toLowerCase()}_list.html', controller: '${entity.name}Ctrl'});
+    ${_}routeProvider.when('/${fn.uncapitalize($entity.name)}/new', {templateUrl: 'partials/${entity.name.toLowerCase()}/${entity.name.toLowerCase()}_form.html', controller: '${entity.name}Ctrl'});
+    ${_}routeProvider.when('/${fn.uncapitalize($entity.name)}/${entity.keyAttributesNamesAsString('/', ':', '')}', {templateUrl: 'partials/${entity.name.toLowerCase()}/${entity.name.toLowerCase()}_form.html', controller: '${entity.name}Ctrl'});
+}]);

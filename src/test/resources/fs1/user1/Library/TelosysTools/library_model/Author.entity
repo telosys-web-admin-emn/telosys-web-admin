@@ -1,0 +1,4 @@
+Author {
+  name: string {@Id};
+  hello: intege {@NotNull};
+}

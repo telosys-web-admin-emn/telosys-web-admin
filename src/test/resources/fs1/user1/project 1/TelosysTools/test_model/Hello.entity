@@ -1,0 +1,5 @@
+// Entity Hello
+
+Hello {
+  myfield : string ; // field example 
+}

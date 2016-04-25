@@ -1,0 +1,24 @@
+{
+	"welcome" : "Accueil",
+
+	"english" : "English",
+    "french" : "Fran\u00e7ais",	
+	
+	"create" : "Cr\u00e9er",
+	"edit" : "Modifier",
+	"delete" : "Supprimer",
+	"delete ok" : "Suppression r\u00e9ussie",
+	"save" : "Enregistrer",
+	"save ok" : "Enregistrement r\u00e9ussi",
+	"cancel" : "Annuler",
+
+	"En" : "En",
+	"en.myfield" : "myfield",
+	"en.id.not.defined" : "L'identfiant de En n'est pas d\u00E9fini",
+
+	"server.not.responding": "Le serveur ne r\u00e9pond pas",
+	"url.invalid": "URL invalide : {value}",
+	"url.bad": "URL incorrecte : {value}",
+
+	"app.version" : "Version"
+}

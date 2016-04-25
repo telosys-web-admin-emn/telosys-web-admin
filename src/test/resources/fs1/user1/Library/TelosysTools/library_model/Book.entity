@@ -1,0 +1,4 @@
+Book {
+  title: string {@Id};
+  author: Author;
+}

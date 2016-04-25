@@ -1,0 +1,155 @@
+#set( $uncapitalizedEntityName = $fn.uncapitalize($entity.name) )
+#set( $_= "$" )
+##--------------------------------------------------------------------------------------------------------
+##--------------------------------------------------------------------------------------------------------
+## Key fields = fields in Primary Key    
+#set( $keyFields = $entity.keyAttributes )
+##--------------------------------------------------------------------------------------------------------
+## Data fields = fields not in Primary Key    
+#set( $dataFields = $entity.nonKeyAttributes )
+##--------------------------------------------------------------------------------------------------------
+## All fields ( ordered fiels : 1) fields in Primary Key 2) fields not in primary key    
+#set( $allFields = $fn.concatLists($keyFields, $dataFields) )
+##--------------------------------------------------------------------------------------------------------
+#set( $referencedEntities = $entity.referencedEntityTypes() )## All referenced entities (PK and NON PK)
+##--------------------------------------------------------------------------------------------------------
+'use strict';
+
+/**
+ * Controller for ${entity.name}
+ **/
+${fn.uncapitalize($entity.name)}Module.controller('${entity.name}Ctrl', ['${entity.name}', #foreach($ref in $referencedEntities) '${ref}',#end '${_}scope', '${_}routeParams', '${_}http', '${_}location', '${_}cookies', 'MessageHandler', 'restURL', function(${entity.name},#foreach($ref in $referencedEntities) ${ref},#end ${_}scope, ${_}routeParams, ${_}http, ${_}location, ${_}cookies, MessageHandler, restURL) {
+	#foreach($ref in $referencedEntities) '${ref}', #end
+    // edition mode
+    ${_}scope.mode = null;
+    
+	// list of ${fn.uncapitalize($entity.name)}s
+    ${_}scope.${fn.uncapitalize($entity.name)}s = [];
+	// ${fn.uncapitalize($entity.name)} to edit
+    ${_}scope.${fn.uncapitalize($entity.name)} = null;
+
+	// referencies entities
+	${_}scope.items = {};
+#foreach( $ref in $referencedEntities )
+    // ${fn.uncapitalize($ref)}s
+	${_}scope.items.${fn.uncapitalize($ref)}s = [];
+#end
+
+    /**
+     * Load all referencies entities
+     */
+	${_}scope.loadAllReferencies = function() {
+#foreach( $ref in $referencedEntities )
+		${ref}.getAllAsListItems().then(
+				function(success) {
+        	        ${_}scope.items.${fn.uncapitalize($ref)}s = success.data;
+            	}, 
+	            MessageHandler.manageError);
+#end
+    };
+    
+    /**
+     * Refresh ${fn.uncapitalize($entity.name)}s list
+     */
+    ${_}scope.refresh${entity.name}List = function() {
+    	try {
+			${_}scope.${fn.uncapitalize($entity.name)}s = [];
+        	${entity.name}.getAll().then(
+				function(success) {
+        	        ${_}scope.${fn.uncapitalize($entity.name)}s = success.data;
+            	}, 
+	            MessageHandler.manageError);
+    	} catch(ex) {
+    		MessageHandler.manageException(ex);
+    	}
+    }
+    /**
+     * Refresh ${fn.uncapitalize($entity.name)}
+     */
+    ${_}scope.refresh${entity.name} = function(${entity.keyAttributesNamesAsString(', ', '', '')}) {
+    	try {
+        	${_}scope.${fn.uncapitalize($entity.name)} = null;
+	        ${entity.name}.get(${entity.keyAttributesNamesAsString(', ', '', '')}).then(
+				function(success) {
+        	        ${_}scope.${fn.uncapitalize($entity.name)} = success.data;
+            	}, 
+	            MessageHandler.manageError);
+    	  } catch(ex) {
+        	MessageHandler.manageException(ex);
+    	}
+    }
+
+    /**
+     * Go to the ${fn.uncapitalize($entity.name)}s list page
+     */
+    ${_}scope.goTo${entity.name}List = function() {
+        ${_}scope.refresh${entity.name}List();
+        ${_}location.path('/${fn.uncapitalize($entity.name)}');
+    }
+    /**
+     * Go to the ${fn.uncapitalize($entity.name)} edit page
+     */
+    ${_}scope.goTo${entity.name} = function(${entity.keyAttributesNamesAsString(', ', '', '')}) {
+        ${_}scope.refresh${entity.name}(${entity.keyAttributesNamesAsString(', ', '', '')});
+        ${_}location.path('/${fn.uncapitalize($entity.name)}/'+${entity.keyAttributesNamesAsString("+'/'+", '', '')});
+    }
+
+    // Actions
+
+    /**
+     * Save ${fn.uncapitalize($entity.name)}
+     */
+    ${_}scope.save = function() {
+    	try {
+			MessageHandler.cleanMessage();
+			var save;
+			if( ${_}scope.mode === 'create' ) {
+        		save = ${entity.name}.create;
+			} else {
+				save = ${entity.name}.update;
+			}
+			save(${_}scope.${fn.uncapitalize($entity.name)}).then(
+    	        function(success) {
+	                MessageHandler.addSuccess('save ok');
+                	${_}scope.${fn.uncapitalize($entity.name)} = success.data;
+            	},
+        	    MessageHandler.manageError);
+    	} catch(ex) {
+        	MessageHandler.manageException(ex);
+    	}
+    };
+    /**
+     * Delete ${fn.uncapitalize($entity.name)}
+     */
+    ${_}scope.delete = function(${entity.keyAttributesNamesAsString(', ', '', '')}) {
+	    try {
+			MessageHandler.cleanMessage();
+    	    ${entity.name}.delete(${entity.keyAttributesNamesAsString(', ', '', '')}).then(
+				function(success) {
+                	${_}scope.goTo${entity.name}List();
+            	}, 
+                MessageHandler.manageError);
+        } catch(ex) {
+            MessageHandler.manageException(ex);
+        }
+    };
+    
+    // Main
+	MessageHandler.cleanMessage();
+    if( ${_}location.path().endsWith('/new') ) {
+        // Creation page
+        ${_}scope.${fn.uncapitalize($entity.name)} = {};
+        ${_}scope.mode = 'create';
+		${_}scope.loadAllReferencies();
+        ${_}scope.bookorderitem = null;
+    } else if( ${entity.keyAttributesNamesAsString(' && ', '$routeParams.', ' != null')} ) {
+        // Edit page
+		${_}scope.loadAllReferencies();
+		${_}scope.refresh${entity.name}(${entity.keyAttributesNamesAsString(', ', '$routeParams.', '')});
+    } else {
+        // List page
+        ${_}scope.refresh${entity.name}List();
+    }
+    
+    
+}]);

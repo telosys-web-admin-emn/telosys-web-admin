@@ -1,0 +1,20 @@
+		<fieldset class="col-sm-12 bordure">
+			<legend class="legende">{{ 'En' | translate }}</legend>
+		
+			<div ng-include src="'partials/message-include.html'"></div>
+			
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>{{ 'en.myfield' | translate }}</th>
+						<th><a class="btn btn-info" href='#/en/new'>{{ 'create' | translate }}</a></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="en in ens">
+						<td>{{en.myfield}}</td>
+						<td><a class="btn btn-info" href="#/en/no_primary_key_for_entity_En">{{ 'edit' | translate }}</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>

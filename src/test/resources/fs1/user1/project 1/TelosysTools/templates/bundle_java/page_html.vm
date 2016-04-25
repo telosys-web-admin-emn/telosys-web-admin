@@ -1,0 +1,15 @@
+<html>
+<body>
+<h1>${entity.name}</h1>
+#foreach($field in $entity.attributes)
+<div>
+  <label for="${field.name}">${field.name}</label>
+#set( $type = "text" )
+#if($field.type == "Date")
+#set( $type = "date" )
+#end
+  <input type="${type}" name="${fn.uncapitalize($entity.name)}.${field.name}" id="${field.name}" />
+</div>
+#end
+</body>
+</html>

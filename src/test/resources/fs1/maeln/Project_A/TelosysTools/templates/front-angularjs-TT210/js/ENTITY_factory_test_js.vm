@@ -1,0 +1,125 @@
+#set( $_ = "$" )
+#set( $tools = $loader.newInstance("Tools") )
+#set( $keyValues = $tools.randomKeyAttributesValues($entity))
+##
+#set( $urlParamValues = "" )
+#set( $methodArgumentValues = "" )
+#set( $objectKeyDefinition = "" )
+#set( $objectKeyDefinitionNull = "" )
+##
+#set( $i = 0 )
+#foreach( $key in $entity.keyAttributes )
+##
+#set( $urlParamValues = $urlParamValues + "/" + ${keyValues.get($i)} )
+##
+#if( $i > 0 )
+#set( $methodArgumentValues = $methodArgumentValues + ", " )
+#end
+#set( $methodArgumentValues = $methodArgumentValues + "'" + ${keyValues.get($i)} + "'" )
+##
+#if( $i > 0 )
+#set( $objectKeyDefinition = $objectKeyDefinition + ", " )
+#end
+#set( $objectKeyDefinition = $objectKeyDefinition + $key.name + ":'" + ${keyValues.get($i)} + "'" )
+##
+#if( $i > 0 )
+#set( $objectKeyDefinitionNull = $objectKeyDefinitionNull + ", " )
+#end
+#set( $objectKeyDefinitionNull = $objectKeyDefinitionNull + $key.name + ":null" )
+##
+#set( $i = $i+1 )
+#end
+'use strict';
+
+/* jasmine specs for controllers go here */
+
+describe('services', function(){
+  beforeEach(module('${fn.uncapitalize($entity.name)}.module'));
+  
+  describe('${entity.name}', function(){
+	var ${_}httpBackend, ${entity.name}, restURL;
+	  
+    beforeEach(inject(function(${_}injector) {
+    	${_}httpBackend = ${_}injector.get('${_}httpBackend');
+    	${entity.name} = ${_}injector.get('${entity.name}');
+        restURL = ${_}injector.get('restURL');
+    }));
+
+    afterEach(function() {
+    	${_}httpBackend.verifyNoOutstandingExpectation();
+    	${_}httpBackend.verifyNoOutstandingRequest();
+    });
+    
+	it('getAllAsListItems', function() {
+		${_}httpBackend.when('GET', restURL+'/items/${fn.uncapitalize($entity.name)}').respond("test");
+    	${entity.name}.getAllAsListItems().then(function(response) {
+        	expect(response.status).toBe(200);
+    		expect(response.data).toBe("test");
+    	});
+    	${_}httpBackend.flush();
+	});
+
+    it('getAll', function() {
+    	${_}httpBackend.when('GET', restURL+'/${fn.uncapitalize($entity.name)}').respond("test");
+    	${entity.name}.getAll().then(function(response) {
+        	expect(response.status).toBe(200);
+    		expect(response.data).toBe("test");
+    	});
+    	${_}httpBackend.flush();
+    });
+    
+    it('get', function() {
+    	${_}httpBackend.when('GET', restURL+'/${fn.uncapitalize($entity.name)}${urlParamValues}').respond("test");
+    	${entity.name}.get($methodArgumentValues).then(function(response) {
+        	expect(response.status).toBe(200);
+    		expect(response.data).toBe("test");
+    	});
+    	${_}httpBackend.flush();
+    });
+    
+    it('create throws exception : id not defined', function() {
+    	try{
+    		${entity.name}.create({${objectKeyDefinitionNull},name:'${fn.uncapitalize($entity.name)}'});
+    		${_}httpBackend.flush();
+    	} catch(errors) {
+    		expect(errors[0]).toBe('${fn.uncapitalize($entity.name)}.id.not.defined');
+    	}
+    });
+    
+    it('create', function() {
+    	${_}httpBackend.when('POST', restURL+'/${fn.uncapitalize($entity.name)}').respond("test");
+    	${entity.name}.create({${objectKeyDefinition},name:'${fn.uncapitalize($entity.name)}'}).then(function(response) {
+        	expect(response.status).toBe(200);
+    		expect(response.data).toBe("test");
+    	});
+    	${_}httpBackend.flush();
+    });
+    
+    it('update throws exception : id not defined', function() {
+    	try{
+    		${entity.name}.update({${objectKeyDefinitionNull},name:'${fn.uncapitalize($entity.name)}'});
+    		${_}httpBackend.flush();
+    	} catch(errors) {
+    		expect(errors[0]).toBe('${fn.uncapitalize($entity.name)}.id.not.defined');
+    	}
+    });
+    
+    it('update', function() {
+    	${_}httpBackend.when('PUT', restURL+'/${fn.uncapitalize($entity.name)}${urlParamValues}').respond("test");
+    	${entity.name}.update({${objectKeyDefinition},name:'${fn.uncapitalize($entity.name)}'}).then(function(response) {
+        	expect(response.status).toBe(200);
+    		expect(response.data).toBe("test");
+    	});
+    	${_}httpBackend.flush();
+    });
+    
+    it('delete', function() {
+    	${_}httpBackend.when('DELETE', restURL+'/${fn.uncapitalize($entity.name)}${urlParamValues}').respond("test");
+    	${entity.name}.delete($methodArgumentValues).then(function(response) {
+        	expect(response.status).toBe(200);
+    		expect(response.data).toBe("test");
+    	});
+    	${_}httpBackend.flush();
+    });
+  });
+});

@@ -1,0 +1,28 @@
+{
+	"welcome" : "Welcome",
+	
+	"english" : "English",
+    "french" : "Fran\u00e7ais",
+	
+	"create" : "Create",
+	"edit" : "Edit",
+	"delete" : "Delete",
+	"delete ok" : "Delete ok",
+	"save" : "Save",
+	"save ok" : "Save ok",
+	"cancel" : "Cancel",
+#foreach( $entity in $selectedEntities )
+
+	"${entity.name}" : "${entity.name}",
+#foreach( $field in $entity.attributes )
+	"${fn.uncapitalize($entity.name)}.${field.formattedName(0)}" : "${field.formattedName(0)}",
+#end
+	"${fn.uncapitalize($entity.name)}.id.not.defined" : "${entity.name} identifier is not defined",
+#end
+	
+	"server.not.responding": "The server is not responding",
+	"url.invalid": "Invalid URL : {value}",
+	"url.bad": "Bad URL : {value}",
+
+	"app.version" : "Version"
+}

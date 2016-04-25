@@ -1,0 +1,267 @@
+#set( $_ = "$" )
+#set( $referencedEntities = $entity.referencedEntityTypes() )## All referenced entities (PK and NON PK)
+#set( $tools = $loader.newInstance("Tools") )
+#set( $keyValues = $tools.randomKeyAttributesValues($entity))
+##
+#set( $urlParamValues = "" )
+#set( $urlParamVariables = "" )
+#set( $methodArgumentValues = "" )
+#set( $methodArgumentVariables = "" )
+#set( $objectKeyDefinition = "" )
+#set( $objectKeyDefinitionNull = "" )
+#set( $concatenateVariables = "" )
+#set( $concatenateValues = "" )
+##
+#set( $i = 0 )
+#foreach( $key in $entity.keyAttributes )
+##
+#set( $urlParamValues = $urlParamValues + "/" + ${keyValues.get($i)} )
+##
+#set( $urlParamVariables = $urlParamVariables + "+'/'+" + ${key.name} )
+##
+#if( $i > 0 )
+#set( $methodArgumentValues = $methodArgumentValues + ", " )
+#end
+#set( $methodArgumentValues = $methodArgumentValues + "'" + ${keyValues.get($i)} + "'" )
+##
+#if( $i > 0 )
+#set( $methodArgumentVariables = $methodArgumentVariables + ", " )
+#end
+#set( $methodArgumentVariables = $methodArgumentVariables + ${key.name} )
+##
+#if( $i > 0 )
+#set( $objectKeyDefinition = $objectKeyDefinition + ", " )
+#end
+#set( $objectKeyDefinition = $objectKeyDefinition + $key.name + ":'" + ${keyValues.get($i)} + "'" )
+##
+#if( $i > 0 )
+#set( $objectKeyDefinitionNull = $objectKeyDefinitionNull + ", " )
+#end
+#set( $objectKeyDefinitionNull = $objectKeyDefinitionNull + $key.name + ":null" )
+##
+#set( $concatenateVariables = $concatenateVariables + "+" + $key.name )
+##
+#set( $concatenateValues = $concatenateValues + "+'" + ${keyValues.get($i)} + "'" )
+##
+#set( $i = $i+1 )
+#end
+'use strict';
+
+/* jasmine specs for controllers go here */
+
+describe('controllers', function(){
+  beforeEach(module('${fn.uncapitalize($entity.name)}.module'));
+  
+  describe('${entity.name}Ctrl', function(){
+    var ${entity.name}Ctrl, ${entity.name},#foreach($ref in $referencedEntities) ${ref}, #end${_}rootScope, ${_}scope, ${_}routeParams, ${_}httpBackend, ${_}location, MessageHandler, ${_}q, ${_}controller;
+	  
+    beforeEach(inject(function(${_}injector) {
+    	${_}controller = ${_}injector.get('${_}controller');
+    	${_}q = ${_}injector.get('${_}q');
+    	${_}rootScope = ${_}injector.get('${_}rootScope');
+    	${_}scope = ${_}rootScope.${_}new();
+    	${_}routeParams = ${_}injector.get('${_}routeParams');
+    	${_}httpBackend = ${_}injector.get('${_}httpBackend');
+    	
+    	// location is mocked due to redirection in browser : karma does not support it
+    	${_}location = {
+    		path: jasmine.createSpy("path").andCallFake(function() {
+        	    return "";
+        	})
+    	};
+    	
+    	// Messages
+    	MessageHandler = {
+    		cleanMessage: jasmine.createSpy("cleanMessage"),
+    		addSuccess: jasmine.createSpy("addSuccess"),
+    		manageError: jasmine.createSpy("manageError"),
+    		manageException: jasmine.createSpy("manageException"),
+    	};
+
+    	// ${entity.name} service
+    	${entity.name} = {
+    		getAll: function() {
+    			var deferred = ${_}q.defer();
+    			deferred.resolve({data:'${fn.uncapitalize($entity.name)}1'});
+    			return deferred.promise;
+    		}
+    	};
+		
+		#foreach($ref in $referencedEntities)
+		$ref = {
+			getAllAsListItems: jasmine.createSpy("getAllAsListItems").andCallFake(function() {
+				return [];
+			})
+		};
+
+		#end
+		${entity.name}Ctrl = ${_}controller('${entity.name}Ctrl', {
+    		'${entity.name}': ${entity.name},
+			#foreach($ref in $referencedEntities)
+			'$ref': $ref,
+			#end
+    		'${_}scope': ${_}scope,
+    		'${_}routeParams': ${_}routeParams,
+    		'${_}http': ${_}httpBackend,
+    		'${_}location': ${_}location,
+    		'MessageHandler': MessageHandler
+    	});
+    }));
+
+    afterEach(function() {
+    	${_}httpBackend.verifyNoOutstandingExpectation();
+    	${_}httpBackend.verifyNoOutstandingRequest();
+    });
+    
+    it('init', function() {
+    	${_}rootScope.${_}apply();
+    	expect(${_}scope.mode).toBeNull();
+    	expect(${_}scope.${fn.uncapitalize($entity.name)}).toBeNull();
+    	expect(${_}scope.${fn.uncapitalize($entity.name)}s).toBe('${fn.uncapitalize($entity.name)}1');
+    	expect(Object.keys(${_}scope.items).length).toBe(${referencedEntities.size()});
+    	expect(MessageHandler.cleanMessage).toHaveBeenCalled();
+    });
+    
+    it('refresh${entity.name}List', function() {
+    	// given
+    	${entity.name}.getAll = function() {
+			var deferred = ${_}q.defer();
+			deferred.resolve({data:'${fn.uncapitalize($entity.name)}2'});
+			return deferred.promise;
+		}
+    	
+    	// when
+    	${_}scope.refresh${entity.name}List();
+    	${_}scope.${_}apply();
+
+    	// then
+    	${_}rootScope.${_}apply();
+    	expect(${_}scope.${fn.uncapitalize($entity.name)}s).toBe('${fn.uncapitalize($entity.name)}2');
+    });
+    
+    it('refresh${entity.name}', function() {
+    	// given
+    	${entity.name}.get = function(${methodArgumentVariables}) {
+			var deferred = ${_}q.defer();
+			deferred.resolve({data:'${fn.uncapitalize($entity.name)}'${concatenateVariables}});
+			return deferred.promise;
+		}
+    	
+    	// when
+    	${_}scope.refresh${entity.name}(${methodArgumentValues});
+    	${_}scope.${_}apply();
+    	
+    	// then
+    	expect(${_}scope.${fn.uncapitalize($entity.name)}).toBe('${fn.uncapitalize($entity.name)}'${concatenateValues});
+    });
+    
+	it('goTo${entity.name}List', function() {
+    	// given
+    	spyOn(${_}scope, "refresh${entity.name}List");
+    	
+    	// when
+    	${_}scope.goTo${entity.name}List();
+    	${_}scope.${_}apply();
+    	
+    	// then
+    	expect(${_}scope.refresh${entity.name}List).toHaveBeenCalled();
+    	expect(${_}location.path).toHaveBeenCalledWith('/${fn.uncapitalize($entity.name)}');
+    });
+    
+    it('goTo${entity.name}', function() {
+    	// given
+    	spyOn(${_}scope, "refresh${entity.name}");
+#set( $i = 0 )
+#foreach( $key in $entity.keyAttributes )
+    	var ${key.name} = ${keyValues.get($i)};
+#set( $i = $i+1 )
+#end
+    	
+    	// when
+    	${_}scope.goTo${entity.name}(${methodArgumentVariables});
+    	${_}scope.${_}apply();
+    	
+    	// then
+    	expect(${_}scope.refresh${entity.name}).toHaveBeenCalledWith(${methodArgumentVariables});
+    	expect(${_}location.path).toHaveBeenCalledWith('/${fn.uncapitalize($entity.name)}'${urlParamVariables});
+    });
+    
+    it('save : create', function() {
+    	// given
+    	${_}scope.${fn.uncapitalize($entity.name)} = {${objectKeyDefinition}, name:'${fn.uncapitalize($entity.name)}'};
+    	
+    	${_}scope.mode = 'create';
+    	${entity.name}.create = function() {
+			var deferred = ${_}q.defer();
+			deferred.resolve({data:'${fn.uncapitalize($entity.name)}Saved'});
+			return deferred.promise;
+		}
+    	
+    	// when
+    	${_}scope.save();
+    	${_}scope.${_}apply();
+    	
+    	// then
+    	expect(MessageHandler.cleanMessage).toHaveBeenCalled();
+    	expect(${_}scope.${fn.uncapitalize($entity.name)}).toBe('${fn.uncapitalize($entity.name)}Saved');
+    	expect(MessageHandler.addSuccess).toHaveBeenCalledWith('save ok');
+    });
+    
+    it('save : update', function() {
+    	// given
+    	${_}scope.${fn.uncapitalize($entity.name)} = {${objectKeyDefinition}, name:'${fn.uncapitalize($entity.name)}'};
+    	
+    	${_}scope.mode = 'update';
+    	${entity.name}.update = function() {
+			var deferred = ${_}q.defer();
+			deferred.resolve({data:'${fn.uncapitalize($entity.name)}Saved'});
+			return deferred.promise;
+		}
+    	
+    	// when
+    	${_}scope.save();
+    	${_}scope.${_}apply();
+    	
+    	// then
+    	expect(MessageHandler.cleanMessage).toHaveBeenCalled();
+    	expect(${_}scope.${fn.uncapitalize($entity.name)}).toBe('${fn.uncapitalize($entity.name)}Saved');
+    	expect(MessageHandler.addSuccess).toHaveBeenCalledWith('save ok');
+    });
+    
+    it('delete', function() {
+    	// given
+    	${entity.name}.delete = function() {
+			var deferred = ${_}q.defer();
+			deferred.resolve(null);
+			return deferred.promise;
+		}
+    	spyOn(${_}scope, "goTo${entity.name}List");
+    	
+    	// when
+    	${_}scope.delete(${methodArgumentValues});
+    	${_}scope.${_}apply();
+    	
+    	// then
+    	expect(${_}scope.goTo${entity.name}List).toHaveBeenCalled();
+    	expect(MessageHandler.cleanMessage).toHaveBeenCalled();
+    });
+    
+    it('init : ${fn.uncapitalize($entity.name)} create page', function() {
+    	// given
+		${_}location.path.andCallFake(function() {
+        	return "/${fn.uncapitalize($entity.name)}/new";
+       	});
+
+		// when
+		${_}scope.${_}apply();
+		
+		// then
+    	expect(${_}scope.mode).toBeNull();
+    	expect(${_}scope.${fn.uncapitalize($entity.name)}).toBeNull();
+    	expect(${_}scope.${fn.uncapitalize($entity.name)}s).toBe('${fn.uncapitalize($entity.name)}1');
+    	expect(Object.keys(${_}scope.items).length).toBe(${referencedEntities.size()});
+    	expect(MessageHandler.cleanMessage).toHaveBeenCalled();
+    });
+	
+  });
+});

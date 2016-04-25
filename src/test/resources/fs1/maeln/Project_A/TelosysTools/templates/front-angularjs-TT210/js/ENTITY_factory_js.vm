@@ -1,0 +1,94 @@
+#set( $_ = ${DOLLAR} )
+##--------------------------------------------------------------------------------------------
+'use strict';
+
+/**
+ * Factory for ${entity.name}
+ */
+${fn.uncapitalize($entity.name)}Module.factory('${entity.name}', ['${_}http', 'restURL', function(${_}http, restURL) {
+
+	// REST Service URL to manage ${fn.uncapitalize($entity.name)}
+    var entityURL = restURL + '/${fn.uncapitalize($entity.name)}';
+	
+	/**
+     * Validate ${fn.uncapitalize($entity.name)}
+     * @param ${fn.uncapitalize($entity.name)} ${fn.uncapitalize($entity.name)}
+     * @throws validation exception
+     */
+	var validate = function (${fn.uncapitalize($entity.name)}) {
+		var errors = [];
+#foreach( $attribute in $entity.keyAttributes )
+        if( ${fn.uncapitalize($entity.name)}.${attribute.name} == null || ${fn.uncapitalize($entity.name)}.${attribute.name} == '' ) {
+			errors.push('${fn.uncapitalize($entity.name)}.id.not.defined');
+		}
+#end
+		if(errors.length > 0) {
+			throw errors;
+		}
+    };
+	
+	return {
+        /**
+         * Get all ${fn.uncapitalize($entity.name)}s as list items
+         * @return all ${fn.uncapitalize($entity.name)}s as list items
+         */
+    	getAllAsListItems: function() {
+        	return ${_}http.get(restURL + '/items/${fn.uncapitalize($entity.name)}');
+    	},
+
+        /**
+         * Get all ${fn.uncapitalize($entity.name)}s
+         * @return all ${fn.uncapitalize($entity.name)}s
+         */
+    	getAll: function() {
+        	return ${_}http.get(entityURL);
+    	},
+
+        /**
+         * Get ${fn.uncapitalize($entity.name)}
+#foreach($attribute in $entity.keyAttributes)
+         * @param $attribute.name $attribute.name
+#end 
+         * @return ${fn.uncapitalize($entity.name)}
+         */
+    	get: function(${entity.keyAttributesNamesAsString(', ', '', '')}) {
+    	    var url = entityURL + '/' + ${entity.keyAttributesNamesAsString(" + '/' + ", "", "")};
+        	return ${_}http.get(url);
+    	},
+
+        /**
+         * Create a new ${fn.uncapitalize($entity.name)}
+         * @param ${fn.uncapitalize($entity.name)} ${fn.uncapitalize($entity.name)}
+         * @return ${fn.uncapitalize($entity.name)} saved
+         */
+		create: function(${fn.uncapitalize($entity.name)}) {
+			validate(${fn.uncapitalize($entity.name)})
+			var url = entityURL;
+			return ${_}http.post(url, ${fn.uncapitalize($entity.name)});
+    	},
+
+        /**
+         * Update ${fn.uncapitalize($entity.name)}
+         * @param ${fn.uncapitalize($entity.name)} ${fn.uncapitalize($entity.name)}
+         * @return ${fn.uncapitalize($entity.name)} saved
+         */
+    	update: function(${fn.uncapitalize($entity.name)}) {
+			validate(${fn.uncapitalize($entity.name)})
+			var url = entityURL + '/' + ${entity.keyAttributesNamesAsString(" + '/' + ", "$fn.uncapitalize($entity.name).", "")};
+			return ${_}http.put(url, ${fn.uncapitalize($entity.name)});
+    	},
+
+		/**
+         * Delete ${fn.uncapitalize($entity.name)}
+#foreach($attribute in $entity.keyAttributes)
+         * @param $attribute.name $attribute.name
+#end 
+         */
+    	delete: function(${entity.keyAttributesNamesAsString(', ', '', '')}) {
+        	var url = entityURL + '/' + ${entity.keyAttributesNamesAsString(" + '/' + ", "", "")};
+        	return ${_}http.delete(url);
+    	}
+	};
+	return ${_}this;
+}]);
+

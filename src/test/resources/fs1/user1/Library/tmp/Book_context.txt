@@ -1,0 +1,127 @@
+
+GENERATOR VARIABLES :
+=====================
+
+* GENERATOR
+$generator.name    = Telosys Tools Generator
+$generator.version = 3.0.0
+
+* CURRENT DATE AND TIME 
+$today.date = 12 janv. 2016
+$today.time = 09:59:46
+$today.date("dd/MM/yyyy") = 12/01/2016
+$today.time("HH:mm")      = 09:59
+
+
+GENERATOR CONSTANTS FOR SPECIAL CHARACTERS :
+============================================
+$DOLLAR = $
+$SHARP  = #
+$AMP    = &
+$QUOT   = "
+$LT     = <
+$GT     = >
+$LBRACE = {
+$RBRACE = }
+
+GENERATOR CONSTANTS USABLE AS METHODS PARAMETERS :
+==================================================
+$const.KEY          =  1
+$const.NOT_KEY      =  2
+
+$const.TEXT         =  4
+$const.NOT_TEXT     =  8
+
+$const.IN_LINKS     =  16
+$const.NOT_IN_LINKS =  32
+
+$const.IN_SELECTED_LINKS      = 64
+$const.NOT_IN_SELECTED_LINKS  = 128
+
+$const.getKEY()     = 1
+$const.getNOT_KEY() = 2 
+
+
+PROJECT VARIABLES :
+===================
+
+Project packages ( predefined variables ) :
+$ROOT_PKG   = "org.demo"
+$ENTITY_PKG = "org.demo.bean"
+
+Project folders ( predefined variables ) :
+$SRC      = "src/main/java"
+$RES      = "src/main/resources"
+$WEB      = "src/main/webapp"
+$TEST_SRC = "src/test/java"
+$TEST_RES = "src/test/resources"
+$DOC      = "doc"
+$TMP      = "tmp"
+
+Project variables ( $project.variables ) including predefined variables :
+ . $WEB = src/main/webapp
+ . $ENTITY_PKG = org.demo.bean
+ . $MAVEN_ARTIFACT_ID = artifact-to-be-defined
+ . $TEST_SRC = src/test/java
+ . $RES = src/main/resources
+ . $PROJECT_NAME = myproject
+ . $DOC = doc
+ . $MAVEN_GROUP_ID = group.to.be.defined
+ . $ROOT_PKG = org.demo
+ . $SRC = src/main/java
+ . $TEST_RES = src/test/resources
+ . $PROJECT_VERSION = 0.1
+ . $TMP = tmp
+
+
+ENTITY VARIABLES :
+==================
+
+* BEAN CLASS
+$entity.name            = Book
+$fn.uncapitalize($entity.name) = book
+$entity.package         = org.demo.bean
+$entity.databaseTable   = 
+$entity.databaseCatalog = 
+$entity.databaseSchema  = 
+
+* BEAN CLASS ATTRIBUTES ( $entity.attributes )
+$entity.attributes.size() = 1 
+$attributes.size() = 1 
+
+* BEAN CLASS JPA ANNOTATIONS ( $jpa.entityAnnotations(2) )
+  @Entity
+  @Table(name="" )
+
+* BEAN CLASS AUTOINCREMTED PRIMARY KEY ?
+ No autoincremented primary key
+
+KEY ATTRIBUTES : 
+
+ ------------------------------
+ Field : title
+ ------------------------------
+ Java :
+  $field.name      = title
+  $field.type      = String
+  $field.getter    = getTitle
+  $field.setter    = setTitle
+  $field.label     = 
+  $field.inputType = 
+ Java bean validation annotations :
+
+ JPA annotations :
+  @Column(name="")
+
+ Database :
+  $field.isKeyElement() = false
+  $field.isAutoIncremented() = false
+  $field.isUsedInForeignKey() = false
+  $field.databaseName = 
+  $field.databaseType = 
+  $field.jdbcTypeCode = 0
+  $field.databaseSize = 0
+  $field.isDatabaseNotNull = false
+  $field.hasDatabaseDefaultValue() = false
+  $field.databaseDefaultValue = 
+
