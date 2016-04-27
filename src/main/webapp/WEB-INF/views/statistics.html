@@ -17,32 +17,30 @@
         <div class="col s12 m12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">Statistics</span>
+                    <h1 style="margin-top:0">Statistics</h1>
+                    <div class="half-width">
+                        <div class="statistics"><i class="medium-icon material-icons">account_box</i><strong>Users : </strong><span th:text="${usersCount}"></span> </div>
+                        <div class="statistics"><i class="medium-icon material-icons">folder_shared</i><strong>Projects : </strong><span th:text="${projectsCount}"></span> </div>
+                        <div class="statistics"><i class="medium-icon material-icons">view_module</i><strong>Models : </strong><span th:text="${modelsCount}"></span> </div>
+                        <div class="statistics"><i class="medium-icon material-icons">data_usage</i><strong>Disk usage : </strong><span th:text="${diskUsage}"></span> </div>
+                    </div>
+                    <div class="half-width">
 
-                    <p><strong>Users : </strong><span th:text="${usersCount}"></span> </p>
-                    <p><strong>Projects : </strong><span th:text="${projectsCount}"></span> </p>
-                    <p><strong>Models : </strong><span th:text="${modelsCount}"></span> </p>
-                    <p><strong>Disk usage : </strong><span th:text="${diskUsage}"></span> </p>
-                    <p><strong>Average number of projects/users : </strong> <span th:text="${averageProjects}"></span></p>
-                    <p><strong>Average number of models/users : </strong> <span th:text="${averageModels}"></span></p>
-                    <p><strong>Average disk usage/users : </strong> <span th:text="${averageDiskUsage}"></span></p>
-
+                    <div class="statistics"><strong>Average projects / users : </strong> <span th:text="${averageProjects}"></span></div>
+                    <div class="statistics"><strong>Average models / users : </strong> <span th:text="${averageModels}"></span></div>
+                    <div class="statistics"><strong>Average disk usage/users : </strong> <span th:text="${averageDiskUsage}"></span></div>
+                    </div>
+                    <h4>Historic per month </h4>
+                    <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
+                        an historic</a></div>
+                    <!--<canvas id="historic-chart" width="600" height="400"></canvas>-->
+                    <img style="width: 100%;height: auto" src="/WEB-CONTENT/img/ChartJS.png"/>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12 m12">
-            <div class="card-panel">
-                <p class="flow-text">Historic per month </p>
-                <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
-                    an historic</a></div>
-                <!--<canvas id="historic-chart" width="600" height="400"></canvas>-->
-                <img src="../img/ChartJS.png"/>
 
             </div>
         </div>
     </div>
+
 </div>
 <ul id='historic-choices' class='dropdown-content'>
     <li><a href="#!" onclick="changeHistoric('Number of users')" class='historic-choice'>Number of users</a></li>
@@ -51,6 +49,7 @@
     <li><a href="#!" onclick="changeHistoric('Number of created projects')" class='historic-choice'>Number of created
         projects</a></li>
 </ul>
+<div th:include="footer :: foot"></div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script type="text/javascript" src="/WEB-CONTENT/materialize/js/materialize.js"></script>
