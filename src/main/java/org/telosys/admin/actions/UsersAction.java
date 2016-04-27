@@ -27,16 +27,16 @@ public class UsersAction extends GenericAction{
     @Override
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
     	try {
-    		List<UsersStatsImpl> allUsers = this.getUsersService().getUsers();
-    		int maxPage = this.getMaxPage(allUsers.size());
+    		List<UsersStatsImpl> users = this.getUsersService().searchUser(this.getUsersService().getUsers(), httpServletRequest);
+    		int maxPage = this.getMaxPage(users.size());
 			// build the pagination parameters
 			httpServletRequest = Paginator.buildPagination(httpServletRequest, maxPage);
 			// build sorting object
 			httpServletRequest = FilterSorter.buildSorting(httpServletRequest);
 			// build filters
-			httpServletRequest = UsersService.buildUsersFilters(httpServletRequest);
+			httpServletRequest = this.getUsersService().buildUsersFilters(httpServletRequest);
 			int page = (int) httpServletRequest.getAttribute(Paginator.CURRENT_PAGE_ATTRIBUTE);
-    		List<UsersStatsImpl> users = this.getPaginatedUsers(allUsers, page, httpServletRequest);
+			users = this.getPaginatedUsers(users, page, httpServletRequest);
     		// add the users to the view
     		httpServletRequest.setAttribute("users", users);
     		// add the date format to format creation and last connection dates
