@@ -26,11 +26,11 @@ public class UserAction extends GenericAction
 	}
 
 	@Override
-	public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public String process(HttpServletRequest request, HttpServletResponse httpServletResponse)
 	{
 		try
 		{
-			String userName = httpServletRequest.getParameter("username");
+			String userName = request.getParameter("username");
 			if(userName != null)
 			{
 				// User's stats.
@@ -40,23 +40,26 @@ public class UserAction extends GenericAction
 				UserStats usersStats = provider.getUserStats(userName);
 				if(myUser == null || usersStats == null)
 				{
-					httpServletRequest.setAttribute("erreur", "Impossible de trouver l'utilisateur.");
+					request.setAttribute("erreur", "Impossible de trouver l'utilisateur.");
 					return "erreur";
 				}
-				httpServletRequest.setAttribute("user", myUser);
-				httpServletRequest.setAttribute("userStats", usersStats);
+				request.setAttribute("user", myUser);
+				request.setAttribute("userStats", usersStats);
 
 				// User's projects stats
-				httpServletRequest.setAttribute("projectStats", provider.getProjectsStats(userName));
-				httpServletRequest.setAttribute("bundleStats", provider.getBundlesStats(userName));
-				httpServletRequest.setAttribute("modelStats", provider.getModelsStats(userName));
+				request.setAttribute("projectStats", provider.getProjectsStats(userName));
+				request.setAttribute("bundleStats", provider.getBundlesStats(userName));
+				request.setAttribute("modelStats", provider.getModelsStats(userName));
+				// add the date format to format creation and last connection dates
+				request.setAttribute("dateFormat", pathHelper.getViewDateFormat());
 
 			}
 		}
 		catch(Exception e)
 		{
-			httpServletRequest.setAttribute("erreur", e.getCause());
-			return "erreur";
+			e.printStackTrace();
+			request.setAttribute("error", e.getClass().getName());
+			return "error";
 		}
 
 		return "user";

@@ -140,5 +140,10 @@ public class UsersStatsImpl implements UserStats {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public Date getLastConnectionDate() {
+		return this.user.getLastConnectionDate();
+	}
 	
 }

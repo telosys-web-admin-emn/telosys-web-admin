@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * Created by alexa on 25/04/2016.
- */
+
 public class Configuration {
 
     public final static String TELOSYS_FS_LOCATION = "telosys_fs_location";
+
+    public final static String VIEW_DATE_FORMAT = "view_date_format";
 
     public final static String USERS_PER_PAGE = "users_per_page";
 
@@ -20,6 +20,7 @@ public class Configuration {
 
     public final static String TEMPLATES_DIR = "templates_dir";
 
+    public final static String DISK_USAGE_QUOTA = "disk_usage_quota";
     /*****************************
      * PRIVATE MEMBERS
      ****************************/
@@ -31,6 +32,8 @@ public class Configuration {
     private String modelExtension;
     private String templatesDir;
     private String telosysDir;
+    private String viewDateFormat;
+    private long diskUsageQuota;
 
 
     public Configuration(InputStream fis) throws IOException {
@@ -41,6 +44,12 @@ public class Configuration {
         this.modelExtension = properties.getProperty(MODEL_EXTENSION);
         this.templatesDir = properties.getProperty(TEMPLATES_DIR);
         this.telosysDir = properties.getProperty(TELOSYS_DIR);
+        this.viewDateFormat = properties.getProperty(VIEW_DATE_FORMAT);
+        this.diskUsageQuota = Long.parseLong(properties.getProperty(DISK_USAGE_QUOTA));
+    }
+
+    // for tests
+    public Configuration() {
     }
 
     public String getTelosysFsLocation() {
@@ -62,4 +71,30 @@ public class Configuration {
     public String getTelosysDir() {
         return telosysDir;
     }
+
+    public void setTelosysFsLocation(String telosysFsLocation) {
+        this.telosysFsLocation = telosysFsLocation;
+    }
+
+    public void setUsersPerPage(int usersPerPage) {
+        this.usersPerPage = usersPerPage;
+    }
+
+    public void setModelExtension(String modelExtension) {
+        this.modelExtension = modelExtension;
+    }
+
+    public void setTemplatesDir(String templatesDir) {
+        this.templatesDir = templatesDir;
+    }
+
+    public void setTelosysDir(String telosysDir) {
+        this.telosysDir = telosysDir;
+    }
+
+    public String getViewDateFormat(){
+    	return viewDateFormat;
+    }
+
+    public long getDiskUsageQuota() { return diskUsageQuota; }
 }

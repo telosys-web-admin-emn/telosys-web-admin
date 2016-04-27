@@ -114,7 +114,7 @@ public class StatsProviderImpl implements StatsProvider
 			List<ModelStats> modelStats = new ArrayList<>();
 			for(ProjectStats project : projectsStats)
 			{
-				for(String bundle : project.getBundlesNames())
+				for(String bundle : project.getModelsNames())
 					modelStats.add(this.getModelStats(userId, project.getProjectName(), bundle));
 			}
 			return modelStats;

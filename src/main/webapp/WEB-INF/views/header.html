@@ -10,11 +10,11 @@
 <nav id="appbar" class="light-blue darken-3 nav-wrapper">
     <!-- Dropdown Structure -->
     <div class="light-blue darken-3 nav-wrapper">
-        <a href="#!" class="brand-logo left logo-telosys-min" style="position: relative; margin-left: 20px; margin-top: 5px;"></a><a href="#!" class="brand-logo left" style="position: relative; margin-right: 20px; ">
+        <a href="#!" class="brand-logo left logo-telosys-min" style="position: relative; margin-left: 20px; margin-top: 5px;"></a><a th:href="@{/do/}" class="brand-logo left" style="position: relative; margin-right: 20px; ">
         <img src="/WEB-CONTENT/img/logo.svg"/>Telosys</a>
         <ul id="nav-mobile" class="hide-on-med-and-down left">
+            <li><a th:href="@{/do/}" >Stats Overview</a></li>
             <li><a th:href="@{/do/users}">Users Overview</a></li>
-            <li><a th:href="@{/do/statistics}" >Stats Overview</a></li>
         </ul>
     </div>
 </nav>

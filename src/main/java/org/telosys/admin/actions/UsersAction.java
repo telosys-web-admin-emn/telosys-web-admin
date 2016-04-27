@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.security.auth.login.Configuration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,10 +31,16 @@ public class UsersAction extends GenericAction{
     		int maxPage = this.getMaxPage(allUsers.size());
 			// build the pagination parameters
 			httpServletRequest = Paginator.buildPagination(httpServletRequest, maxPage);
+			// build sorting object
 			httpServletRequest = FilterSorter.buildSorting(httpServletRequest);
+			// build filters
+			httpServletRequest = UsersService.buildUsersFilters(httpServletRequest);
 			int page = (int) httpServletRequest.getAttribute(Paginator.CURRENT_PAGE_ATTRIBUTE);
     		List<UsersStatsImpl> users = this.getPaginatedUsers(allUsers, page, httpServletRequest);
+    		// add the users to the view
     		httpServletRequest.setAttribute("users", users);
+    		// add the date format to format creation and last connection dates
+    		httpServletRequest.setAttribute("dateFormat", pathHelper.getViewDateFormat());
 			
     	} catch (IOException | ParseException e) {
 			e.printStackTrace();

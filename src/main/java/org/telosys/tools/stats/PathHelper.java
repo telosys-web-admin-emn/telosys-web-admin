@@ -46,7 +46,7 @@ public class PathHelper
 		}
 	}
 
-	private PathHelper(Configuration configuration) {
+	public PathHelper(Configuration configuration) {
 		this.conf = configuration;
 		this.rootPath = configuration.getTelosysFsLocation();
 		this.root = new File(rootPath);
@@ -73,7 +73,7 @@ public class PathHelper
 	}
 
 	public File getModelFile(String user, String project, String model) {
-		return resolve(user, project, conf.getTelosysDir(), model + conf.getModelExtension());
+		return resolve(rootPath, user, project, conf.getTelosysDir(), model + conf.getModelExtension());
 	}
 
 	public int getUsersPerPage() {
@@ -103,6 +103,10 @@ public class PathHelper
 	private File resolve(String... files) {
 		return new File(stream(files).collect(joining(File.separator)));
 	}
+	
+	public String getViewDateFormat(){
+		return conf.getViewDateFormat();
+	}
 
-
+	public long getDiskUsageQuota() { return conf.getDiskUsageQuota(); }
 }

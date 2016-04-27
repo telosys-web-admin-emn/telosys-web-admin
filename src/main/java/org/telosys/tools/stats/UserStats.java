@@ -18,6 +18,8 @@ public interface UserStats {
 	
 	Date getCreationDate(); // to be added in User
 	
+	Date getLastConnectionDate();
+	
 	String getCountry(); // to be added in User
 	
 	String getLanguage(); // to be added in User
@@ -36,14 +38,14 @@ public interface UserStats {
 	 * Returns all the projects names for the user
 	 * @return
 	 */
-	List<String> getProjectsNames() ;
+	List<String> getProjectsNames();
 	
 	/**
 	 * The number of models <br>
 	 * Origin : models files found in the filesystem
 	 * @return
 	 */
-	int getModelsCount() ;
+	int getModelsCount();
 
 	/**
 	 * Returns all the models names for the user
@@ -62,7 +64,7 @@ public interface UserStats {
 	 * Returns all the bundles names for the user
 	 * @return
 	 */
-	List<String> getBundlesNames() ;
+	List<String> getBundlesNames();
 	
 	/**
 	 * The total disk usage <br>
