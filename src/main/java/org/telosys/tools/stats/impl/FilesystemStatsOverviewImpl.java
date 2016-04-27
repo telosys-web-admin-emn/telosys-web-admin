@@ -18,11 +18,12 @@ import java.util.stream.Collectors;
 
 public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	private final List<User> users;
-	private File root;
+	private PathHelper pathHelper;
 
 
 	public FilesystemStatsOverviewImpl(PathHelper pathHelper) {
 		UsersFileDAO dao = new UsersFileDAO(pathHelper.getCsvFile().getAbsolutePath());
+		this.pathHelper = pathHelper;
 		this.users = dao.loadAllUsers().entrySet().stream()
 				.sorted(Comparator.comparing(Map.Entry::getValue))
 				.map(Map.Entry::getValue)
@@ -79,7 +80,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 
 	@Override
 	public long getDiskUsage() {
-		return FileUtils.sizeOfDirectory(root);
+		return FileUtils.sizeOfDirectory(pathHelper.getRoot());
 	}
 
 }
