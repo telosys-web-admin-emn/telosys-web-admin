@@ -34,13 +34,40 @@ public class ModelStatsImpl implements ModelStats {
 	}
 
 	@Override
-	public Date getLastModifiedDate() throws IOException {
+	public Date getLastModifiedDate() {
 		Path file = pathHelper.getModelFile(userId, projectName, modelName).toPath();
-		// File info
-		BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class);
 
-		// lastModifiedTime : OK / Windows and Linux
-		return new Date(attr.lastModifiedTime().toMillis());
+		try
+		{
+			// File info
+			BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class);
+
+			// lastModifiedTime : OK / Windows and Linux
+			return new Date(attr.lastModifiedTime().toMillis());
+		}
+		catch(IOException e)
+		{
+			return null;
+		}
+	}
+
+	@Override
+	public Date getCreationDate()
+	{
+		Path file = pathHelper.getModelFile(userId, projectName, modelName).toPath();
+
+		try
+		{
+			// File info
+			BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class);
+
+			// creationTime : OK / Windows and Linux
+			return new Date(attr.creationTime().toMillis());
+		}
+		catch(IOException e)
+		{
+			return null;
+		}
 	}
 
 }

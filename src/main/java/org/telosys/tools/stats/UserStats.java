@@ -46,6 +46,12 @@ public interface UserStats {
 	 * @return
 	 */
 	int getModelsCount() ;
+
+	/**
+	 * Returns all the models names for the user
+	 * @return
+	 */
+	List<String> getModelsNames();
 	
 	/**
 	 * The number of bundles <br>

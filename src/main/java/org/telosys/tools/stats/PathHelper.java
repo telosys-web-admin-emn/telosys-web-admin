@@ -92,6 +92,14 @@ public class PathHelper
 		return root;
 	}
 
+	public boolean isModel(File file) {
+		return file.getName().endsWith(conf.getModelExtension());
+	}
+
+	public String getModelName(File modelFile) {
+		return modelFile.getName().replaceAll(conf.getModelExtension(), "");
+	}
+
 	private File resolve(String... files) {
 		return new File(stream(files).collect(joining(File.separator)));
 	}
@@ -99,5 +107,6 @@ public class PathHelper
 	public String getViewDateFormat(){
 		return conf.getViewDateFormat();
 	}
+
 
 }

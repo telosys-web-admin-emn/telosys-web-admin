@@ -20,7 +20,6 @@ public class FilesystemStatsOverviewTest {
 
     @Before
     public void setup() {
-
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("fs1").getFile());
         impl = new FilesystemStatsOverviewImpl(file);

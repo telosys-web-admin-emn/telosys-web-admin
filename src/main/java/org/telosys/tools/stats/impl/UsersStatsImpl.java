@@ -1,9 +1,12 @@
 package org.telosys.tools.stats.impl;
 
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -75,14 +78,24 @@ public class UsersStatsImpl implements UserStats {
 	public int getModelsCount() {
 		int count = 0;
 		if (this.userDir.exists()) {
-			for(File project:this.userDir.listFiles()){
-				File telosysToolsDir = new File(project.getAbsolutePath() + "/TelosysTools");
-				if (telosysToolsDir.isDirectory()) {
-					count += telosysToolsDir.listFiles(f -> f.getName().toLowerCase().endsWith(".model")).length;
-				}			
+			for (String project : this.getProjectsNames()) {
+				count += pathHelper.getTelosysDir(user.getLogin(), project).listFiles(pathHelper::isModel).length;
 			}
 		}
 		return count;
+	}
+
+	@Override
+	public List<String> getModelsNames() {
+		List<String> modelsNames = new ArrayList<>();
+		if(this.userDir.exists()) {
+			for (String project : this.getProjectsNames()) {
+				File telosys = pathHelper.getTelosysDir(user.getLogin(), project);
+				modelsNames.addAll(stream(telosys.listFiles(pathHelper::isModel))
+						.map(pathHelper::getModelName).collect(toList()));
+			}
+		}
+		return modelsNames;
 	}
 
 	@Override
