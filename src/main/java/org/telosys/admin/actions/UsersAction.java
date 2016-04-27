@@ -28,7 +28,6 @@ public class UsersAction extends GenericAction{
     	try {
     		List<UsersStatsImpl> allUsers = this.getUsersService().getUsers();
     		int maxPage = this.getMaxPage(allUsers.size());
-    		System.out.println("Page max : "+maxPage);
 			// build the pagination parameters
 			httpServletRequest = Paginator.buildPagination(httpServletRequest, maxPage);
 			httpServletRequest = FilterSorter.buildSorting(httpServletRequest);

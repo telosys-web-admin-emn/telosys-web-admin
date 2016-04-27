@@ -1,17 +1,16 @@
 package org.telosys.admin.actions;
 
 import org.nanoj.web.tinymvc.GenericAction;
-import org.telosys.tools.stats.*;
-import org.telosys.tools.stats.exception.ProjectNotFoundException;
+import org.telosys.tools.stats.PathHelper;
+import org.telosys.tools.stats.StatsProvider;
+import org.telosys.tools.stats.StatsProviderFactory;
+import org.telosys.tools.stats.UserStats;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileName;
 import org.telosys.tools.users.UsersManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class UserAction extends GenericAction
 {
