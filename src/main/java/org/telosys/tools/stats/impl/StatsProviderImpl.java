@@ -26,15 +26,9 @@ public class StatsProviderImpl implements StatsProvider
 	}
 
 	@Override
-	public File getRoot()
-	{
-		return pathHelper.getRoot();
-	}
-
-	@Override
 	public FilesystemStatsOverview getFilesystemStatsOverview()
 	{
-		return new FilesystemStatsOverviewImpl(getRoot());
+		return new FilesystemStatsOverviewImpl(pathHelper);
 	}
 
 	@Override
@@ -75,7 +69,7 @@ public class StatsProviderImpl implements StatsProvider
 	@Override
 	public BundleStats getBundleStats(String userId, String projectName, String bundleName)
 	{
-		return new BundleStatsImpl(pathHelper.getRoot(), userId, bundleName, projectName);
+		return new BundleStatsImpl(pathHelper, userId, bundleName, projectName);
 	}
 
 	@Override
@@ -126,14 +120,12 @@ public class StatsProviderImpl implements StatsProvider
 	public List<BundleStats> getBundlesStats(String userId)
 	{
 		List<BundleStats> bundles = new ArrayList<>();
-		File userDir = pathHelper.getUserDir(userId);
-		File[] projectDirs = userDir.listFiles();
-		for(File projectDir : projectDirs)
-		{
-			File telosysDir = pathHelper.getTelosysDir(userId, projectDir.getName());
-			for(File file : telosysDir.listFiles())
-			{
-				bundles.add(this.getBundleStats(userId, projectDir.getName(), file.getName()));
+		UserStats userStats = this.getUserStats(userId);
+
+		for(String projectName : userStats.getProjectsNames()) {
+			File templatesDir = pathHelper.getBundlesDir(userId, projectName);
+			for(File file : templatesDir.listFiles()) {
+				bundles.add(this.getBundleStats(userId, projectName, file.getName()));
 			}
 		}
 		return bundles;

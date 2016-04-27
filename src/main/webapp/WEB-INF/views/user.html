@@ -44,7 +44,7 @@
         </tr>
         <tr>
             <td>Disk space used</td>
-            <td th:text="${userStats.diskUsage}"></td>
+            <td th:text="${userStats.diskUsageMB}"></td>
         </tr>
         <tr>
             <td>Projects count</td>
@@ -74,7 +74,7 @@
                     <th>Last generation date</th>
                     <th># Generations</th>
                     <th># Bundles</th>
-                    <th>Disk Spaces</th>
+                    <th>Disk Space (MB)</th>
                 </tr>
                 </thead>
 
@@ -85,7 +85,7 @@
                     <td th:text="${#dates.format(project.lastGenerationDate, dateFormat)}"></td>
                     <td th:text="${project.generationsCount}"></td>
                     <td th:text="${project.bundlesCount}"></td>
-                    <td th:text="${project.diskUsage}"></td>
+                    <td th:text="${project.diskUsageMB}"></td>
                 </tr>
                 </tbody>
             </table>

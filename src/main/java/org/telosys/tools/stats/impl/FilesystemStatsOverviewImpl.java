@@ -19,19 +19,12 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	private File root;
 
 
-	public FilesystemStatsOverviewImpl(File root) {
-        this.root = root;
-        UsersFileDAO dao = null;
-        try {
-            dao = new UsersFileDAO(root.getCanonicalPath()+"/users.csv");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        this.users = dao.loadAllUsers().entrySet().stream()
-                .sorted(Comparator.comparing(Map.Entry::getValue))
-                .map(Map.Entry::getValue)
-                .collect(Collectors.toList());
+	public FilesystemStatsOverviewImpl(PathHelper pathHelper) {
+		UsersFileDAO dao = new UsersFileDAO(pathHelper.getCsvFile().getAbsolutePath());
+		this.users = dao.loadAllUsers().entrySet().stream()
+				.sorted(Comparator.comparing(Map.Entry::getValue))
+				.map(Map.Entry::getValue)
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -61,7 +54,7 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 
 	@Override
 	public long getDiskUsage() {
-			return FileUtils.sizeOfDirectory(root);
+		return FileUtils.sizeOfDirectory(root);
 	}
 
 }

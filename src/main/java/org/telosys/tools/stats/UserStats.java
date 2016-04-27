@@ -72,6 +72,13 @@ public interface UserStats {
 	 * @return
 	 */
 	long getDiskUsage();
+
+	/**
+	 * The total disk usage in megabytes<br>
+	 * @see UserStats#getDiskUsage()
+	 * @return
+	 */
+	String getDiskUsageMB();
 	
 	//------------------------------------------------------------------------------
 	// From ".counter" files

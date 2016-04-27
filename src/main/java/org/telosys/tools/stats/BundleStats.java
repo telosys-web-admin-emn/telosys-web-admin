@@ -1,5 +1,6 @@
 package org.telosys.tools.stats;
 
+import java.io.IOException;
 import java.util.Date;
 
 public interface BundleStats {
@@ -26,7 +27,7 @@ public interface BundleStats {
 	 * Origin : installation date file ( ".date" file )
 	 * @return
 	 */
-	Date getInstallationDate() ;
+	Date getInstallationDate() throws IOException;
 	
 	//------------------------------------------------------------------------------
 	// COUNTERS

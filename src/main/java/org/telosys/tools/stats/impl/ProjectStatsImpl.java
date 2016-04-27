@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.telosys.tools.helper.FileUnit;
 import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.ProjectStats;
 
@@ -65,7 +68,16 @@ public class ProjectStatsImpl implements ProjectStats {
 
 	@Override
 	public long getDiskUsage() {
-		return FileUtils.sizeOfDirectory(dir);
+		if(dir.exists()) {
+			return FileUtils.sizeOfDirectory(dir);
+		}
+		return 0;
+	}
+
+	@Override
+	public String getDiskUsageMB() {
+		NumberFormat formatter = new DecimalFormat("#0.00");
+		return formatter.format(getDiskUsage() / FileUnit.MEGABYTE);
 	}
 
 	@Override

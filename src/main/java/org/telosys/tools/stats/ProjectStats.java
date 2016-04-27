@@ -48,7 +48,14 @@ public interface ProjectStats {
 	 * @return
 	 */
 	long getDiskUsage();
-	
+
+	/**
+	 * The total disk usage for the project in megabytes<br>
+	 * @see ProjectStats#getDiskUsage()
+	 * @return
+	 */
+	String getDiskUsageMB();
+
 	//------------------------------------------------------------------------------
 	// DATES
 	//------------------------------------------------------------------------------

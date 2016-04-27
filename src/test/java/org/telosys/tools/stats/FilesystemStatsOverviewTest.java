@@ -3,6 +3,7 @@ package org.telosys.tools.stats;
 import org.junit.Before;
 import org.junit.Test;
 import org.telosys.tools.stats.impl.FilesystemStatsOverviewImpl;
+import org.telosys.tools.stats.impl.ModelStatsImpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,15 +16,16 @@ import static org.junit.Assert.assertEquals;
  */
 public class FilesystemStatsOverviewTest {
 
-    private FilesystemStatsOverview impl = new FilesystemStatsOverviewImpl(new File("fs1"));
+    private FilesystemStatsOverview impl;
 
 
     @Before
     public void setup() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("fs1").getFile());
-        impl = new FilesystemStatsOverviewImpl(file);
+        Configuration testConf = new Configuration();
+        testConf.setTelosysFsLocation("src/test/resources/fs1");
+        this.impl = new FilesystemStatsOverviewImpl(new PathHelper(testConf));
     }
+
 
     @Test
     public void testUsersCount() throws ParseException {

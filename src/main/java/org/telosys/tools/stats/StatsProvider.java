@@ -6,12 +6,6 @@ import java.io.File;
 import java.util.List;
 
 public interface StatsProvider {
-
-	/**
-	 * Returns the root folder for the current StatsProvider
-	 * @return
-	 */
-	File getRoot();
 	
 	/**
 	 * Returns the global stats overview
