@@ -79,7 +79,8 @@ public class UsersStatsImpl implements UserStats {
 		int count = 0;
 		if (this.userDir.exists()) {
 			for (String project : this.getProjectsNames()) {
-				count += pathHelper.getTelosysDir(user.getLogin(), project).listFiles(pathHelper::isModel).length;
+				count += pathHelper.getTelosysDir(user.getLogin(), project)
+						.listFiles(pathHelper::isModel).length;
 			}
 		}
 		return count;

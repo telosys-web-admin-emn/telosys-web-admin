@@ -2,13 +2,21 @@ package org.telosys.tools.stats;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface ProjectStats {
 
 	//------------------------------------------------------------------------------
 	// FILESYSTEM
 	//------------------------------------------------------------------------------
+	/**
+	 * The number of each type in a project <br>
+	 * Origin : all the project files in the filesystem
+	 * @return
+	 */
+	Map<String,Integer> getCountFileTypes();
 	/**
 	 * The project name <br>
 	 * Origin : folder name in the filesystem
@@ -74,5 +82,6 @@ public interface ProjectStats {
 	 * @return
 	 */
 	int getGenerationsCount();
-	
+
+
 }

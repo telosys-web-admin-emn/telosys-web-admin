@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.ProjectStats;
 
@@ -28,6 +29,20 @@ public class ProjectStatsImpl implements ProjectStats {
 		this.user = user;
 		this.pathHelper = pathHelper;
 		this.dir = pathHelper.getProjectDir(user, name);
+	}
+
+	@Override
+	public Map<String, Integer> getCountFileTypes() {
+		List<File> files = new ArrayList<File>(FileUtils.listFiles(dir, TrueFileFilter.TRUE, TrueFileFilter.INSTANCE));
+		Map<String, List<File>> filesMap = files.stream().collect(
+				Collectors.groupingBy(file ->FilenameUtils.getExtension(file.getAbsolutePath()))
+		);
+		Map<String,Integer> filesCountMap = new HashMap<>();
+		for (String key : filesMap.keySet())
+		{
+			filesCountMap.put(key,filesMap.get(key).size());
+		}
+		return filesCountMap;
 	}
 
 	@Override
