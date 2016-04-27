@@ -41,10 +41,10 @@
                 <td th:text="${user.generationsCount}"></td>
             </tr>
         </table>
-        <ul class="pagination">
-        	<li th:class="${currentPage} == 1 ? disabled : waves-effect"><a th:href="${paginator.getPreviousPage(#httpServletRequest)}"><i class="material-icons">chevron_left</i></a></li>
+        <ul th:if="${maxPage} != 1" class="pagination">
+        	<li th:class="${currentPage} == 1 ? disabled : waves-effect"><a th:if="${currentPage} != 1" th:href="${paginator.getPreviousPage(#httpServletRequest)}"><i class="material-icons">chevron_left</i></a></li>
 		    <li th:class="${i} == ${currentPage} ? active : waves-effect" th:each="i : ${#numbers.sequence(1, maxPage)}"><a th:href="${paginator.getPage(#httpServletRequest, i)}" th:text="${i}"></a></li>
-		    <li th:class="${maxPage} == ${currentPage} ? disabled : waves-effect"><a th:href="${paginator.getNextPage(#httpServletRequest)}"><i class="material-icons">chevron_right</i></a></li>
+		    <li th:class="${maxPage} == ${currentPage} ? disabled : waves-effect"><a th:if="${currentPage} != ${maxPage}" th:href="${paginator.getNextPage(#httpServletRequest)}"><i class="material-icons">chevron_right</i></a></li>
 		</ul>
 </div>
 
