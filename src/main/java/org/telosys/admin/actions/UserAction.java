@@ -51,11 +51,14 @@ public class UserAction extends GenericAction
 				request.setAttribute("projectStats", provider.getProjectsStats(userName));
 				request.setAttribute("bundleStats", provider.getBundlesStats(userName));
 				request.setAttribute("modelStats", provider.getModelsStats(userName));
+				// add the date format to format creation and last connection dates
+				request.setAttribute("dateFormat", pathHelper.getViewDateFormat());
 
 			}
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			request.setAttribute("error", e.getClass().getName());
 			return "error";
 		}
