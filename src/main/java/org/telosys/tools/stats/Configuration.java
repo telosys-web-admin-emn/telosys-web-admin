@@ -11,6 +11,8 @@ import java.util.Properties;
 public class Configuration {
 
     public final static String TELOSYS_FS_LOCATION = "telosys_fs_location";
+    
+    public final static String VIEW_DATE_FORMAT = "view_date_format";
 
     public final static String USERS_PER_PAGE = "users_per_page";
 
@@ -31,6 +33,7 @@ public class Configuration {
     private String modelExtension;
     private String templatesDir;
     private String telosysDir;
+    private String viewDateFormat;
 
 
     public Configuration(InputStream fis) throws IOException {
@@ -41,6 +44,7 @@ public class Configuration {
         this.modelExtension = properties.getProperty(MODEL_EXTENSION);
         this.templatesDir = properties.getProperty(TEMPLATES_DIR);
         this.telosysDir = properties.getProperty(TELOSYS_DIR);
+        this.viewDateFormat = properties.getProperty(VIEW_DATE_FORMAT);
     }
 
     public String getTelosysFsLocation() {
@@ -61,5 +65,9 @@ public class Configuration {
 
     public String getTelosysDir() {
         return telosysDir;
+    }
+    
+    public String getViewDateFormat(){
+    	return viewDateFormat;
     }
 }

@@ -18,6 +18,8 @@ public interface UserStats {
 	
 	Date getCreationDate(); // to be added in User
 	
+	Date getLastConnectionDate();
+	
 	String getCountry(); // to be added in User
 	
 	String getLanguage(); // to be added in User
