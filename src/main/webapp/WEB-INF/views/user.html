@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="/WEB-CONTENT/materialize/css/materialize.css"/>
     <link rel="stylesheet" href="/WEB-CONTENT/css/main.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <title>User info</title>
 </head>
 <body>
@@ -61,30 +62,81 @@
 
     <br/>
 
-    <table class="bordered striped responsive-table">
-        <thead>
-        <tr>
-            <th>Project Name</th>
-            <th>Creation Date</th>
-            <th>Last generation date</th>
-            <th># Generations</th>
-            <th># Bundles</th>
-            <th>Disk Spaces</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr th:each="project : ${projectStats}">
-            <td th:text="${project.projectName}"></td>
-            <td th:text="${project.creationDate}"></td>
-            <td th:text="${project.lastGenerationDate}"></td>
-            <td th:text="${project.generationsCount}"></td>
-            <td th:text="${project.bundlesCount}"></td>
-            <td th:text="${project.diskUsage}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <ul class="collapsible" data-collapsible="accordion">
+        <li>
+            <div class="collapsible-header"><i class="material-icons">work</i> User's Projects</div>
+            <table class="collapsible-body bordered striped responsive-table">
+                <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Creation Date</th>
+                    <th>Last generation date</th>
+                    <th># Generations</th>
+                    <th># Bundles</th>
+                    <th>Disk Spaces</th>
+                </tr>
+                </thead>
 
+                <tbody>
+                <tr th:each="project : ${projectStats}">
+                    <td th:text="${project.projectName}"></td>
+                    <td th:text="${project.creationDate}"></td>
+                    <td th:text="${project.lastGenerationDate}"></td>
+                    <td th:text="${project.generationsCount}"></td>
+                    <td th:text="${project.bundlesCount}"></td>
+                    <td th:text="${project.diskUsage}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </li>
+
+        <li>
+            <div class="collapsible-header"><i class="material-icons">description</i> User's Models</div>
+            <table class="collapsible-body bordered striped responsive-table">
+                <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Model Name</th>
+                    <th>Creation Date</th>
+                    <th>Last generation date</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="model : ${modelStats}">
+                    <td th:text="${model.projectName}"></td>
+                    <td th:text="${model.modelName}"></td>
+                    <td th:text="${model.lastModifiedDate}"></td>
+                    <td th:text="${model.creationDate}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </li>
+
+        <li>
+            <div class="collapsible-header"><i class="material-icons">library_books</i> User's Bundles</div>
+            <table class="collapsible-body bordered striped responsive-table">
+                <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Bundle Name</th>
+                    <th>Installation Date</th>
+                    <th># Generations</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="bundle : ${bundleStats}">
+                    <td th:text="${bundle.projectName}"></td>
+                    <td th:text="${bundle.bundleName}"></td>
+                    <td th:text="${bundle.installationDate}"></td>
+                    <td th:text="${bundle.generationsCount}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </li>
+    </ul>
 </div>
 
 <div th:include="footer :: foot"></div>
