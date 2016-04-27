@@ -1,5 +1,6 @@
 package org.telosys.tools.stats;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -30,6 +31,7 @@ public class Configuration {
     private String modelExtension;
     private String templatesDir;
     private String telosysDir;
+    private String viewDateFormat;
 
 
     public Configuration(InputStream fis) throws IOException {
@@ -89,5 +91,9 @@ public class Configuration {
 
     public void setTelosysDir(String telosysDir) {
         this.telosysDir = telosysDir;
+    }
+
+    public String getViewDateFormat(){
+    	return viewDateFormat;
     }
 }

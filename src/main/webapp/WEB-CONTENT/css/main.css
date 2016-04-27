@@ -7,3 +7,18 @@
 {
     margin-bottom: 25px;
 }
+.medium-icon
+{
+    vertical-align: middle;
+    font-size: 3rem;
+}
+.statistics
+{
+    font-size: 1.5em;
+}
+.half-width {
+    width: 49%;
+    display: inline-block;
+    vertical-align: top;
+}
+ 
