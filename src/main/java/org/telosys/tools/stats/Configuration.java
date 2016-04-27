@@ -69,10 +69,6 @@ public class Configuration {
         return telosysDir;
     }
 
-    public String getViewDateFormat(){
-    	return viewDateFormat;
-    }
-
     public void setTelosysFsLocation(String telosysFsLocation) {
         this.telosysFsLocation = telosysFsLocation;
     }
