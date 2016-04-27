@@ -57,7 +57,7 @@ public class UsersService {
 	 * @param request
 	 * @return HttpServletRequest
 	 */
-	public HttpServletRequest buildUsersFilters(HttpServletRequest request){
+	public HttpServletRequest buildUsersSearchs(HttpServletRequest request){
 		request.setAttribute("SEARCH_BY_LOGIN", SEARCH_BY_LOGIN);
 		request.setAttribute("SEARCH_BY_BEGINNING_CREATION_DATE", SEARCH_BY_BEGINNING_CREATION_DATE);
 		request.setAttribute("SEARCH_BY_ENDING_CREATION_DATE", SEARCH_BY_ENDING_CREATION_DATE);
@@ -72,7 +72,7 @@ public class UsersService {
 	 * @param request
 	 * @return HttpServletRequest
 	 */
-	public HttpServletRequest buildUsersSearchs(HttpServletRequest request){
+	public HttpServletRequest  buildUsersFilters(HttpServletRequest request){
 		request.setAttribute("LOGIN_FILTER", LOGIN_FILTER);
 		request.setAttribute("CREATION_DATE_FILTER", CREATION_DATE_FILTER);
 		request.setAttribute("LAST_CONNECTION_DATE_FILTER", LAST_CONNECTION_DATE_FILTER);

@@ -13,6 +13,7 @@
          <!-- comment -->
          <h1 class="center-align">Users</h1>
          <div class="row">
+            <!--<form method="POST" th:attr="action = ${currentUrl}">-->
             <form method="GET">
                <div class="input-field col s3">
                   <input placeholder="Login" type="text" th:attr="id = ${SEARCH_BY_LOGIN}, name = ${SEARCH_BY_LOGIN}, value = ${#httpServletRequest.getParameter(SEARCH_BY_LOGIN)}" class="validate"/>

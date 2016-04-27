@@ -35,6 +35,8 @@ public class UsersAction extends GenericAction{
 			httpServletRequest = FilterSorter.buildSorting(httpServletRequest);
 			// build filters
 			httpServletRequest = this.getUsersService().buildUsersFilters(httpServletRequest);
+			// build searchs
+			httpServletRequest = this.getUsersService().buildUsersSearchs(httpServletRequest);
 			int page = (int) httpServletRequest.getAttribute(Paginator.CURRENT_PAGE_ATTRIBUTE);
 			users = this.getPaginatedUsers(users, page, httpServletRequest);
     		// add the users to the view
