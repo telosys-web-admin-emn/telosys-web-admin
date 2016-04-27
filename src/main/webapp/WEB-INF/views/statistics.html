@@ -19,16 +19,36 @@
                 <div class="card-content">
                     <h1 style="margin-top:0">Statistics</h1>
                     <div class="half-width">
-                        <div class="statistics"><i class="medium-icon material-icons">account_box</i><strong>Users : </strong><span th:text="${usersCount}"></span> </div>
-                        <div class="statistics"><i class="medium-icon material-icons">folder_shared</i><strong>Projects : </strong><span th:text="${projectsCount}"></span> </div>
-                        <div class="statistics"><i class="medium-icon material-icons">view_module</i><strong>Models : </strong><span th:text="${modelsCount}"></span> </div>
-                        <div class="statistics"><i class="medium-icon material-icons">data_usage</i><strong>Disk usage : </strong><span th:text="${diskUsage}"></span> </div>
+                        <div class="statistics">
+                            <i class="medium-icon material-icons">account_box</i>
+                            <strong>Users : </strong><span th:text="${usersCount}"></span>
+                        </div>
+                        <div class="statistics">
+                            <i class="medium-icon material-icons">folder_shared</i>
+                            <strong>Projects : </strong><span th:text="${projectsCount}"></span>
+                        </div>
+                        <div class="statistics">
+                            <i class="medium-icon material-icons">view_module</i>
+                            <strong>Models : </strong><span th:text="${modelsCount}"></span>
+                        </div>
+                        <div class="statistics">
+                            <i class="medium-icon material-icons">data_usage</i>
+                            <strong>Disk usage : </strong><span th:text="${diskUsage}"></span> MB
+                        </div>
                     </div>
                     <div class="half-width">
-
-                    <div class="statistics"><strong>Average projects / users : </strong> <span th:text="${averageProjects}"></span></div>
-                    <div class="statistics"><strong>Average models / users : </strong> <span th:text="${averageModels}"></span></div>
-                    <div class="statistics"><strong>Average disk usage/users : </strong> <span th:text="${averageDiskUsage}"></span></div>
+                        <div class="statistics">
+                            <strong>Average projects / users : </strong>
+                            <span th:text="${averageProjects}"></span>
+                        </div>
+                        <div class="statistics">
+                            <strong>Average models / users : </strong>
+                            <span th:text="${averageModels}"></span>
+                        </div>
+                        <div class="statistics">
+                            <strong>Average disk usage/users : </strong>
+                            <span th:text="${averageDiskUsage}"></span> MB
+                        </div>
                     </div>
                     <h4>Historic per month </h4>
                     <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
