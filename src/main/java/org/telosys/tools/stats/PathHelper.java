@@ -108,5 +108,5 @@ public class PathHelper
 		return conf.getViewDateFormat();
 	}
 
-
+	public long getDiskUsageQuota() { return conf.getDiskUsageQuota(); }
 }
