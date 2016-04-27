@@ -21,4 +21,12 @@
     display: inline-block;
     vertical-align: top;
 }
- 
+
+
+.collapsible-header {
+    margin-bottom: 10px;
+}
+
+.collapsible-body table {
+    margin-bottom: 10px;
+}
