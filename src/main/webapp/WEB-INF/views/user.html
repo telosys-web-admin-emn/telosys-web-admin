@@ -63,7 +63,7 @@
     <br/>
 
 
-    <ul class="collapsible" data-collapsible="expandable">
+    <ul class="collapsible popout" data-collapsible="expandable">
         <li>
             <div class="collapsible-header"><i class="material-icons">work</i> User's Projects</div>
             <table class="collapsible-body bordered striped responsive-table">
@@ -143,5 +143,16 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script type="text/javascript" src="/WEB-CONTENT/materialize/js/materialize.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('.collapsible').collapsible({
+            accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+        });
+    });
+
+
+
+</script>
 </body>
 </html>
