@@ -1,6 +1,7 @@
 package org.telosys.admin.actions;
 
 import org.nanoj.web.tinymvc.GenericAction;
+import org.telosys.tools.helper.FileUnit;
 import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.stats.StatsProviderFactory;
 
@@ -19,7 +20,7 @@ public class StatisticsAction extends GenericAction {
             int usersCount = statsOverview.getUsersCount();
             int projectsCount = statsOverview.getProjectsCount();
             int modelsCount = statsOverview.getModelsCount();
-            long diskUsage = Math.round(statsOverview.getDiskUsage()/1000000);
+            long diskUsage = Math.round(statsOverview.getDiskUsage()/ FileUnit.MEGABYTE);
             //Need to multipy by 1.0 to cast in double ) have a double result
             double averageProjects = projectsCount * 1.0 / usersCount;
             double averageModels = modelsCount * 1.0 / usersCount;
