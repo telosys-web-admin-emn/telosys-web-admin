@@ -26,11 +26,16 @@ public class Paginator extends AbstractParameterReplacer {
 	 */
 	public static HttpServletRequest buildPagination(HttpServletRequest request, int maxPage)
 	{
+		int computedMaxPage = maxPage;
+		// if we have no users in the csv, maxPage value is 0
+		if(computedMaxPage == 0) {
+			computedMaxPage = 1;
+		}
 		int page = getCurrentPage(request);
 		request.setAttribute(CURRENT_PAGE_ATTRIBUTE, page);
 		request.setAttribute(PREVIOUS_PAGE_ATTRIBUTE, page == 1 ? 1 : page-1);
-		request.setAttribute(NEXT_PAGE_ATTRIBUTE, maxPage == page ? maxPage : page+1);
-		request.setAttribute(MAX_PAGE_ATTRIBUTE, maxPage);
+		request.setAttribute(NEXT_PAGE_ATTRIBUTE, computedMaxPage == page ? computedMaxPage : page+1);
+		request.setAttribute(MAX_PAGE_ATTRIBUTE, computedMaxPage == 0 ? 1 : computedMaxPage);
 		// we pass the paginator to the view so that we can use methods such as getPreviousPage, getNextPage, ...
 		request.setAttribute(PAGINATOR_ATTRIBUTE, new Paginator());
 		return request;
