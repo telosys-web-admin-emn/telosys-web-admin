@@ -38,6 +38,7 @@ public class StatisticsAction extends GenericAction {
             httpServletRequest.setAttribute("averageProjects", averageProjects);
             httpServletRequest.setAttribute("averageModels", averageModels);
             httpServletRequest.setAttribute("averageDiskUsage", averageDiskUsage );
+
             Map<String,Integer> usersProjectsTypes = statsOverview.getCountFileTypes();
             httpServletRequest.setAttribute("filetype", usersProjectsTypes );
 
