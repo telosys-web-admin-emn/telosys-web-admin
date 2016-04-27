@@ -26,7 +26,7 @@ public abstract class AbstractParameterReplacer {
 			URL url = new URL(fullUrl);
 			urlParameters = url.getQuery();
 		} catch (MalformedURLException e) {
-			// TODO : gérer l'exception
+			// TODO : gÃ©rer l'exception
 			e.printStackTrace();
 		}
 		boolean requestUrlHasParameters = urlParameters != null;
