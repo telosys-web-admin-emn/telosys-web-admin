@@ -26,13 +26,23 @@ public class FilesystemStatsOverviewTest {
     }
 
     @Test
-    public void testNbUsers() throws ParseException {
+    public void testUsersCount() throws ParseException {
         assertEquals(2, impl.getUsersCount());
     }
 
     @Test
     public void testProjectsCount() throws ParseException, IOException {
         assertEquals(5, impl.getProjectsCount());
+    }
+
+    @Test
+    public void testModelsCount() throws ParseException, IOException {
+        assertEquals(6, impl.getModelsCount());
+    }
+
+    @Test
+    public void testDiskUsage() throws ParseException, IOException {
+        assertEquals(29658442, impl.getDiskUsage());
     }
 
 }
