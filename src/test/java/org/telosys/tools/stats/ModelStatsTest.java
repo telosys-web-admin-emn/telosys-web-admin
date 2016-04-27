@@ -1,10 +1,6 @@
 package org.telosys.tools.stats;
 
-import org.easymock.EasyMockRule;
-import org.easymock.Mock;
-import org.easymock.TestSubject;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.telosys.tools.stats.impl.ModelStatsImpl;
 
@@ -13,7 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 /**
