@@ -51,12 +51,28 @@ public class UsersService {
 		
 		return users;
 	}
+	
 	/**
 	 * Build the filters for the view users
 	 * @param request
 	 * @return HttpServletRequest
 	 */
 	public HttpServletRequest buildUsersFilters(HttpServletRequest request){
+		request.setAttribute("SEARCH_BY_LOGIN", SEARCH_BY_LOGIN);
+		request.setAttribute("SEARCH_BY_BEGINNING_CREATION_DATE", SEARCH_BY_BEGINNING_CREATION_DATE);
+		request.setAttribute("SEARCH_BY_ENDING_CREATION_DATE", SEARCH_BY_ENDING_CREATION_DATE);
+		request.setAttribute("SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE", SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE);
+		request.setAttribute("SEARCH_BY_ENDING_LAST_CONNECTION_DATE", SEARCH_BY_ENDING_LAST_CONNECTION_DATE);
+		request.setAttribute("SEARCH_BY_IS_CONNECTED", SEARCH_BY_IS_CONNECTED);
+		return request;
+	}
+	
+	/**
+	 * Build the available search for the view users
+	 * @param request
+	 * @return HttpServletRequest
+	 */
+	public HttpServletRequest buildUsersSearchs(HttpServletRequest request){
 		request.setAttribute("LOGIN_FILTER", LOGIN_FILTER);
 		request.setAttribute("CREATION_DATE_FILTER", CREATION_DATE_FILTER);
 		request.setAttribute("LAST_CONNECTION_DATE_FILTER", LAST_CONNECTION_DATE_FILTER);
