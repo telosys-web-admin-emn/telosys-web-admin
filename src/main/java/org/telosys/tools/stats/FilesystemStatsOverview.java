@@ -2,6 +2,7 @@ package org.telosys.tools.stats;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Map;
 
 /**
  * Global filesystem information for all users <br>
@@ -11,6 +12,11 @@ import java.text.ParseException;
  */
 public interface FilesystemStatsOverview {
 
+	/**
+	 * Returns all types in all users projects
+	 * @return
+	 */
+	public Map<String,Integer> getCountFileTypes() throws IOException, ParseException;
 	/**
 	 * Returns the total number of users folders
 	 * @return
