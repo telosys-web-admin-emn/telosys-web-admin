@@ -10,7 +10,7 @@ public interface ModelStats {
 	 * Origin : folder name in the filesystem
 	 * @return
 	 */
-	String getProjectName() ;
+	String getProjectName();
 	
 	/**
 	 * The model name <br>
@@ -18,7 +18,7 @@ public interface ModelStats {
 	 * e.g. : "cars.model"
 	 * @return
 	 */
-	String getModelName() ;
+	String getModelName();
 	
 	/**
 	 * Returns the last modified date of the model file <br> 
@@ -26,13 +26,13 @@ public interface ModelStats {
 	 *  see : Files.readAttributes + attr.lastModifiedTime() (OK in Windows and Linux)
 	 * @return
 	 */
-	Date getLastModifiedDate() throws IOException;
+	Date getLastModifiedDate();
 	
-//	/**
-//	 * Returns the creation date of the model file <br> 
-//	 * Origin : "creation.date"
-//	 * @return
-//	 */
-//	Date getCreationDate() ;
+	/**
+	 * Returns the creation date of the model file <br>
+	 * Origin : "creation.date"
+	 * @return
+	 */
+	Date getCreationDate();
 	
 }

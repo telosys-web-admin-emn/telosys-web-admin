@@ -10,31 +10,37 @@ import org.telosys.tools.users.UsersManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class UserAction extends GenericAction {
+public class UserAction extends GenericAction
+{
 
 	private StatsProvider provider = StatsProviderFactory.getStatsProvider();
 
 	private PathHelper pathHelper;
 
-	public UserAction() {
+	public UserAction()
+	{
 		super();
 		this.pathHelper = PathHelper.getInstance();
 	}
 
 	@Override
-	public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	{
 		try
 		{
 			String userName = httpServletRequest.getParameter("username");
-			if (userName != null) {
+			if(userName != null)
+			{
 				// User's stats.
 				UsersFileName.setSpecificFileName(pathHelper.getCsvFile().getPath());
 				UsersManager users = UsersManager.getInstance();
 				User myUser = users.getUserByLogin(userName);
 				UserStats usersStats = provider.getUserStats(userName);
-				if(myUser == null || usersStats == null) {
+				if(myUser == null || usersStats == null)
+				{
 					httpServletRequest.setAttribute("erreur", "Impossible de trouver l'utilisateur.");
 					return "erreur";
 				}
@@ -42,14 +48,13 @@ public class UserAction extends GenericAction {
 				httpServletRequest.setAttribute("userStats", usersStats);
 
 				// User's projects stats
-				List<ProjectStats> projectStats = new ArrayList<>();
-				for (String project : usersStats.getProjectsNames()) {
-					projectStats.add(provider.getProjectStats(userName, project));
-				}
-				httpServletRequest.setAttribute("projectStats", projectStats);
+				httpServletRequest.setAttribute("projectStats", provider.getProjectsStats(userName));
+				httpServletRequest.setAttribute("bundleStats", provider.getBundlesStats(userName));
+				httpServletRequest.setAttribute("modelStats", provider.getModelsStats(userName));
 
 			}
-		} catch(ProjectNotFoundException e)
+		}
+		catch(Exception e)
 		{
 			httpServletRequest.setAttribute("erreur", e.getCause());
 			return "erreur";

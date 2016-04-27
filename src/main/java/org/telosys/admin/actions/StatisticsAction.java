@@ -19,11 +19,11 @@ public class StatisticsAction extends GenericAction {
             int usersCount = statsOverview.getUsersCount();
             int projectsCount = statsOverview.getProjectsCount();
             int modelsCount = statsOverview.getModelsCount();
-            long diskUsage = statsOverview.getDiskUsage();
-            //Need to multipy by 1.0 to cast in double and have a double result
+            long diskUsage = Math.round(statsOverview.getDiskUsage()/1000000);
+            //Need to multipy by 1.0 to cast in double ) have a double result
             double averageProjects = projectsCount * 1.0 / usersCount;
             double averageModels = modelsCount * 1.0 / usersCount;
-            double averageDiskUsage = diskUsage * 1.0 / usersCount;
+            long averageDiskUsage = Math.round(diskUsage / usersCount);
             //Add statistics to the body
             httpServletRequest.setAttribute("usersCount", usersCount);
             httpServletRequest.setAttribute("projectsCount", projectsCount);

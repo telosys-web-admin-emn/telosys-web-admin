@@ -103,6 +103,10 @@ public class PathHelper
 	private File resolve(String... files) {
 		return new File(stream(files).collect(joining(File.separator)));
 	}
+	
+	public String getViewDateFormat(){
+		return conf.getViewDateFormat();
+	}
 
 
 }
