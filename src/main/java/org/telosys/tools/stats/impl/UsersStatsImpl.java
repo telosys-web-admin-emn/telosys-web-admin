@@ -8,12 +8,15 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.telosys.tools.helper.FileUnit;
 import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.UserStats;
 import org.telosys.tools.users.User;
@@ -79,7 +82,8 @@ public class UsersStatsImpl implements UserStats {
 		int count = 0;
 		if (this.userDir.exists()) {
 			for (String project : this.getProjectsNames()) {
-				count += pathHelper.getTelosysDir(user.getLogin(), project).listFiles(pathHelper::isModel).length;
+				count += pathHelper.getTelosysDir(user.getLogin(), project)
+						.listFiles(pathHelper::isModel).length;
 			}
 		}
 		return count;
@@ -132,7 +136,12 @@ public class UsersStatsImpl implements UserStats {
 			return FileUtils.sizeOfDirectory(this.userDir);
 		}
 		return 0;
-		
+	}
+
+	@Override
+	public String getDiskUsageMB() {
+		NumberFormat formatter = new DecimalFormat("#0.00");
+		return formatter.format(getDiskUsage() / FileUnit.MEGABYTE);
 	}
 
 	@Override

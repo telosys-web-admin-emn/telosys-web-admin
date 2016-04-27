@@ -38,18 +38,19 @@
                     </div>
                     <div class="half-width">
                         <div class="statistics">
-                            <strong>Average projects / users : </strong>
+                            <strong>Average projects / user : </strong>
                             <span th:text="${averageProjects}"></span>
                         </div>
                         <div class="statistics">
-                            <strong>Average models / users : </strong>
+                            <strong>Average models / user : </strong>
                             <span th:text="${averageModels}"></span>
                         </div>
                         <div class="statistics">
-                            <strong>Average disk usage/users : </strong>
+                            <strong>Average disk usage / user : </strong>
                             <span th:text="${averageDiskUsage}"></span> MB
                         </div>
                     </div>
+                    <span th:text="${filetype}"></span>
                     <h4>Historic per month </h4>
                     <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
                         an historic</a></div>

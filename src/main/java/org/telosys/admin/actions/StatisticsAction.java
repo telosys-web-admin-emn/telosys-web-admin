@@ -1,25 +1,30 @@
 package org.telosys.admin.actions;
 
 import org.nanoj.web.tinymvc.GenericAction;
+import org.telosys.tools.helper.FileUnit;
 import org.telosys.tools.stats.FilesystemStatsOverview;
+import org.telosys.tools.stats.ProjectStats;
 import org.telosys.tools.stats.StatsProviderFactory;
+import org.telosys.tools.stats.impl.ProjectStatsImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.io.IOException;
+import java.util.Map;
 
 public class StatisticsAction extends GenericAction {
 
     @Override
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         FilesystemStatsOverview statsOverview = StatsProviderFactory.getStatsProvider().getFilesystemStatsOverview();
+
         try {
             //Get statistics from stats overview class
             int usersCount = statsOverview.getUsersCount();
             int projectsCount = statsOverview.getProjectsCount();
             int modelsCount = statsOverview.getModelsCount();
-            long diskUsage = Math.round(statsOverview.getDiskUsage()/1000000);
+            long diskUsage = Math.round(statsOverview.getDiskUsage()/ FileUnit.MEGABYTE);
             //Need to multipy by 1.0 to cast in double ) have a double result
             double averageProjects = projectsCount * 1.0 / usersCount;
             double averageModels = modelsCount * 1.0 / usersCount;
@@ -33,6 +38,9 @@ public class StatisticsAction extends GenericAction {
             httpServletRequest.setAttribute("averageProjects", averageProjects);
             httpServletRequest.setAttribute("averageModels", averageModels);
             httpServletRequest.setAttribute("averageDiskUsage", averageDiskUsage );
+            Map<String,Integer> usersProjectsTypes = statsOverview.getCountFileTypes();
+            httpServletRequest.setAttribute("filetype", usersProjectsTypes );
+
         } catch (IOException | ArithmeticException | ParseException e )
         {
             e.printStackTrace();

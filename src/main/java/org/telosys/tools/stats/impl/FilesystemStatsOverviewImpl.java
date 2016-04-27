@@ -1,5 +1,6 @@
 package org.telosys.tools.stats.impl;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.io.FileUtils;
 import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.FilesystemStatsOverview;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,19 +21,12 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 	private File root;
 
 
-	public FilesystemStatsOverviewImpl(File root) {
-        this.root = root;
-        UsersFileDAO dao = null;
-        try {
-            dao = new UsersFileDAO(root.getCanonicalPath()+"/users.csv");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        this.users = dao.loadAllUsers().entrySet().stream()
-                .sorted(Comparator.comparing(Map.Entry::getValue))
-                .map(Map.Entry::getValue)
-                .collect(Collectors.toList());
+	public FilesystemStatsOverviewImpl(PathHelper pathHelper) {
+		UsersFileDAO dao = new UsersFileDAO(pathHelper.getCsvFile().getAbsolutePath());
+		this.users = dao.loadAllUsers().entrySet().stream()
+				.sorted(Comparator.comparing(Map.Entry::getValue))
+				.map(Map.Entry::getValue)
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -58,10 +53,33 @@ public class FilesystemStatsOverviewImpl implements FilesystemStatsOverview  {
 		}
 		return somme;
 	}
+    @Override
+    public Map<String,Integer> getCountFileTypes() throws ParseException, IOException
+    {
+        Map<String,Integer> res = new HashMap<>();
+        for (User user : this.users) {
+            UsersStatsImpl stats = new UsersStatsImpl(PathHelper.getInstance(), user);
+            List<String> userProjects = stats.getProjectsNames();
+            for (String project : userProjects)
+            {
+                ProjectStatsImpl projectStats = new ProjectStatsImpl(PathHelper.getInstance(),project,user.getLogin());
+                Map<String,Integer> userFilesTypes = projectStats.getCountFileTypes();
+                for(String key : userFilesTypes.keySet())
+                {
+                    if(!res.containsKey(key))
+                        res.put(key,userFilesTypes.get(key));
+                    else
+                        res.put(key,res.get(key) + userFilesTypes.get(key));
+                }
+            }
+        }
+        return  res;
+    }
+
 
 	@Override
 	public long getDiskUsage() {
-			return FileUtils.sizeOfDirectory(root);
+		return FileUtils.sizeOfDirectory(root);
 	}
 
 }

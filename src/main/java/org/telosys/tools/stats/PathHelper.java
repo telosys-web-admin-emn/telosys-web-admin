@@ -64,6 +64,10 @@ public class PathHelper
 		return resolve(rootPath, user, project, conf.getTelosysDir(), conf.getTemplatesDir());
 	}
 
+	public File getTemplatesDir(String user, String project, String bundle) {
+		return resolve(rootPath, user, project, conf.getTelosysDir(), conf.getTemplatesDir(), bundle);
+	}
+
 	public File getTelosysDir(String user, String project) {
 		return resolve(rootPath, user, project, conf.getTelosysDir());
 	}
@@ -108,5 +112,5 @@ public class PathHelper
 		return conf.getViewDateFormat();
 	}
 
-
+	public long getDiskUsageQuota() { return conf.getDiskUsageQuota(); }
 }

@@ -1,5 +1,6 @@
 package org.telosys.tools.stats.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,27 +35,22 @@ public class ModelStatsImpl implements ModelStats {
 	}
 
 	@Override
-	public Date getLastModifiedDate() {
+	public Date getLastModifiedDate() throws IOException {
+		File modelFile = pathHelper.getModelFile(userId, projectName, modelName);
+		System.out.println(modelFile.exists());
 		Path file = pathHelper.getModelFile(userId, projectName, modelName).toPath();
+		// File info
+		BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class);
 
-		try
-		{
-			// File info
-			BasicFileAttributes attr = Files.readAttributes(file, BasicFileAttributes.class);
-
-			// lastModifiedTime : OK / Windows and Linux
-			return new Date(attr.lastModifiedTime().toMillis());
-		}
-		catch(IOException e)
-		{
-			return null;
-		}
+		// lastModifiedTime : OK / Windows and Linux
+		return new Date(attr.lastModifiedTime().toMillis());
 	}
 
 	@Override
 	public Date getCreationDate()
 	{
-		Path file = pathHelper.getModelFile(userId, projectName, modelName).toPath();
+		File modelFile = pathHelper.getModelFile(userId, projectName, modelName);
+		Path file = modelFile.toPath();
 
 		try
 		{

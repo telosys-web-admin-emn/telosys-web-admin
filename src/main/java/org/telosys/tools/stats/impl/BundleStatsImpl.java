@@ -8,16 +8,17 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
 
 import org.telosys.tools.stats.BundleStats;
+import org.telosys.tools.stats.PathHelper;
 
 public class BundleStatsImpl implements BundleStats {
 
-	private File root;
 	private String userName;
 	private String bundleName;
 	private String projectName;
+	private PathHelper pathHelper;
 
-	public BundleStatsImpl(File root, String userName, String bundleName, String projectName) {
-		this.root = root;
+	public BundleStatsImpl(PathHelper pathHelper, String userName, String bundleName, String projectName) {
+		this.pathHelper = pathHelper;
 		this.userName = userName;
 		this.bundleName = bundleName;
 		this.projectName = projectName;
@@ -34,18 +35,10 @@ public class BundleStatsImpl implements BundleStats {
 	}
 
 	@Override
-	public Date getInstallationDate() {
-		Path bundle_path = this.root.toPath().resolve(this.userName).resolve(this.projectName);
-		bundle_path.resolve("TelosysTools/templates").resolve(this.bundleName);
-		BasicFileAttributes attr = null;
-		try
-		{
-			attr = Files.readAttributes(bundle_path, BasicFileAttributes.class);
-			return new Date(attr.creationTime().toMillis());
-		} catch(IOException e)
-		{
-			return null;
-		}
+	public Date getInstallationDate() throws IOException {
+		Path bundle = pathHelper.getTemplatesDir(userName, projectName, bundleName).toPath();
+		BasicFileAttributes attr = Files.readAttributes(bundle, BasicFileAttributes.class);
+		return new Date(attr.creationTime().toMillis());
 	}
 
 	@Override

@@ -20,6 +20,7 @@ public class Configuration {
 
     public final static String TEMPLATES_DIR = "templates_dir";
 
+    public final static String DISK_USAGE_QUOTA = "disk_usage_quota";
     /*****************************
      * PRIVATE MEMBERS
      ****************************/
@@ -32,6 +33,7 @@ public class Configuration {
     private String templatesDir;
     private String telosysDir;
     private String viewDateFormat;
+    private long diskUsageQuota;
 
 
     public Configuration(InputStream fis) throws IOException {
@@ -43,6 +45,7 @@ public class Configuration {
         this.templatesDir = properties.getProperty(TEMPLATES_DIR);
         this.telosysDir = properties.getProperty(TELOSYS_DIR);
         this.viewDateFormat = properties.getProperty(VIEW_DATE_FORMAT);
+        this.diskUsageQuota = Long.parseLong(properties.getProperty(DISK_USAGE_QUOTA));
     }
 
     // for tests
@@ -92,4 +95,6 @@ public class Configuration {
     public String getViewDateFormat(){
     	return viewDateFormat;
     }
+
+    public long getDiskUsageQuota() { return diskUsageQuota; }
 }

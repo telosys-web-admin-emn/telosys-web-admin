@@ -50,22 +50,22 @@
                   <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, LAST_CONNECTION_DATE_FILTER)}">Last login date</a></th>
                   <th>Connected</th>
                   <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, MAIL_FILTER)}">Mail</a></th>
-                  <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, DISK_USAGE_FILTER)}">Disk space</a></th>
+                <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, DISK_USAGE_FILTER)}">Disk space (MB)</a></th>
                   <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, PROJECTS_COUNT_FILTER)}">Projects count</a></th>
                   <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, MODELS_COUNT_FILTER)}">Models count</a></th>
                   <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, GENERATIONS_COUNT_FILTER)}">Generations count</a></th>
                </tr>
             </thead>
             <tr th:each="user : ${users}">
-               <td><a th:text="${user.login}" th:href="@{/do/user(username=${user.login})}"></a></td>
-               <td th:text="${#dates.format(user.creationDate, dateFormat)}"></td>
-               <td th:text="${#dates.format(user.lastConnectionDate, dateFormat)}"></td>
-               <td>Yes</td>
-               <td th:text="${user.mail}"></td>
-               <td th:text="${user.diskUsage}"></td>
-               <td th:text="${user.projectsCount}"></td>
-               <td th:text="${user.modelsCount}"></td>
-               <td th:text="${user.generationsCount}"></td>
+                <td><a th:text="${user.login}" th:href="@{/do/user(username=${user.login})}"></a></td>
+                <td th:text="${#dates.format(user.creationDate, dateFormat)}"></td>
+                <td th:text="${#dates.format(user.lastConnectionDate, dateFormat)}"></td>
+                <td>Yes</td>
+                <td th:text="${user.mail}"></td>
+                <td th:text="${user.diskUsageMB}"></td>
+                <td th:text="${user.projectsCount}"></td>
+                <td th:text="${user.modelsCount}"></td>
+                <td th:text="${user.generationsCount}"></td>
             </tr>
          </table>
          <ul th:if="${maxPage} != 1" class="pagination center-align">

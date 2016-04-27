@@ -26,7 +26,7 @@ public interface ModelStats {
 	 *  see : Files.readAttributes + attr.lastModifiedTime() (OK in Windows and Linux)
 	 * @return
 	 */
-	Date getLastModifiedDate();
+	Date getLastModifiedDate() throws IOException;
 	
 	/**
 	 * Returns the creation date of the model file <br>
