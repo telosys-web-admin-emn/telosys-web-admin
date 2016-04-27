@@ -60,6 +60,12 @@
             <version>9.3.8.v20160314</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>3.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>
