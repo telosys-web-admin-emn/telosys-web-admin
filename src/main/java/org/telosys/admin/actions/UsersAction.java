@@ -18,6 +18,7 @@ import org.telosys.web.services.UsersService;
 
 public class UsersAction extends GenericAction{
 
+
 	private PathHelper pathHelper;
 
 	public UsersAction() {
@@ -49,13 +50,15 @@ public class UsersAction extends GenericAction{
 		}
     	return "users";
     }
-    
+
     /**
-     * Paginate the user
-     * @param httpServletRequest
-     * @return
-     * @throws IOException
-     * @throws ParseException
+	 * Paginate the user
+	 * @param allUsers
+	 * @param page
+	 * @param httpServletRequest
+	 * @return List of users paginated
+	 * @throws IOException
+	 * @throws ParseException
      */
     public List<UsersStatsImpl> getPaginatedUsers(List<UsersStatsImpl> allUsers, int page, HttpServletRequest httpServletRequest) throws IOException, ParseException
     {
