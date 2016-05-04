@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link rel="stylesheet" href="/WEB-CONTENT/materialize/css/materialize.css"/>
-    <link rel="stylesheet" href="/WEB-CONTENT/css/main.css"/>
+    <link rel="stylesheet" th:href="@{/WEB-CONTENT/materialize/css/materialize.css}"/>
+    <link rel="stylesheet" th:href="@{/WEB-CONTENT/css/main.css}"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
@@ -11,7 +11,7 @@
 <body>
 <div th:include="header :: hnav"></div>
 
-<input id="files-types" th:attr="data-types=${filesTypes.scriptValue}" type="hidden" />
+
 <div class="container">
     <div class="row">
         <div class="col s12 m12">
@@ -50,12 +50,12 @@
                             <span th:text="${averageDiskUsage}"></span> MB
                         </div>
                     </div>
-                    <canvas id="pieChart" width="400" height="400"></canvas>
+                    <span th:text="${filetype}"></span>
                     <h4>Historic per month </h4>
                     <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
                         an historic</a></div>
                     <!--<canvas id="historic-chart" width="600" height="400"></canvas>-->
-                    <img style="width: 100%;height: auto" src="/WEB-CONTENT/img/ChartJS.png"/>
+                    <img style="width: 100%;height: auto" th:src="@{/WEB-CONTENT/img/ChartJS.png}"/>
                 </div>
 
             </div>
@@ -71,36 +71,36 @@
         projects</a></li>
 </ul>
 <div th:include="footer :: foot"></div>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
-<script type="text/javascript" src="/WEB-CONTENT/materialize/js/materialize.js"></script>
-<script type="text/javascript" src="/WEB-CONTENT/js/Chart.js"></script>
+<script type="text/javascript" th:src="@{/WEB-CONTENT/materialize/js/materialize.js}"></script>
+<script type="text/javascript" th:src="@{/WEB-CONTENT/js/Chart.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-        var ctxPieChart = document.getElementById("pieChart").getContext("2d");
-        var myObject = [[${filesTypes}]];
-        var labels = [];
-        var data=[];
-        for(var key in myObject)
-        {
-            labels.push(key);
-            data.push(myObject[key]);
-        }
-        var chartData = {
-            labels: labels,
-            datasets: [
-                {
-                    data: data,
-                }]
-        };
-        console.log(chartData);
-        var myPieChart = new Chart(ctxPieChart,{
-            type: 'pie',
-            data: chartData,
-            options : {segmentShowStroke : false,
-                animateScale : true}
-        });
+    var ctxPieChart = document.getElementById("pieChart").getContext("2d");
+    var myObject = [[${filesTypes}]];
+    var labels = [];
+    var data=[];
+    for(var key in myObject)
+    {
+        labels.push(key);
+        data.push(myObject[key]);
+    }
+    var chartData = {
+        labels: labels,
+        datasets: [
+            {
+                data: data,
+            }]
+    };
+    console.log(chartData);
+    var myPieChart = new Chart(ctxPieChart,{
+        type: 'pie',
+        data: chartData,
+        options : {segmentShowStroke : false,
+            animateScale : true}
+    });
 
 
 </script>
-
 </body>
 </html>

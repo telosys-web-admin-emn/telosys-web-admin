@@ -18,6 +18,7 @@ import org.telosys.web.services.UsersService;
 
 public class UsersAction extends GenericAction{
 
+
 	private PathHelper pathHelper;
 
 	public UsersAction() {
@@ -27,16 +28,18 @@ public class UsersAction extends GenericAction{
     @Override
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
     	try {
-    		List<UsersStatsImpl> allUsers = this.getUsersService().getUsers();
-    		int maxPage = this.getMaxPage(allUsers.size());
+    		List<UsersStatsImpl> users = this.getUsersService().searchUser(this.getUsersService().getUsers(), httpServletRequest);
+    		int maxPage = this.getMaxPage(users.size());
 			// build the pagination parameters
 			httpServletRequest = Paginator.buildPagination(httpServletRequest, maxPage);
 			// build sorting object
 			httpServletRequest = FilterSorter.buildSorting(httpServletRequest);
 			// build filters
-			httpServletRequest = UsersService.buildUsersFilters(httpServletRequest);
+			httpServletRequest = this.getUsersService().buildUsersFilters(httpServletRequest);
+			// build searchs
+			httpServletRequest = this.getUsersService().buildUsersSearchs(httpServletRequest);
 			int page = (int) httpServletRequest.getAttribute(Paginator.CURRENT_PAGE_ATTRIBUTE);
-    		List<UsersStatsImpl> users = this.getPaginatedUsers(allUsers, page, httpServletRequest);
+			users = this.getPaginatedUsers(users, page, httpServletRequest);
     		// add the users to the view
     		httpServletRequest.setAttribute("users", users);
     		// add the date format to format creation and last connection dates
@@ -47,13 +50,15 @@ public class UsersAction extends GenericAction{
 		}
     	return "users";
     }
-    
+
     /**
-     * Paginate the user
-     * @param httpServletRequest
-     * @return
-     * @throws IOException
-     * @throws ParseException
+	 * Paginate the user
+	 * @param allUsers
+	 * @param page
+	 * @param httpServletRequest
+	 * @return List of users paginated
+	 * @throws IOException
+	 * @throws ParseException
      */
     public List<UsersStatsImpl> getPaginatedUsers(List<UsersStatsImpl> allUsers, int page, HttpServletRequest httpServletRequest) throws IOException, ParseException
     {
