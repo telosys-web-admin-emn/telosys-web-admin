@@ -9,3 +9,4 @@
 *.iml
 
 /src/main/resources/META-INF/webadmin.properties
+/src/main/java/org/telosys/history/files
