@@ -80,17 +80,47 @@
     var timeFormat = 'MM/DD/YYYY HH:mm';
     var ctx = document.getElementById("historyChart").getContext("2d");
 
-    function newDate(days) {
-        return moment().add(days, 'd').toDate();
+    function randomColorFactor() {
+        return Math.round(Math.random() * 255);
     }
+
+    function randomColor(opacity) {
+        return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
+    }
+
+
 
     var config = {
         type: 'line',
         data: {
             xValueType: "dateTime",
             datasets: [{
-                label: "Nombre d'utilisateurs",
-                data: JSON.parse([[${historyJs}]]),
+                label: "Average disk usage",
+                data: JSON.parse([[${averageDiskUsageStats}]]),
+                fill: false
+            },{
+                label: "Models count",
+                data: JSON.parse([[${modelsCountStats}]]),
+                fill: false
+            },{
+                label: "Users count",
+                data: JSON.parse([[${usersCountStats}]]),
+                fill: false
+            },{
+                label: "Disk usage",
+                data: JSON.parse([[${diskUsageStats}]]),
+                fill: false
+            },{
+                label: "Projects count",
+                data: JSON.parse([[${projectsCountStats}]]),
+                fill: false
+            },{
+                label: "Average models",
+                data: JSON.parse([[${averageModelsStats}]]),
+                fill: false
+            },{
+                label: "Average projects",
+                data: JSON.parse([[${averageProjectsStats}]]),
                 fill: false
             }]
         },
@@ -122,7 +152,18 @@
             },
         }
     };
+
+    $.each(config.data.datasets, function(i, dataset) {
+        dataset.borderColor = randomColor(0.4);
+        dataset.backgroundColor = randomColor(0.5);
+        dataset.pointBorderColor = randomColor(0.7);
+        dataset.pointBackgroundColor = randomColor(0.5);
+        dataset.pointBorderWidth = 1;
+    });
+
     var myLineChart = new Chart(ctx, config);
+
+
     console.log(JSON.parse([[${historyJs}]]));
     /**var ctxPieChart = document.getElementById("pieChart").getContext("2d");
     var myObject = [[${filesTypes}]];

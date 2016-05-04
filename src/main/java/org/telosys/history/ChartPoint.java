@@ -3,11 +3,11 @@ package org.telosys.history;
 import java.util.Date;
 import java.util.Map;
 
-public class Point {
+public class ChartPoint {
     private Date x;
     private Number y;
 
-    public Point(Date x, Number y) {
+    public ChartPoint(Date x, Number y) {
         this.x = x;
         this.y = y;
     }

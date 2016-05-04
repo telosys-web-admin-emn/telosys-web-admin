@@ -6,51 +6,60 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.commons.io.FilenameUtils;
 import org.telosys.web.services.StatisticsService;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.Timestamp;
-import java.text.DateFormat;
-import java.text.Format;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.*;
 import java.util.*;
 
 public class Transformer {
-    public String getStatisticsToJs(String pathPrefix){
+    public Map<String, String> getStatistics(String pathPrefix){
         Map<String, String> jsData = new HashMap<>();
-        List<Point> averageDiskUsageData = new ArrayList<>();
-        List<Point> modelsCountData = new ArrayList<>();
-        List<Point> usersCountData = new ArrayList<>();
-        List<Point> diskUsageData = new ArrayList<>();
-        List<Point> projectsCountData = new ArrayList<>();
-        List<Point> averageModelsData = new ArrayList<>();
-        List<Point> averageProjectsData = new ArrayList<>();
+        List<ChartPoint> averageDiskUsageStats = new ArrayList<>();
+        List<ChartPoint> modelsCountStats = new ArrayList<>();
+        List<ChartPoint> usersCountStats = new ArrayList<>();
+        List<ChartPoint> diskUsageStats = new ArrayList<>();
+        List<ChartPoint> projectsCountStats = new ArrayList<>();
+        List<ChartPoint> averageModelsStats = new ArrayList<>();
+        List<ChartPoint> averageProjectsStats = new ArrayList<>();
         File folder = new File(pathPrefix + Configuration.HISTORY_FOLDER_PATH);
         for (File fileEntry : folder.listFiles()) {
             if (!fileEntry.isDirectory()) {
                 String fileName = fileEntry.getName();
+                // todo : folder.getPath
                 String filePath = pathPrefix + Configuration.HISTORY_FOLDER_PATH +fileName;
-                usersCountData.add(getUsersCountFromHistoryFile(filePath));
+                Properties prop = getProperty(filePath);
+                String timestamp = FilenameUtils.getBaseName(filePath);
+                if(prop != null) {
+                    averageDiskUsageStats.add(getAverageDiskUsage(timestamp, prop));
+                    modelsCountStats.add(getModelsCount(timestamp, prop));
+                    usersCountStats.add(getUsersCount(timestamp, prop));
+                    diskUsageStats.add(getDiskUsage(timestamp, prop));
+                    projectsCountStats.add(getProjectsCount(timestamp, prop));
+                    averageModelsStats.add(getAverageModels(timestamp, prop));
+                    averageProjectsStats.add(getAverageProjects(timestamp, prop));
+                }
             }
         }
+        Map<String, String> res = new HashMap<>();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = "";
         try {
-            json = ow.writeValueAsString(jsData);
+            res.put(Configuration.AVERAGE_DISK_USAGE_STATS, ow.writeValueAsString(averageDiskUsageStats));
+            res.put(Configuration.MODELS_COUNT_STATS, ow.writeValueAsString(modelsCountStats));
+            res.put(Configuration.USERS_COUNT_STATS, ow.writeValueAsString(usersCountStats));
+            res.put(Configuration.DISK_USAGE_STATS, ow.writeValueAsString(diskUsageStats));
+            res.put(Configuration.PROJECTS_COUNT_STATS, ow.writeValueAsString(projectsCountStats));
+            res.put(Configuration.AVERAGE_MODELS_STATS, ow.writeValueAsString(averageModelsStats));
+            res.put(Configuration.AVERAGE_PROJECTS_STATS, ow.writeValueAsString(averageProjectsStats));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return json;
+        return res;
     }
 
     /**
-     * Get the usersCount value from an history file
+     * Get the property file according to a filePath
      * @param filePath
-     * @return Number
+     * @return Properties
      */
-    protected Point getUsersCountFromHistoryFile(String filePath) {
+    protected Properties getProperty(String filePath) {
         int count = 0;
         Properties prop = new Properties();
         InputStream historyFile = null;
@@ -59,44 +68,98 @@ public class Transformer {
             if (historyFile != null) {
                 try {
                     prop.load(historyFile);
+                    try {
+                        historyFile.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return prop;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                count = Integer.parseInt(prop.getProperty(StatisticsService.USERS_COUNT));
             }
-        } catch (IOException e) {
+        } catch(FileNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            if(historyFile != null) {
-                try{
-                    historyFile.close();
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
         }
-        String timestamp = FilenameUtils.getBaseName(filePath);
-        return new Point(this.getTimestampToDate(timestamp), count);
-
+        return null;
     }
 
+    /**
+     * Transform timestamp string to a date
+     * @param timestamp
+     * @return Date
+     */
     protected Date getTimestampToDate(String timestamp) {
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("TRANSOFRMER RECEIVED : "+timestamp);
-        Date date = new Date(Long.parseLong(timestamp));
-        //DateFormat format = new SimpleDateFormat("MMddyyHHmmss");
-        System.out.println("SUCCESSFUL transform : "+formatter.format(date));
-        /*Date date = null;
-        try {
-            date = format.parse(timestamp);
-            System.out.println("SUCCESSFUL transform : "+formatter.format(date));
-        } catch(ParseException e) {
-            return null;
-        }*/
-
-        return date;
+        return new Date(Long.parseLong(timestamp));
     }
 
+    /**
+     * Create a chart point representing the number of users
+     * @param timestamp
+     * @param prop
+     * @return ChartPoint
+     */
+    protected ChartPoint getUsersCount(String timestamp, Properties prop) {
+        return new ChartPoint(this.getTimestampToDate(timestamp), Integer.parseInt(prop.getProperty(StatisticsService.USERS_COUNT)));
+    }
+
+    /**
+     * Create a chart point representing the average disk usage
+     * @param timestamp
+     * @param prop
+     * @return ChartPoint
+     */
+    protected ChartPoint getAverageDiskUsage(String timestamp, Properties prop) {
+        return new ChartPoint(this.getTimestampToDate(timestamp), Integer.parseInt(prop.getProperty(StatisticsService.AVERAGE_DISK_USAGE)));
+    }
+
+    /**
+     * Create a chart point representing the number of models
+     * @param timestamp
+     * @param prop
+     * @return ChartPoint
+     */
+    protected ChartPoint getModelsCount(String timestamp, Properties prop) {
+        return new ChartPoint(this.getTimestampToDate(timestamp), Integer.parseInt(prop.getProperty(StatisticsService.MODELS_COUNT)));
+    }
+
+    /**
+     * Create a chart point representing the number of projects
+     * @param timestamp
+     * @param prop
+     * @return ChartPoint
+     */
+    protected ChartPoint getProjectsCount(String timestamp, Properties prop) {
+        return new ChartPoint(this.getTimestampToDate(timestamp), Integer.parseInt(prop.getProperty(StatisticsService.PROJECTS_COUNT)));
+    }
+
+    /**
+     * Create a chart point representing the average number of models
+     * @param timestamp
+     * @param prop
+     * @return ChartPoint
+     */
+    protected ChartPoint getAverageModels(String timestamp, Properties prop) {
+        return new ChartPoint(this.getTimestampToDate(timestamp), Double.parseDouble(prop.getProperty(StatisticsService.AVERAGE_MODELS)));
+    }
+
+    /**
+     * Create a chart point representing the average number of projects
+     * @param timestamp
+     * @param prop
+     * @return ChartPoint
+     */
+    protected ChartPoint getAverageProjects(String timestamp, Properties prop) {
+        return new ChartPoint(this.getTimestampToDate(timestamp), Double.parseDouble(prop.getProperty(StatisticsService.AVERAGE_PROJECTS)));
+    }
+
+    /**
+     * Create a chart point representing the disk usage
+     * @param timestamp
+     * @param prop
+     * @return ChartPoint
+     */
+    protected ChartPoint getDiskUsage(String timestamp, Properties prop) {
+        return new ChartPoint(this.getTimestampToDate(timestamp), Integer.parseInt(prop.getProperty(StatisticsService.DISK_USAGE)));
+    }
 }
