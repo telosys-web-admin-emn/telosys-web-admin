@@ -1,4 +1,4 @@
-package org.telosys.history.generator;
+package org.telosys.history;
 
 import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.stats.StatsProviderFactory;
@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
-
-import static org.telosys.history.Configuration.HISTORY_FILE_PATH;
 
 public class Generator {
     public static void generateHistory(){
@@ -27,7 +25,7 @@ public class Generator {
             properties.setProperty(StatisticsService.AVERAGE_MODELS, counts.get(StatisticsService.AVERAGE_MODELS).toString());
             properties.setProperty(StatisticsService.AVERAGE_PROJECTS, counts.get(StatisticsService.AVERAGE_PROJECTS).toString());
             String fileName = new Date().getTime()+".properties";
-            String path = HISTORY_FILE_PATH + fileName;
+            String path = Configuration.HISTORY_FOLDER_PATH + fileName;
             File file = new File(path);
             FileOutputStream fileOut = new FileOutputStream(file);
             properties.store(fileOut, "");

@@ -1,6 +1,7 @@
 package org.telosys.admin.actions;
 
 import org.nanoj.web.tinymvc.GenericAction;
+import org.telosys.history.Transformer;
 import org.telosys.tools.helper.FileUnit;
 import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.stats.StatsProviderFactory;
@@ -18,6 +19,7 @@ public class StatisticsAction extends GenericAction {
     @Override
     public String process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         FilesystemStatsOverview statsOverview = StatsProviderFactory.getStatsProvider().getFilesystemStatsOverview();
+        Transformer transformer = new Transformer();
 
         try {
             httpServletRequest = StatisticsService.buildCounts(httpServletRequest);
@@ -29,6 +31,7 @@ public class StatisticsAction extends GenericAction {
                     cleanProjectsTypes.put(key,value);
             });
             httpServletRequest.setAttribute("filesTypes", cleanProjectsTypes);
+            httpServletRequest.setAttribute("historyJs", transformer.getStatisticsToJs("../../telosys-web-admin/"));
         } catch (IOException | ArithmeticException | ParseException e ) {
             e.printStackTrace();
         }

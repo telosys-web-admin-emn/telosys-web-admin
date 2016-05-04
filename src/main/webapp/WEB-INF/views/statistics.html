@@ -54,8 +54,8 @@
                     <h4>Historic per month </h4>
                     <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
                         an historic</a></div>
-                    <!--<canvas id="historic-chart" width="600" height="400"></canvas>-->
-                    <img style="width: 100%;height: auto" th:src="@{/WEB-CONTENT/img/ChartJS.png}"/>
+                    <canvas id="historyChart" width="600" height="400"></canvas>-->
+                    <!--<img style="width: 100%;height: auto" th:src="@{/WEB-CONTENT/img/ChartJS.png}"/>-->
                 </div>
 
             </div>
@@ -74,9 +74,57 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script type="text/javascript" th:src="@{/WEB-CONTENT/materialize/js/materialize.js}"></script>
+<script type="text/javascript" th:src="@{/WEB-CONTENT/js/moment.min.js}"></script>
 <script type="text/javascript" th:src="@{/WEB-CONTENT/js/Chart.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-    var ctxPieChart = document.getElementById("pieChart").getContext("2d");
+    var timeFormat = 'MM/DD/YYYY HH:mm';
+    var ctx = document.getElementById("historyChart").getContext("2d");
+
+    function newDate(days) {
+        return moment().add(days, 'd').toDate();
+    }
+
+    var config = {
+        type: 'line',
+        data: {
+            xValueType: "dateTime",
+            datasets: [{
+                label: "Nombre d'utilisateurs",
+                data: JSON.parse([[${historyJs}]]),
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            title:{
+                display:true,
+                text:"Evolution des utilisateurs"
+            },
+            scales: {
+                xAxes: [{
+                    type: "time",
+                    time: {
+                        format: timeFormat,
+                        // round: 'day'
+                        tooltipFormat: 'll HH:mm',
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
+                    }
+                }, ],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'value'
+                    }
+                }]
+            },
+        }
+    };
+    var myLineChart = new Chart(ctx, config);
+    console.log(JSON.parse([[${historyJs}]]));
+    /**var ctxPieChart = document.getElementById("pieChart").getContext("2d");
     var myObject = [[${filesTypes}]];
     var labels = [];
     var data=[];
@@ -98,7 +146,7 @@
         data: chartData,
         options : {segmentShowStroke : false,
             animateScale : true}
-    });
+    });**/
 
 
 </script>
