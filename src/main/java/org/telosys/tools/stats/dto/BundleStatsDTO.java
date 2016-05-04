@@ -3,27 +3,29 @@ package org.telosys.tools.stats.dto;
 import org.telosys.tools.stats.BundleStats;
 
 import java.io.IOException;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by alexa on 04/05/2016.
  */
-public class BundleDTO {
+public class BundleStatsDTO {
 
     private String projectName;
     private String bundleName;
-    private Date installationDate;
+    private String installationDate;
     private int generationsCount;
 
-    public BundleDTO(String projectName, String bundleName, Date installationDate, int generationsCount) {
+    public BundleStatsDTO(String projectName, String bundleName, String installationDate, int generationsCount) {
         this.projectName = projectName;
         this.bundleName = bundleName;
         this.installationDate = installationDate;
         this.generationsCount = generationsCount;
     }
 
-    public static BundleDTO fromBundleStats(BundleStats stats) throws IOException {
-        BundleDTO dto = new BundleDTO(stats.getProjectName(), stats.getBundleName(), stats.getInstallationDate(),
+    public static BundleStatsDTO fromBundleStats(BundleStats stats, String datePattern) throws IOException {
+        DateFormat sdf = new SimpleDateFormat(datePattern);
+        BundleStatsDTO dto = new BundleStatsDTO(stats.getProjectName(), stats.getBundleName(), sdf.format(stats.getInstallationDate()),
                 stats.getGenerationsCount());
         return dto;
     }
@@ -44,11 +46,11 @@ public class BundleDTO {
         this.bundleName = bundleName;
     }
 
-    public Date getInstallationDate() {
+    public String getInstallationDate() {
         return installationDate;
     }
 
-    public void setInstallationDate(Date installationDate) {
+    public void setInstallationDate(String installationDate) {
         this.installationDate = installationDate;
     }
 

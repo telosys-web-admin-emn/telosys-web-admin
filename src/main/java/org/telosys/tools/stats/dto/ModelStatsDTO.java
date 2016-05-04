@@ -3,29 +3,31 @@ package org.telosys.tools.stats.dto;
 import org.telosys.tools.stats.ModelStats;
 
 import java.io.IOException;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by alexa on 04/05/2016.
  */
-public class ModelDTO {
+public class ModelStatsDTO {
 
     private String projectName;
     private String modelName;
-    private Date lastModifiedDate;
-    private Date creationDate;
+    private String lastModifiedDate;
+    private String creationDate;
 
 
-    public ModelDTO(String projectName, String modelName, Date lastModifiedDate, Date creationDate) {
+    public ModelStatsDTO(String projectName, String modelName, String lastModifiedDate, String creationDate) {
         this.projectName = projectName;
         this.modelName = modelName;
         this.lastModifiedDate = lastModifiedDate;
         this.creationDate = creationDate;
     }
 
-    public static ModelDTO fromModelStats(ModelStats stats) throws IOException {
-        ModelDTO dto = new ModelDTO(stats.getProjectName(), stats.getModelName(), stats.getLastModifiedDate(),
-                stats.getCreationDate());
+    public static ModelStatsDTO fromModelStats(ModelStats stats, String datePattern) throws IOException {
+        DateFormat sdf = new SimpleDateFormat(datePattern);
+        ModelStatsDTO dto = new ModelStatsDTO(stats.getProjectName(), stats.getModelName(), sdf.format(stats.getLastModifiedDate()),
+                sdf.format(stats.getCreationDate()));
         return dto;
     }
 
@@ -45,19 +47,19 @@ public class ModelDTO {
         this.modelName = modelName;
     }
 
-    public Date getLastModifiedDate() {
+    public String getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(String lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 }

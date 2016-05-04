@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <td>Creation date</td>
-            <td th:text="${#dates.format(user.creationDate, dateFormat)}"></td>
+            <td th:text="${user.creationDate}"></td>
         </tr>
         <tr>
             <td>Country (origin browser)</td>
@@ -36,7 +36,7 @@
         </tr>
         <tr>
             <td>Last login</td>
-            <td th:text="${#dates.format(user.lastConnectionDate, dateFormat)}"></td>
+            <td th:text="${user.lastConnectionDate}"></td>
         </tr>
         <tr>
             <td>Generations count</td>
@@ -83,8 +83,8 @@
                     <tbody>
                     <tr th:each="project : ${projectStats}">
                         <td th:text="${project.projectName}"></td>
-                        <td th:text="${#dates.format(project.creationDate, dateFormat)}"></td>
-                        <td th:text="${#dates.format(project.lastGenerationDate, dateFormat)}"></td>
+                        <td th:text="${project.creationDate}"></td>
+                        <td th:text="${project.lastGenerationDate}"></td>
                         <td th:text="${project.generationsCount}"></td>
                         <td th:text="${project.bundlesCount}"></td>
                         <td th:text="${project.diskUsageMB}"></td>
@@ -112,8 +112,8 @@
                     <tr th:each="model : ${modelStats}">
                         <td th:text="${model.projectName}"></td>
                         <td th:text="${model.modelName}"></td>
-                        <td th:text="${#dates.format(model.lastModifiedDate, dateFormat)}"></td>
-                        <td th:text="${#dates.format(model.creationDate, dateFormat)}"></td>
+                        <td th:text="${model.lastModifiedDate}"></td>
+                        <td th:text="${model.creationDate}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -139,7 +139,7 @@
                     <tr th:each="bundle : ${bundleStats}">
                         <td th:text="${bundle.projectName}"></td>
                         <td th:text="${bundle.bundleName}"></td>
-                        <td th:text="${#dates.format(bundle.installationDate, dateFormat)}"></td>
+                        <td th:text="${bundle.installationDate}"></td>
                         <td th:text="${bundle.generationsCount}"></td>
                     </tr>
                     </tbody>

@@ -2,10 +2,7 @@ package org.telosys.admin.actions;
 
 import org.nanoj.web.tinymvc.GenericAction;
 import org.telosys.tools.stats.*;
-import org.telosys.tools.stats.dto.BundleDTO;
-import org.telosys.tools.stats.dto.ModelDTO;
-import org.telosys.tools.stats.dto.ProjectDTO;
-import org.telosys.tools.stats.dto.UserDTO;
+import org.telosys.tools.stats.dto.*;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileName;
 import org.telosys.tools.users.UsersManager;
@@ -46,28 +43,25 @@ public class UserAction extends GenericAction
 					request.setAttribute("erreur", "Impossible de trouver l'utilisateur.");
 					return "erreur";
 				}
-				request.setAttribute("user", myUser);
-				request.setAttribute("userStats", UserDTO.fromUserStats(usersStats));
+				request.setAttribute("user", UserDTO.fromUser(myUser, pathHelper.getViewDateFormat()));
+				request.setAttribute("userStats", UserStatsDTO.fromUserStats(usersStats, pathHelper.getViewDateFormat()));
 
 				// User's projects stats
-				List<ProjectDTO> projectsDTO = new ArrayList<>();
+				List<ProjectStatsDTO> projectsDTO = new ArrayList<>();
 				for (ProjectStats projectStats : provider.getProjectsStats(userName)) {
-					projectsDTO.add(ProjectDTO.fromProjectStats(projectStats));
+					projectsDTO.add(ProjectStatsDTO.fromProjectStats(projectStats, pathHelper.getViewDateFormat()));
 				}
 				request.setAttribute("projectStats", projectsDTO);
-				List<BundleDTO> bundlesDTO = new ArrayList<>();
+				List<BundleStatsDTO> bundlesDTO = new ArrayList<>();
 				for (BundleStats bundleStats : provider.getBundlesStats(userName)) {
-					bundlesDTO.add(BundleDTO.fromBundleStats(bundleStats));
+					bundlesDTO.add(BundleStatsDTO.fromBundleStats(bundleStats, pathHelper.getViewDateFormat()));
 				}
 				request.setAttribute("bundleStats", bundlesDTO);
-				List<ModelDTO> modelsDTO = new ArrayList<>();
+				List<ModelStatsDTO> modelsDTO = new ArrayList<>();
 				for (ModelStats modelStats : provider.getModelsStats(userName)) {
-					modelsDTO.add(ModelDTO.fromModelStats(modelStats));
+					modelsDTO.add(ModelStatsDTO.fromModelStats(modelStats, pathHelper.getViewDateFormat()));
 				}
 				request.setAttribute("modelStats", modelsDTO);
-				// add the date format to format creation and last connection dates
-				request.setAttribute("dateFormat", pathHelper.getViewDateFormat());
-
 			}
 		}
 		catch(Exception e)

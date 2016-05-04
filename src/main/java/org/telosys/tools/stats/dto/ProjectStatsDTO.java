@@ -3,6 +3,8 @@ package org.telosys.tools.stats.dto;
 import org.telosys.tools.stats.ProjectStats;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +12,7 @@ import java.util.Map;
 /**
  * Created by alexa on 04/05/2016.
  */
-public class ProjectDTO {
+public class ProjectStatsDTO {
 
     private Map<String, Integer> fileTypes;
     private String projectName;
@@ -19,14 +21,14 @@ public class ProjectDTO {
     private int bundlesCount;
     private List<String> modelsNames;
     private String diskUsageMB;
-    private Date creationDate;
-    private Date lastGenerationDate;
+    private String creationDate;
+    private String lastGenerationDate;
     private int generationsCount;
 
 
-    public ProjectDTO(Map<String, Integer> fileTypes, String projectName, List<String> bundlesNames,
-                      int modelsCount, List<String> modelsNames, String diskUsageMB, int bundlesCount, Date creationDate,
-                      Date lastGenerationDate, int generationsCount) {
+    public ProjectStatsDTO(Map<String, Integer> fileTypes, String projectName, List<String> bundlesNames,
+                           int modelsCount, List<String> modelsNames, String diskUsageMB, int bundlesCount, String creationDate,
+                           String lastGenerationDate, int generationsCount) {
         this.fileTypes = fileTypes;
         this.projectName = projectName;
         this.bundlesNames = bundlesNames;
@@ -39,10 +41,11 @@ public class ProjectDTO {
         this.generationsCount = generationsCount;
     }
 
-    public static ProjectDTO fromProjectStats(ProjectStats stats) throws IOException {
-        ProjectDTO dto = new ProjectDTO(stats.getCountFileTypes(), stats.getProjectName(), stats.getBundlesNames(),
+    public static ProjectStatsDTO fromProjectStats(ProjectStats stats, String datePattern) throws IOException {
+        DateFormat sdf = new SimpleDateFormat(datePattern);
+        ProjectStatsDTO dto = new ProjectStatsDTO(stats.getCountFileTypes(), stats.getProjectName(), stats.getBundlesNames(),
                 stats.getModelsCount(), stats.getModelsNames(), stats.getDiskUsageMB(), stats.getBundlesCount(),
-                stats.getCreationDate(), stats.getLastGenerationDate(), stats.getGenerationsCount());
+                sdf.format(stats.getCreationDate()), sdf.format(stats.getLastGenerationDate()), stats.getGenerationsCount());
         return dto;
     }
 
@@ -94,19 +97,19 @@ public class ProjectDTO {
         this.diskUsageMB = diskUsageMB;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Date getLastGenerationDate() {
+    public String getLastGenerationDate() {
         return lastGenerationDate;
     }
 
-    public void setLastGenerationDate(Date lastGenerationDate) {
+    public void setLastGenerationDate(String lastGenerationDate) {
         this.lastGenerationDate = lastGenerationDate;
     }
 

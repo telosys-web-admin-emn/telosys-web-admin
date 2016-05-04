@@ -2,12 +2,10 @@ package org.telosys.admin.actions;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.security.auth.login.Configuration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +13,7 @@ import org.nanoj.web.tinymvc.GenericAction;
 import org.telosys.admin.actions.helper.FilterSorter;
 import org.telosys.admin.actions.helper.Paginator;
 import org.telosys.tools.stats.PathHelper;
-import org.telosys.tools.stats.dto.UserDTO;
+import org.telosys.tools.stats.dto.UserStatsDTO;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
 import org.telosys.web.services.UsersService;
 
@@ -44,11 +42,10 @@ public class UsersAction extends GenericAction{
 			int page = (int) httpServletRequest.getAttribute(Paginator.CURRENT_PAGE_ATTRIBUTE);
 			users = this.getPaginatedUsers(users, page, httpServletRequest);
     		// add the users to the view
-			List<UserDTO> usersDTO = users.stream().map(UserDTO::fromUserStats).collect(Collectors.toList());
+			List<UserStatsDTO> usersDTO = users.stream()
+					.map(u -> UserStatsDTO.fromUserStats(u, pathHelper.getViewDateFormat()))
+					.collect(Collectors.toList());
 			httpServletRequest.setAttribute("users", usersDTO);
-    		// add the date format to format creation and last connection dates
-    		httpServletRequest.setAttribute("dateFormat", pathHelper.getViewDateFormat());
-			
     	} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}

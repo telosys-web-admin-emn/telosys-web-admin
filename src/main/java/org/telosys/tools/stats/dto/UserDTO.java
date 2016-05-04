@@ -1,54 +1,42 @@
 package org.telosys.tools.stats.dto;
 
-import org.telosys.tools.stats.UserStats;
+import org.telosys.tools.users.User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by alexa on 04/05/2016.
  */
 public class UserDTO {
 
-
     private String login;
     private String mail;
-    private Date creationDate;
-    private Date lastConnectionDate;
+    private String firstName;
+    private String lastName;
+    private String lastConnectionDate;
+    private String creationDate;
     private String country;
     private String language;
-    private int projectsCount;
-    private int modelsCount;
-    private List<String> modelsNames;
-    private int bundlesCount;
-    private List<String> bundlesNames;
-    private String diskUsageMB;
-    private int generationsCount;
 
-    public UserDTO(String login, String mail, Date lastConnectionDate, String country, String language, int projectsCount,
-                   int modelsCount, List<String> modelsNames, Date creationDate, int bundlesCount, List<String> bundlesNames,
-                   String diskUsageMB,
-                   int generationsCount) {
+
+    public UserDTO(String login, String mail, String firstName, String lastName, String lastConnectionDate, String creationDate,
+                   String country, String language) {
         this.login = login;
         this.mail = mail;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.lastConnectionDate = lastConnectionDate;
+        this.creationDate = creationDate;
         this.country = country;
         this.language = language;
-        this.projectsCount = projectsCount;
-        this.modelsCount = modelsCount;
-        this.modelsNames = modelsNames;
-        this.creationDate = creationDate;
-        this.bundlesCount = bundlesCount;
-        this.bundlesNames = bundlesNames;
-        this.diskUsageMB = diskUsageMB;
-        this.generationsCount = generationsCount;
     }
 
-    public static UserDTO fromUserStats(UserStats stats) {
-        UserDTO dto = new UserDTO(stats.getLogin(), stats.getMail(), stats.getLastConnectionDate(), stats.getCountry(),
-                stats.getLanguage(), stats.getProjectsCount(), stats.getModelsCount(), stats.getModelsNames(),
-                stats.getCreationDate(), stats.getBundlesCount(), stats.getBundlesNames(), stats.getDiskUsageMB(),
-                stats.getGenerationsCount());
+    public static UserDTO fromUser(User user, String datePattern) {
+        DateFormat sdf = new SimpleDateFormat(datePattern);
+        UserDTO dto = new UserDTO(user.getLogin(), user.getMail(), user.getFirstName(), user.getLastName(),
+                sdf.format(user.getLastConnectionDate()), sdf.format(user.getCreationDate()), user.getCountry(), user.getLanguage());
         return dto;
     }
 
@@ -68,12 +56,36 @@ public class UserDTO {
         this.mail = mail;
     }
 
-    public Date getLastConnectionDate() {
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getLastConnectionDate() {
         return lastConnectionDate;
     }
 
-    public void setLastConnectionDate(Date lastConnectionDate) {
+    public void setLastConnectionDate(String lastConnectionDate) {
         this.lastConnectionDate = lastConnectionDate;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
     }
 
     public String getCountry() {
@@ -91,68 +103,5 @@ public class UserDTO {
     public void setLanguage(String language) {
         this.language = language;
     }
-
-    public int getProjectsCount() {
-        return projectsCount;
-    }
-
-    public void setProjectsCount(int projectsCount) {
-        this.projectsCount = projectsCount;
-    }
-
-    public int getModelsCount() {
-        return modelsCount;
-    }
-
-    public void setModelsCount(int modelsCount) {
-        this.modelsCount = modelsCount;
-    }
-
-    public List<String> getModelsNames() {
-        return modelsNames;
-    }
-
-    public void setModelsNames(List<String> modelsNames) {
-        this.modelsNames = modelsNames;
-    }
-
-    public int getBundlesCount() {
-        return bundlesCount;
-    }
-
-    public void setBundlesCount(int bundlesCount) {
-        this.bundlesCount = bundlesCount;
-    }
-
-    public List<String> getBundlesNames() {
-        return bundlesNames;
-    }
-
-    public void setBundlesNames(List<String> bundlesNames) {
-        this.bundlesNames = bundlesNames;
-    }
-
-    public String getDiskUsageMB() {
-        return diskUsageMB;
-    }
-
-    public void setDiskUsageMB(String diskUsageMB) {
-        this.diskUsageMB = diskUsageMB;
-    }
-
-    public int getGenerationsCount() {
-        return generationsCount;
-    }
-
-    public void setGenerationsCount(int generationsCount) {
-        this.generationsCount = generationsCount;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
 }
+
