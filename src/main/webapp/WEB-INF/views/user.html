@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="/WEB-CONTENT/materialize/css/materialize.css"/>
-    <link rel="stylesheet" href="/WEB-CONTENT/css/main.css"/>
+    <link rel="stylesheet" th:href="@{/WEB-CONTENT/materialize/css/materialize.css}"/>
+    <link rel="stylesheet" th:href="@{/WEB-CONTENT/css/main.css}"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <title>User info</title>
 </head>
@@ -153,7 +153,7 @@
 <div th:include="footer :: foot"></div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
-<script type="text/javascript" src="/WEB-CONTENT/materialize/js/materialize.js"></script>
+<script type="text/javascript" th:src="@{/WEB-CONTENT/materialize/js/materialize.js}"></script>
 <script type="text/javascript">
 
     $(document).ready(function(){

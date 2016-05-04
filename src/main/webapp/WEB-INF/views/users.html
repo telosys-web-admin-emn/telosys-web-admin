@@ -3,8 +3,8 @@
    <head>
       <meta charset="UTF-8"/>
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-      <link rel="stylesheet" href="/WEB-CONTENT/materialize/css/materialize.css"/>
-      <link rel="stylesheet" href="/WEB-CONTENT/css/main.css"/>
+      <link rel="stylesheet" th:href="@{/WEB-CONTENT/materialize/css/materialize.css}"/>
+      <link rel="stylesheet" th:href="@{/WEB-CONTENT/css/main.css}"/>
       <title>Users</title>
    </head>
    <body>
@@ -83,8 +83,8 @@
       </div>
       <div th:include="footer :: foot"></div>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.js"></script>
-      <script type="text/javascript" src="/WEB-CONTENT/materialize/js/materialize.js"></script>
-      <script type="text/javascript" src="/WEB-CONTENT/js/selectInitializer.js"></script>
-      <script type="text/javascript" src="/WEB-CONTENT/js/datePickerInitializer.js"></script>
+      <script type="text/javascript" th:src="@{/WEB-CONTENT/materialize/js/materialize.js}"></script>
+      <script type="text/javascript" th:src="@{/WEB-CONTENT/js/selectInitializer.js}"></script>
+      <script type="text/javascript" th:src="@{/WEB-CONTENT/js/datePickerInitializer.js}"></script>
    </body>
 </html>
