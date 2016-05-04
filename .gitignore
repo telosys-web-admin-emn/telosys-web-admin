@@ -8,3 +8,4 @@
 
 *.iml
 
+/src/main/resources/META-INF/webadmin.properties
