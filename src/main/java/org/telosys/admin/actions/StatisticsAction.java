@@ -1,5 +1,7 @@
 package org.telosys.admin.actions;
 
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.nanoj.web.tinymvc.GenericAction;
 import org.telosys.tools.helper.FileUnit;
 import org.telosys.tools.stats.FilesystemStatsOverview;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class StatisticsAction extends GenericAction {
@@ -38,8 +41,14 @@ public class StatisticsAction extends GenericAction {
             httpServletRequest.setAttribute("averageProjects", averageProjects);
             httpServletRequest.setAttribute("averageModels", averageModels);
             httpServletRequest.setAttribute("averageDiskUsage", averageDiskUsage );
+            // On récupère chaque type fichier
             Map<String,Integer> usersProjectsTypes = statsOverview.getCountFileTypes();
-            httpServletRequest.setAttribute("filetype", usersProjectsTypes );
+            Map<String,Integer> cleanProjectsTypes = new HashMap<>();
+            usersProjectsTypes.forEach((key,value) -> {
+                if (key!= "")
+                    cleanProjectsTypes.put(key,value);
+            });
+            httpServletRequest.setAttribute("filesTypes", cleanProjectsTypes);
 
         } catch (IOException | ArithmeticException | ParseException e )
         {
