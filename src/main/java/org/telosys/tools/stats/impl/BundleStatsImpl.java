@@ -43,7 +43,6 @@ public class BundleStatsImpl implements BundleStats {
 
 	@Override
 	public int getGenerationsCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

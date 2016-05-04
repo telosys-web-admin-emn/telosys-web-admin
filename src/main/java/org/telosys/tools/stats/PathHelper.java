@@ -88,6 +88,11 @@ public class PathHelper
 		return conf.getModelExtension();
 	}
 
+	public File getProjectGenerationsCountFile(String user, String project) {
+		return resolve(rootPath, user, project, conf.getTelosysDir(), conf.getTelosysStatsFolder(),
+				conf.getGenerationsFilename());
+	}
+
 	public File getCsvFile() {
 		return resolve(rootPath, "users.csv");
 	}

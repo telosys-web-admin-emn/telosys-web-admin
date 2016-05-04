@@ -1,6 +1,8 @@
 package org.telosys.tools.stats.services;
 
-import java.io.File;
+import java.io.*;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 
 /**
  * A counter which is stored in a file <br>
@@ -8,9 +10,9 @@ import java.io.File;
  *
  */
 public class CounterFileManager {
-	
+
 	private final File file ;
-	
+
 	public CounterFileManager(File file) {
 		super();
 		this.file = file;
@@ -19,17 +21,32 @@ public class CounterFileManager {
 	public File getFile() {
 		return file ;
 	}
-	
-	
-	public void incrementCounter() {
-		// TODO
-		// read, increment, write (with lock)
+
+
+	public void incrementCounter() throws IOException {
+		FileLock lock = lockFile();
+		int current = readCounter();
+
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		writer.write(current + 1 + "");
+		lock.release();
 	}
 
 	public int readCounter() {
-		// TODO
-		// read (no lock)
-		return 0 ;
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			String count = reader.readLine();
+			return Integer.parseInt(count);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	private FileLock lockFile() throws IOException {
+		FileChannel channel = new RandomAccessFile(file, "rw").getChannel();
+		FileLock lock = channel.lock();
+		return lock;
 	}
 
 }

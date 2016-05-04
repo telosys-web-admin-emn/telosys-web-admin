@@ -19,6 +19,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.ProjectStats;
+import org.telosys.tools.stats.services.CounterFileManager;
 
 import static java.util.stream.Collectors.toList;
 
@@ -112,8 +113,9 @@ public class ProjectStatsImpl implements ProjectStats {
 
 	@Override
 	public int getGenerationsCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		File file = pathHelper.getProjectGenerationsCountFile(user, name);
+		CounterFileManager counterFileManager = new CounterFileManager(file);
+		return counterFileManager.readCounter();
 	}
 
 

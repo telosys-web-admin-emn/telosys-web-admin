@@ -1,6 +1,5 @@
 package org.telosys.tools.stats;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -21,6 +20,11 @@ public class Configuration {
     public final static String TEMPLATES_DIR = "templates_dir";
 
     public final static String DISK_USAGE_QUOTA = "disk_usage_quota";
+
+    public final static String GENERATIONS_FILENAME = "generations_filename";
+
+    public final static String TELOSYS_STATS_FOLDER = "telosys_stats_folder";
+
     /*****************************
      * PRIVATE MEMBERS
      ****************************/
@@ -33,6 +37,8 @@ public class Configuration {
     private String templatesDir;
     private String telosysDir;
     private String viewDateFormat;
+    private String generationsFilename;
+    private String telosysStatsFolder;
     private long diskUsageQuota;
 
 
@@ -46,6 +52,8 @@ public class Configuration {
         this.telosysDir = properties.getProperty(TELOSYS_DIR);
         this.viewDateFormat = properties.getProperty(VIEW_DATE_FORMAT);
         this.diskUsageQuota = Long.parseLong(properties.getProperty(DISK_USAGE_QUOTA));
+        this.generationsFilename = properties.getProperty(GENERATIONS_FILENAME);
+        this.telosysStatsFolder = properties.getProperty(TELOSYS_STATS_FOLDER);
     }
 
     // for tests
@@ -70,6 +78,14 @@ public class Configuration {
 
     public String getTelosysDir() {
         return telosysDir;
+    }
+
+    public String getGenerationsFilename() {
+        return generationsFilename;
+    }
+
+    public void setGenerationsFilename(String generationsFilename) {
+        this.generationsFilename = generationsFilename;
     }
 
     public void setTelosysFsLocation(String telosysFsLocation) {
@@ -97,4 +113,12 @@ public class Configuration {
     }
 
     public long getDiskUsageQuota() { return diskUsageQuota; }
+
+    public String getTelosysStatsFolder() {
+        return telosysStatsFolder;
+    }
+
+    public void setTelosysStatsFolder(String telosysStatsFolder) {
+        this.telosysStatsFolder = telosysStatsFolder;
+    }
 }
