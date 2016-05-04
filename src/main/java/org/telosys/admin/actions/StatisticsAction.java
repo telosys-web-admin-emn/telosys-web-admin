@@ -28,7 +28,7 @@ public class StatisticsAction extends GenericAction {
             int projectsCount = statsOverview.getProjectsCount();
             int modelsCount = statsOverview.getModelsCount();
             long diskUsage = Math.round(statsOverview.getDiskUsage()/ FileUnit.MEGABYTE);
-            //Need to multipy by 1.0 to cast in double ) have a double result
+            //Need to multiply by 1.0 to cast in double ) have a double result
             double averageProjects = projectsCount * 1.0 / usersCount;
             double averageModels = modelsCount * 1.0 / usersCount;
             long averageDiskUsage = Math.round(diskUsage / usersCount);
@@ -41,7 +41,7 @@ public class StatisticsAction extends GenericAction {
             httpServletRequest.setAttribute("averageProjects", averageProjects);
             httpServletRequest.setAttribute("averageModels", averageModels);
             httpServletRequest.setAttribute("averageDiskUsage", averageDiskUsage );
-            // On récupère chaque type fichier
+            // On rÃ©cupÃ¨re chaque type fichier
             Map<String,Integer> usersProjectsTypes = statsOverview.getCountFileTypes();
             Map<String,Integer> cleanProjectsTypes = new HashMap<>();
             usersProjectsTypes.forEach((key,value) -> {
@@ -49,9 +49,7 @@ public class StatisticsAction extends GenericAction {
                     cleanProjectsTypes.put(key,value);
             });
             httpServletRequest.setAttribute("filesTypes", cleanProjectsTypes);
-
-        } catch (IOException | ArithmeticException | ParseException e )
-        {
+        } catch (IOException | ArithmeticException | ParseException e ) {
             e.printStackTrace();
         }
       return "statistics";
