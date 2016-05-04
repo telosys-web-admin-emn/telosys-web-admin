@@ -3,7 +3,6 @@ package org.telosys.tools.stats.impl;
 import org.telosys.tools.stats.*;
 import org.telosys.tools.stats.exception.ProjectNotFoundException;
 import org.telosys.tools.users.User;
-import org.telosys.tools.users.UsersFileName;
 import org.telosys.tools.users.UsersManager;
 
 import java.io.File;
@@ -36,7 +35,7 @@ public class StatsProviderImpl implements StatsProvider
 	{
 		try
 		{
-			UsersFileName.setSpecificFileName(pathHelper.getCsvFile().getPath());
+			UsersManager.setUsersFileName(pathHelper.getCsvFile().getPath());
 			UsersManager users = UsersManager.getInstance();
 			User myUser = users.getUserByLogin(userId);
 			return new UsersStatsImpl(pathHelper, myUser);
@@ -77,7 +76,7 @@ public class StatsProviderImpl implements StatsProvider
 	{
 		try
 		{
-			UsersFileName.setSpecificFileName(pathHelper.getCsvFile().getPath());
+			UsersManager.setUsersFileName(pathHelper.getCsvFile().getPath());
 			UsersManager users = UsersManager.getInstance();
 			User myUser = users.getUserByLogin(userId);
 			UserStats userStats = new UsersStatsImpl(pathHelper, myUser);

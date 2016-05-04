@@ -6,17 +6,35 @@
     <groupId>telosys</groupId>
     <artifactId>telosys-web-admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>telosys-web-admin</name>
 
     <properties>
-        <telosys.version>3.0.0</telosys.version>
-        <nanoj.version>0.8.1-SNAPSHOT</nanoj.version>
+        <telosys.version>3.0.0-SNAPSHOT</telosys.version>
+        <nanoj.version>0.8.3</nanoj.version>
     </properties>
 
-    <dependencies>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name></name>
+            <url>http://repo.maven.apache.org/maven2/</url>
+        </repository>
 
-        <!-- FOR TESTS -->
+        <repository>
+            <id>sonatype</id>
+            <name>Sonatype snapshots and releases</name>
+            <url>https://oss.sonatype.org/content/groups/public</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -37,27 +55,35 @@
         </dependency>
 
         <dependency>
-            <groupId>org.telosys.tools</groupId>
+            <groupId>org.telosys</groupId>
             <artifactId>telosys-tools-api</artifactId>
             <version>${telosys.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>nanoj</groupId>
+            <groupId>org.nanoj</groupId>
             <artifactId>nanoj-web</artifactId>
             <version>${nanoj.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>9.3.8.v20160314</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>9.3.8.v20160314</version>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.2.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>org.easymock</groupId>
@@ -89,46 +115,6 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.3.8.v20160314</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>1.6</version>
-                <configuration>
-                    <createDependencyReducedPom>true</createDependencyReducedPom>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.SF</exclude>
-                                <exclude>META-INF/*.DSA</exclude>
-                                <exclude>META-INF/*.RSA</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <manifestEntries>
-                                        <Main-Class>org.telosys.entry.TelosysWebAdminServer</Main-Class>
-                                    </manifestEntries>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

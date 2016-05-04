@@ -4,7 +4,6 @@ import org.nanoj.web.tinymvc.GenericAction;
 import org.telosys.tools.stats.*;
 import org.telosys.tools.stats.dto.*;
 import org.telosys.tools.users.User;
-import org.telosys.tools.users.UsersFileName;
 import org.telosys.tools.users.UsersManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +33,7 @@ public class UserAction extends GenericAction
 			if(userName != null)
 			{
 				// User's stats.
-				UsersFileName.setSpecificFileName(pathHelper.getCsvFile().getPath());
+				UsersManager.setUsersFileName(pathHelper.getCsvFile().getPath());
 				UsersManager users = UsersManager.getInstance();
 				User myUser = users.getUserByLogin(userName);
 				UserStats usersStats = provider.getUserStats(userName);
