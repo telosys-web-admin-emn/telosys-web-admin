@@ -51,12 +51,38 @@
                         </div>
                     </div>
                     <span th:text="${filetype}"></span>
+                    <br/>
                     <div class="input-field col s4">
                         <select id="yearFilter" multiple="multiple">
                             <option value="" disabled="disabled" selected="selected">Choose year(s)</option>
                             <option th:each="i : ${#numbers.sequence(minYear, maxYear)}" th:value="${i}" th:text="${i}"></option>
                         </select>
-                        <label>Materialize Select</label>
+                        <label>Filter by year(s)</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <select id="monthFilter" multiple="multiple">
+                            <option value="" disabled="disabled" selected="selected">Choose month(s)</option>
+                            <option value="0">January</option>
+                            <option value="1">February</option>
+                            <option value="2">March</option>
+                            <option value="3">April</option>
+                            <option value="4">May</option>
+                            <option value="5">June</option>
+                            <option value="6">July</option>
+                            <option value="7">August</option>
+                            <option value="8">September</option>
+                            <option value="9">October</option>
+                            <option value="10">November</option>
+                            <option value="11">December</option>
+                        </select>
+                        <label>Filter by month(s)</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <select id="dayFilter" multiple="multiple">
+                            <option value="" disabled="disabled" selected="selected">Choose day(s)</option>
+                            <option th:each="i : ${#numbers.sequence(1, 31)}" th:value="${i}" th:text="${i}"></option>
+                        </select>
+                        <label>Filter by day(s)</label>
                     </div>
                     <!--<h4>Historic per month </h4>
                     <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
@@ -102,6 +128,9 @@
     function ChartPointList(jsonData, id) {
         var self = this;
         self.index = null;
+        self.byYearData = jsonData;
+        self.byMonthData = jsonData;
+        self.byDayData = jsonData;
         self.id = id;
         self.immutableData = jsonData;
         self.mutableData = jsonData;
@@ -113,16 +142,69 @@
                     years.push($(this).val());
                 }
             });
-            // repopulate all origin data
-            self.resetMutableData();
-            // filter the data
-            self.mutableData = self.mutableData.filter(function(chartPoint) {
-                var currentYear = new Date(chartPoint.x).getFullYear().toString();
-                if (years.length === 0 || jQuery.inArray(currentYear, years) !== -1) return chartPoint;
-            })
-            // update the chart to rebuild the line
+            if(years.length === 0) {
+                self.byYearData = self.immutableData;
+            } else {
+                // filter the data
+                self.byYearData = self.immutableData.filter(function(chartPoint) {
+                    var currentYear = new Date(chartPoint.x).getFullYear().toString();
+                    if (jQuery.inArray(currentYear, years) !== -1) {
+                        return chartPoint;
+                    }
+                });
+            }
+            self.updateMutableData();
+            // update the chart to rebuild the line in the graph
             self.updateChartData();
-        }
+        };
+        self.filterByMonth = function() {
+            var months = [];
+            // get all the selected months
+            $('#monthFilter option:selected').each(function(){
+                if($(this).val() !== "") {
+                    months.push($(this).val());
+                }
+            });
+            if(months.length === 0 ) {
+                self.byMonthData = self.immutableData;
+            } else {
+                // filter the data
+                self.byMonthData = self.immutableData.filter(function(chartPoint) {
+                    var currentMonth = new Date(chartPoint.x).getMonth().toString();
+                    if (jQuery.inArray(currentMonth, months) !== -1) {
+                        return chartPoint;
+                    }
+                });
+            }
+
+            self.updateMutableData();
+            // update the chart to rebuild the line in the graph
+            self.updateChartData();
+        };
+        self.filterByDay = function() {
+            var days = [];
+            // get all the selected days
+            $('#dayFilter option:selected').each(function(){
+                if($(this).val() !== "") {
+                    days.push($(this).val());
+                }
+            });
+            if(days.length === 0 ) {
+                self.byDayData = self.immutableData;
+            } else {
+                // filter the data
+                self.byDayData = self.immutableData.filter(function(chartPoint) {
+                    var currentDay = new Date(chartPoint.x).getUTCDate().toString();
+                    if (jQuery.inArray(currentDay, days) !== -1) {
+                        return chartPoint;
+                    }
+                });
+            }
+
+            self.updateMutableData();
+            // update the chart to rebuild the line in the graph
+            self.updateChartData();
+        };
         // get the index of this dataset from the config of the chart
         self.getDataIndex = function() {
             if(self.index === null) {
@@ -135,26 +217,48 @@
             }
             return self.index;
 
-        }
+        };
         // update the chart dataset corresponding to this object
         self.updateChartData = function() {
             myLineChart.config.data.datasets[self.getDataIndex()].data = self.mutableData;
             myLineChart.update();
-        }
+        };
 
         // set our mutable data to the origin ones
         self.resetMutableData = function(){
             self.mutableData = self.immutableData;
-        }
+        };
 
         self.getData = function(){
             return self.mutableData;
-        }
+        };
+        self.updateMutableData = function() {
+            var allArrays = [self.byDayData, self.byMonthData, self.byYearData];
+            self.mutableData =  allArrays.shift().filter(function(v) {
+                return allArrays.every(function(a) {
+                    return jQuery.grep(a, function(item) {
+                        return(item.x === v.x);
+                    }).length > 0;
+                });
+            });
+        };
+        self.getLength = function(obj) {
+            return Object.keys(obj).length;
+        };
         // add an event listener on the year select
         $("#yearFilter").change(function(){
             self.filterByYear();
         });
 
+        // add an event listener on the month select
+        $("#monthFilter").change(function(){
+            self.filterByMonth();
+        });
+
+        // add an event listener on the day select
+        $("#dayFilter").change(function(){
+            self.filterByDay();
+        });
     }
 
     // create our ChartPointList objects
@@ -252,7 +356,7 @@
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'value'
+                        labelString: 'Amount'
                     }
                 }]
             },
