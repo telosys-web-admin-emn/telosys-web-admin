@@ -19,6 +19,8 @@ public class Transformer {
      * @return Map of JSON string values
      */
     public Map<String, String> getStatistics(String pathPrefix){
+        String maxYear = "";
+        String minYear = "";
         // Prepare the result Map
         Map<String, String> jsData = new HashMap<>();
         // create lists for each type of data we have
@@ -42,6 +44,8 @@ public class Transformer {
                 String timestamp = FilenameUtils.getBaseName(filePath);
                 // if we succeeded getting the prop loaded
                 if(prop != null) {
+                    minYear = computeMinYear(minYear, timestamp);
+                    maxYear = computeMaxYear(maxYear, timestamp);
                     // we retrieve and add each type of data to the corresponding lists
                     averageDiskUsageStats.add(getAverageDiskUsage(timestamp, prop));
                     modelsCountStats.add(getModelsCount(timestamp, prop));
@@ -65,6 +69,13 @@ public class Transformer {
 
         // Convert the lists to JSON strings
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        jsData.put(Configuration.AVERAGE_DISK_USAGE_STATS, "{}");
+        jsData.put(Configuration.MODELS_COUNT_STATS, "{}");
+        jsData.put(Configuration.USERS_COUNT_STATS, "{}");
+        jsData.put(Configuration.DISK_USAGE_STATS, "{}");
+        jsData.put(Configuration.PROJECTS_COUNT_STATS, "{}");
+        jsData.put(Configuration.AVERAGE_MODELS_STATS, "{}");
+        jsData.put(Configuration.AVERAGE_PROJECTS_STATS, "{}");
         try {
             jsData.put(Configuration.AVERAGE_DISK_USAGE_STATS, ow.writeValueAsString(averageDiskUsageStats));
             jsData.put(Configuration.MODELS_COUNT_STATS, ow.writeValueAsString(modelsCountStats));
@@ -76,8 +87,49 @@ public class Transformer {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+        jsData.put(Configuration.MIN_YEAR, minYear);
+        jsData.put(Configuration.MAX_YEAR, maxYear);
         return jsData;
     }
+
+    /**
+     * Keep the min year from all histories files up to date
+     * @param minYear
+     * @param timestamp
+     * @return String the min year
+     */
+    protected String computeMinYear(String minYear, String timestamp) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getTimestampToDate(timestamp));
+        int year = cal.get(Calendar.YEAR);
+        // if min year is not defined yet or if we found a smaller one
+        if(minYear.equals("") || Integer.parseInt(minYear) > year) {
+            return year+"";
+        } else {
+            // else if we already have the min year
+            return minYear;
+        }
+    }
+
+    /**
+     * Keep the max year from all histories files up to date
+     * @param maxYear
+     * @param timestamp
+     * @return String the max year
+     */
+    protected String computeMaxYear(String maxYear, String timestamp) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getTimestampToDate(timestamp));
+        int year = cal.get(Calendar.YEAR);
+        // if max year is not defined yet or if we found a greater one
+        if(maxYear.equals("") || Integer.parseInt(maxYear) < year) {
+            return year+"";
+        } else {
+            // else if we already have the max year
+            return maxYear;
+        }
+    }
+
 
     /**
      * Get the property file according to a filePath

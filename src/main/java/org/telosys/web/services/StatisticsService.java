@@ -90,6 +90,8 @@ public class StatisticsService {
         request.setAttribute(Configuration.MODELS_COUNT_STATS, stats.get(Configuration.MODELS_COUNT_STATS));
         request.setAttribute(Configuration.PROJECTS_COUNT_STATS, stats.get(Configuration.PROJECTS_COUNT_STATS));
         request.setAttribute(Configuration.USERS_COUNT_STATS, stats.get(Configuration.USERS_COUNT_STATS));
+        request.setAttribute(Configuration.MIN_YEAR, stats.get(Configuration.MIN_YEAR));
+        request.setAttribute(Configuration.MAX_YEAR, stats.get(Configuration.MAX_YEAR));
         return request;
     }
 }

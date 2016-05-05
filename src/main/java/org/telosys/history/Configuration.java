@@ -12,4 +12,6 @@ public class Configuration {
     public static final String PROJECTS_COUNT_STATS = "projectsCountStats";
     public static final String AVERAGE_MODELS_STATS = "averageModelsStats";
     public static final String AVERAGE_PROJECTS_STATS = "averageProjectsStats";
+    public static final String MIN_YEAR = "minYear";
+    public static final String MAX_YEAR = "maxYear";
 }

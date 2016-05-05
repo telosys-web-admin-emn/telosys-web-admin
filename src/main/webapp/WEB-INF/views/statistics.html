@@ -51,11 +51,10 @@
                         </div>
                     </div>
                     <span th:text="${filetype}"></span>
-                    <div class="input-field col s12">
-                        <select id="selectFilter">
-                            <option value="" disabled="disabled" selected="selected">Choose your option</option>
-                            <option value="1993">Year 1993</option>
-                            <option value="reset">Reset</option>
+                    <div class="input-field col s4">
+                        <select id="yearFilter" multiple="multiple">
+                            <option value="" disabled="disabled" selected="selected">Choose year(s)</option>
+                            <option th:each="i : ${#numbers.sequence(minYear, maxYear)}" th:value="${i}" th:text="${i}"></option>
                         </select>
                         <label>Materialize Select</label>
                     </div>
@@ -89,6 +88,8 @@
     var timeFormat = 'MM/DD/YYYY HH:mm';
     var ctx = document.getElementById("historyChart").getContext("2d");
     var myLineChart = null;
+
+    // prepare the ids of our series of data
     var averageDiskUsageId = "averageDiskUsage";
     var modelsCountId = "modelsCount";
     var usersCountId = "usersCount";
@@ -97,47 +98,66 @@
     var averageModelsId = "averageModels";
     var averageProjectsId = "averageProjects";
 
+    // ChartPointList constructor
     function ChartPointList(jsonData, id) {
         var self = this;
+        self.index = null;
         self.id = id;
         self.immutableData = jsonData;
         self.mutableData = jsonData;
-        self.filterByYear = function(year) {
+        self.filterByYear = function() {
+            var years = [];
+            // get all the selected years
+            $('#yearFilter option:selected').each(function(){
+                if($(this).val() !== "") {
+                    years.push($(this).val());
+                }
+            });
+            // repopulate all origin data
             self.resetMutableData();
+            // filter the data
             self.mutableData = self.mutableData.filter(function(chartPoint) {
-                var currentYear = new Date(chartPoint.x).getFullYear();
-                if (new Date(chartPoint.x).getFullYear() == year) return chartPoint;
+                var currentYear = new Date(chartPoint.x).getFullYear().toString();
+                if (years.length === 0 || jQuery.inArray(currentYear, years) !== -1) return chartPoint;
             })
+            // update the chart to rebuild the line
             self.updateChartData();
-
         }
+        // get the index of this dataset from the config of the chart
         self.getDataIndex = function() {
-            for(var i in myLineChart.config.data.datasets) {
-                if(myLineChart.config.data.datasets[i].id === self.id) {
-                    return i;
+            if(self.index === null) {
+                for (var i in myLineChart.config.data.datasets) {
+                    if (myLineChart.config.data.datasets[i].id === self.id) {
+                        self.index = i;
+                        break;
+                    }
                 }
             }
+            return self.index;
+
         }
+        // update the chart dataset corresponding to this object
         self.updateChartData = function() {
             myLineChart.config.data.datasets[self.getDataIndex()].data = self.mutableData;
             myLineChart.update();
         }
+
+        // set our mutable data to the origin ones
         self.resetMutableData = function(){
             self.mutableData = self.immutableData;
         }
+
         self.getData = function(){
             return self.mutableData;
         }
-        $("#selectFilter").change(function() {
-                var val = $('#selectFilter option:selected').val();
-                if(val === "reset") {
-                    self.resetMutableData();
-                    self.updateChartData();
-                } else {
-                   self.filterByYear(1993);
-                }
+        // add an event listener on the year select
+        $("#yearFilter").change(function(){
+            self.filterByYear();
         });
+
     }
+
+    // create our ChartPointList objects
     var averageDiskUsageStats = new ChartPointList(JSON.parse([[${averageDiskUsageStats}]]), averageDiskUsageId);
     var modelsCountStats = new ChartPointList(JSON.parse([[${modelsCountStats}]]), modelsCountId);
     var usersCountStats = new ChartPointList(JSON.parse([[${usersCountStats}]]), usersCountId);
@@ -154,6 +174,7 @@
         return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
     }
 
+    // prepare the config
     var config = {
         type: 'line',
         data: {
