@@ -194,7 +194,7 @@
             } else {
                 // filter the data
                 self.byDayData = self.immutableData.filter(function(chartPoint) {
-                    var currentDay = new Date(chartPoint.x).getUTCDate().toString();
+                    var currentDay = new Date(chartPoint.x).getDate().toString();
                     if (jQuery.inArray(currentDay, days) !== -1) {
                         return chartPoint;
                     }
