@@ -100,7 +100,7 @@ public class Paginator extends AbstractParameterReplacer {
 	/**
 	 * Do computation to replace or include a page in the URL
 	 * @param request
-	 * @param direction
+	 * @param newPage
 	 * @return String
 	 */
 	protected String computePage(HttpServletRequest request, int newPage)

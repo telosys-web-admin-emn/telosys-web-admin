@@ -51,10 +51,10 @@
                         </div>
                     </div>
                     <span th:text="${filetype}"></span>
-                    <h4>Historic per month </h4>
+                    <!--<h4>Historic per month </h4>
                     <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
-                        an historic</a></div>
-                    <canvas id="historyChart" width="600" height="400"></canvas>-->
+                        an historic</a></div>-->
+                    <canvas id="historyChart" width="600" height="400"></canvas>
                     <!--<img style="width: 100%;height: auto" th:src="@{/WEB-CONTENT/img/ChartJS.png}"/>-->
                 </div>
 
@@ -63,13 +63,13 @@
     </div>
 
 </div>
-<ul id='historic-choices' class='dropdown-content'>
+<!--<ul id='historic-choices' class='dropdown-content'>
     <li><a href="#!" onclick="changeHistoric('Number of users')" class='historic-choice'>Number of users</a></li>
     <li><a href="#!" onclick="changeHistoric('Number of generations')" class='historic-choice'>Number of generations</a>
     </li>
     <li><a href="#!" onclick="changeHistoric('Number of created projects')" class='historic-choice'>Number of created
         projects</a></li>
-</ul>
+</ul>-->
 <div th:include="footer :: foot"></div>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
@@ -87,8 +87,6 @@
     function randomColor(opacity) {
         return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
     }
-
-
 
     var config = {
         type: 'line',
@@ -128,7 +126,7 @@
             responsive: true,
             title:{
                 display:true,
-                text:"Evolution des utilisateurs"
+                text:"Historic"
             },
             scales: {
                 xAxes: [{

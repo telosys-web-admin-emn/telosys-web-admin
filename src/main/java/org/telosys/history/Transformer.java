@@ -38,6 +38,13 @@ public class Transformer {
                 }
             }
         }
+        Collections.sort(averageDiskUsageStats);
+        Collections.sort(modelsCountStats);
+        Collections.sort(usersCountStats);
+        Collections.sort(diskUsageStats);
+        Collections.sort(projectsCountStats);
+        Collections.sort(averageModelsStats);
+        Collections.sort(averageProjectsStats);
         Map<String, String> res = new HashMap<>();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         try {
