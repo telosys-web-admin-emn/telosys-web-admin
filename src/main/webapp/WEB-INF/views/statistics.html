@@ -184,36 +184,50 @@
                 data: averageDiskUsageStats.getData(),
                 fill: false,
                 id: averageDiskUsageId,
+                borderColor: "rgba(209, 223, 46, 0.4)", // yellow
+                pointBackgroundColor: "rgba(227, 247, 7, 0.5)",
             },{
                 label: "Models count",
                 data: modelsCountStats.getData(),
                 fill: false,
                 id: modelsCountId,
+                borderColor: "rgba(223, 124, 31, 0.4)", // orange
+                pointBackgroundColor: "rgba(242, 121, 7, 0.5)",
             },{
                 label: "Users count",
                 data: usersCountStats.getData(),
                 fill: false,
                 id: usersCountId,
+                borderColor: "rgba(118, 220, 40, 0.4)", // green
+                pointBackgroundColor: "rgba(114, 237, 7, 0.5)",
             },{
                 label: "Disk usage",
                 data: diskUsageStats.getData(),
                 fill: false,
                 id: diskUsageId,
+                borderColor: "rgba(43, 221, 192, 0.4)", // light blue
+                pointBackgroundColor: "rgba(7, 242, 218, 0.5)",
             },{
                 label: "Projects count",
                 data: projectsCountStats.getData(),
                 fill: false,
                 id: projectsCountId,
+                borderColor: "rgba(43, 93, 221, 0.4)", // dark blue
+                pointBackgroundColor: "rgba(7, 19, 242, 0.5)",
             },{
                 label: "Average models",
                 data: averageModelsStats.getData(),
                 fill: false,
                 id: averageModelsId,
+                borderColor: "rgba(218, 43, 221, 0.4)", // purple
+                pointBackgroundColor: "rgba(242, 7, 242, 0.5)",
             },{
                 label: "Average projects",
                 data: averageProjectsStats.getData(),
                 fill: false,
                 id: averageProjectsId,
+                borderColor: "rgba(221, 43, 46, 0.5)", // red
+                pointBackgroundColor: "rgba(242, 7, 11, 0.6)",
             }]
         },
         options: {
@@ -246,10 +260,7 @@
     };
 
     $.each(config.data.datasets, function(i, dataset) {
-        dataset.borderColor = randomColor(0.4);
-        dataset.backgroundColor = randomColor(0.5);
-        dataset.pointBorderColor = randomColor(0.7);
-        dataset.pointBackgroundColor = randomColor(0.5);
+        dataset.pointBorderColor = "rgba(0,0,0)";
         dataset.pointBorderWidth = 1;
     });
 
