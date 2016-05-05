@@ -14,7 +14,7 @@ import org.demo.bean.Entity1 ;
 /**
  * Very basic cache for Entity1 instances (just for the Telosys Tools demo)
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class Entity1Cache

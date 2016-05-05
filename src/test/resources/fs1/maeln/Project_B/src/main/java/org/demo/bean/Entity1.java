@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * Entity bean for table ""
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class Entity1 implements Serializable

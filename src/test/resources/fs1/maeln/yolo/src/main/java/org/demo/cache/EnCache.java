@@ -14,7 +14,7 @@ import org.demo.bean.En ;
 /**
  * Very basic cache for En instances (just for the Telosys Tools demo)
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class EnCache

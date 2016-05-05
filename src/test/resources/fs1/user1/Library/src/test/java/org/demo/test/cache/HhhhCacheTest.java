@@ -16,7 +16,7 @@ import org.junit.Test;
 /**
  * JUnit test case for Hhhh caching service
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class HhhhCacheTest 

@@ -1,20 +1,24 @@
 package org.telosys.history;
 
-import org.telosys.tools.stats.FilesystemStatsOverview;
-import org.telosys.tools.stats.StatsProviderFactory;
 import org.telosys.web.services.StatisticsService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
-public class Generator {
+/**
+ * Generates snapshot(s) of all statistics we have at time t
+ */
+public class StatisticsSnapshotGenerator {
+
+    /**
+     * Get all counters values and store it into a property file
+     */
     public static void generateHistory(){
         Map<String, Number> counts = StatisticsService.computeCounts();
         try {
@@ -39,6 +43,10 @@ public class Generator {
         }
     }
 
+    /**
+     * Generate random history files with random values for test purpose
+     * @param historiesNumber
+     */
     public static void generateRandomHistories(int historiesNumber) {
         for (int i = 0; i < historiesNumber; i++) {
             try {
@@ -88,6 +96,10 @@ public class Generator {
         return new Date(ms).getTime()+"";
     }
 
+    /**
+     * Generate a random double as a string
+     * @return String
+     */
     protected static String getRandomDouble() {
         double start = 0;
         double end = 3500;

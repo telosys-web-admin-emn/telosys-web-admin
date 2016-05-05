@@ -14,7 +14,7 @@ import org.demo.bean.Book ;
 /**
  * Very basic cache for Book instances (just for the Telosys Tools demo)
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class BookCache

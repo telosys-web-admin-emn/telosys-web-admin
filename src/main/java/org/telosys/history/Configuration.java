@@ -1,5 +1,8 @@
 package org.telosys.history;
 
+/**
+ * The statistics configuration
+ */
 public class Configuration {
     public static final String HISTORY_FOLDER_PATH = "src/main/java/org/telosys/history/files/";
     public static final String AVERAGE_DISK_USAGE_STATS = "averageDiskUsageStats";

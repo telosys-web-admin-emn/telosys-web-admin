@@ -17,7 +17,7 @@ import org.junit.Test;
 /**
  * JUnit test case for bean Test
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class TestTest 

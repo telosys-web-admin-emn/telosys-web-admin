@@ -14,7 +14,7 @@ import org.demo.bean.Test ;
 /**
  * Very basic cache for Test instances (just for the Telosys Tools demo)
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class TestCache

@@ -14,7 +14,7 @@ import org.demo.bean.Sdf ;
 /**
  * Very basic cache for Sdf instances (just for the Telosys Tools demo)
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class SdfCache

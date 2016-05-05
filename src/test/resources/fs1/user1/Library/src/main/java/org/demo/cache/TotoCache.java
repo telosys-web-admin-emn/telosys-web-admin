@@ -14,7 +14,7 @@ import org.demo.bean.Toto ;
 /**
  * Very basic cache for Toto instances (just for the Telosys Tools demo)
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class TotoCache

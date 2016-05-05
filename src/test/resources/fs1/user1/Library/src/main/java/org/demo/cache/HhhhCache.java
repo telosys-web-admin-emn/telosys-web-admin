@@ -14,7 +14,7 @@ import org.demo.bean.Hhhh ;
 /**
  * Very basic cache for Hhhh instances (just for the Telosys Tools demo)
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class HhhhCache

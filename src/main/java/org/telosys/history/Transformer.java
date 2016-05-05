@@ -9,9 +9,19 @@ import org.telosys.web.services.StatisticsService;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Transforms the data we have in multiple property files (representing a snapshot of statistics) into JSON strings
+ */
 public class Transformer {
+    /**
+     * Get the statistics to a JSON String format
+     * @param pathPrefix the begin path to be in the telosys-web-amin working directory
+     * @return Map of JSON string values
+     */
     public Map<String, String> getStatistics(String pathPrefix){
+        // Prepare the result Map
         Map<String, String> jsData = new HashMap<>();
+        // create lists for each type of data we have
         List<ChartPoint> averageDiskUsageStats = new ArrayList<>();
         List<ChartPoint> modelsCountStats = new ArrayList<>();
         List<ChartPoint> usersCountStats = new ArrayList<>();
@@ -19,15 +29,20 @@ public class Transformer {
         List<ChartPoint> projectsCountStats = new ArrayList<>();
         List<ChartPoint> averageModelsStats = new ArrayList<>();
         List<ChartPoint> averageProjectsStats = new ArrayList<>();
+        // read the history folder containg all the generated properties
         File folder = new File(pathPrefix + Configuration.HISTORY_FOLDER_PATH);
         for (File fileEntry : folder.listFiles()) {
+            // check that the file is not a directory
             if (!fileEntry.isDirectory()) {
-                String fileName = fileEntry.getName();
-                // todo : folder.getPath
-                String filePath = pathPrefix + Configuration.HISTORY_FOLDER_PATH +fileName;
+                // get the current file path
+                String filePath = folder.getPath() + "/" + fileEntry.getName();
+                // get the property from the file path
                 Properties prop = getProperty(filePath);
+                // get the timestamp from the name of the property
                 String timestamp = FilenameUtils.getBaseName(filePath);
+                // if we succeeded getting the prop loaded
                 if(prop != null) {
+                    // we retrieve and add each type of data to the corresponding lists
                     averageDiskUsageStats.add(getAverageDiskUsage(timestamp, prop));
                     modelsCountStats.add(getModelsCount(timestamp, prop));
                     usersCountStats.add(getUsersCount(timestamp, prop));
@@ -38,6 +53,8 @@ public class Transformer {
                 }
             }
         }
+
+        // Finally, we sort the lists to be sure data are ordered by ascending date
         Collections.sort(averageDiskUsageStats);
         Collections.sort(modelsCountStats);
         Collections.sort(usersCountStats);
@@ -45,20 +62,21 @@ public class Transformer {
         Collections.sort(projectsCountStats);
         Collections.sort(averageModelsStats);
         Collections.sort(averageProjectsStats);
-        Map<String, String> res = new HashMap<>();
+
+        // Convert the lists to JSON strings
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         try {
-            res.put(Configuration.AVERAGE_DISK_USAGE_STATS, ow.writeValueAsString(averageDiskUsageStats));
-            res.put(Configuration.MODELS_COUNT_STATS, ow.writeValueAsString(modelsCountStats));
-            res.put(Configuration.USERS_COUNT_STATS, ow.writeValueAsString(usersCountStats));
-            res.put(Configuration.DISK_USAGE_STATS, ow.writeValueAsString(diskUsageStats));
-            res.put(Configuration.PROJECTS_COUNT_STATS, ow.writeValueAsString(projectsCountStats));
-            res.put(Configuration.AVERAGE_MODELS_STATS, ow.writeValueAsString(averageModelsStats));
-            res.put(Configuration.AVERAGE_PROJECTS_STATS, ow.writeValueAsString(averageProjectsStats));
+            jsData.put(Configuration.AVERAGE_DISK_USAGE_STATS, ow.writeValueAsString(averageDiskUsageStats));
+            jsData.put(Configuration.MODELS_COUNT_STATS, ow.writeValueAsString(modelsCountStats));
+            jsData.put(Configuration.USERS_COUNT_STATS, ow.writeValueAsString(usersCountStats));
+            jsData.put(Configuration.DISK_USAGE_STATS, ow.writeValueAsString(diskUsageStats));
+            jsData.put(Configuration.PROJECTS_COUNT_STATS, ow.writeValueAsString(projectsCountStats));
+            jsData.put(Configuration.AVERAGE_MODELS_STATS, ow.writeValueAsString(averageModelsStats));
+            jsData.put(Configuration.AVERAGE_PROJECTS_STATS, ow.writeValueAsString(averageProjectsStats));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return res;
+        return jsData;
     }
 
     /**
@@ -67,7 +85,6 @@ public class Transformer {
      * @return Properties
      */
     protected Properties getProperty(String filePath) {
-        int count = 0;
         Properties prop = new Properties();
         InputStream historyFile = null;
         try {
@@ -92,7 +109,7 @@ public class Transformer {
     }
 
     /**
-     * Transform timestamp string to a date
+     * Transform a timestamp string to a date
      * @param timestamp
      * @return Date
      */

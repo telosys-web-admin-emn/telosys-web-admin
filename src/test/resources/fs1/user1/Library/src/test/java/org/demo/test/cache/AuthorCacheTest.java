@@ -16,7 +16,7 @@ import org.junit.Test;
 /**
  * JUnit test case for Author caching service
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class AuthorCacheTest 

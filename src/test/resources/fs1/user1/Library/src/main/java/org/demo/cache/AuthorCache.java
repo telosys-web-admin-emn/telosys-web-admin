@@ -14,7 +14,7 @@ import org.demo.bean.Author ;
 /**
  * Very basic cache for Author instances (just for the Telosys Tools demo)
  * 
- * @author Telosys Tools Generator
+ * @author Telosys Tools StatisticsSnapshotGenerator
  *
  */
 public class AuthorCache
