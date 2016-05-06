@@ -36,8 +36,6 @@ public class StatisticsSnapshotGenerator {
             FileOutputStream fileOut = new FileOutputStream(file);
             properties.store(fileOut, "");
             fileOut.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,8 +62,6 @@ public class StatisticsSnapshotGenerator {
                 FileOutputStream fileOut = new FileOutputStream(file);
                 properties.store(fileOut, "");
                 fileOut.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
