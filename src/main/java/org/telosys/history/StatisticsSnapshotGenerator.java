@@ -57,7 +57,7 @@ public class StatisticsSnapshotGenerator {
                 properties.setProperty(StatisticsService.AVERAGE_MODELS, getRandomDouble());
                 properties.setProperty(StatisticsService.AVERAGE_PROJECTS, getRandomDouble());
                 String fileName = getRandomTimestamp()+".properties";
-                String path = Configuration.HISTORY_FOLDER_PATH + fileName;
+                String path = Configuration.PATH_PREFIX + File.separator + Configuration.HISTORY_FOLDER_PATH + fileName;
                 File file = new File(path);
                 FileOutputStream fileOut = new FileOutputStream(file);
                 properties.store(fileOut, "");

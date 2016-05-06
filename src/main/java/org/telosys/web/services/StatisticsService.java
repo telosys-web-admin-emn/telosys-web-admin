@@ -82,7 +82,7 @@ public class StatisticsService {
      */
     public static HttpServletRequest buildChartData(HttpServletRequest request) {
         Transformer transformer = new Transformer();
-        Map<String, String> stats = transformer.getStatistics("../../telosys-web-admin/");
+        Map<String, String> stats = transformer.getStatistics(Configuration.PATH_PREFIX);
         request.setAttribute(Configuration.AVERAGE_DISK_USAGE_STATS, stats.get(Configuration.AVERAGE_DISK_USAGE_STATS));
         request.setAttribute(Configuration.AVERAGE_MODELS_STATS, stats.get(Configuration.AVERAGE_MODELS_STATS));
         request.setAttribute(Configuration.AVERAGE_PROJECTS_STATS, stats.get(Configuration.AVERAGE_PROJECTS_STATS));

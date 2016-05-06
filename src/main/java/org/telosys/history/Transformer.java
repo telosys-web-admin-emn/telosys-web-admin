@@ -32,7 +32,14 @@ public class Transformer {
         List<ChartPoint> averageModelsStats = new ArrayList<>();
         List<ChartPoint> averageProjectsStats = new ArrayList<>();
         // read the history folder containg all the generated properties
-        File folder = new File(pathPrefix + Configuration.HISTORY_FOLDER_PATH);
+        File folder = new File(pathPrefix + File.separator + Configuration.HISTORY_FOLDER_PATH);
+
+        // If the parent file does not exists, it is impossible to retrieve and create statistics data
+        // otherwise, the statistics folder could be created or retrieved
+        if(!folder.exists()) {
+            throw new IllegalArgumentException("Can't find the folder " + folder.getAbsolutePath());
+        }
+
         for (File fileEntry : folder.listFiles()) {
             // check that the file is not a directory
             if (!fileEntry.isDirectory()) {
