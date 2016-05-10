@@ -54,8 +54,11 @@
                     <br/>
                     <div class="input-field col s4">
                         <select id="yearFilter" multiple="multiple">
-                            <option value="" disabled="disabled" selected="selected">Choose year(s)</option>
-                            <option th:each="i : ${#numbers.sequence(minYear, maxYear)}" th:value="${i}" th:text="${i}"></option>
+                            <option th:if="${minYear} == '' or ${maxYear} == ''" disabled="disabled">Aucune</option>
+                            <div th:if="${minYear} != '' and ${maxYear} != ''">
+                            <option  th:each="i : ${#numbers.sequence(minYear, maxYear)}" th:value="${i}" th:text="${i}"></option>
+
+                            </div>
                         </select>
                         <label>Filter by year(s)</label>
                     </div>

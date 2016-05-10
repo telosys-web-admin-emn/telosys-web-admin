@@ -253,6 +253,7 @@ var config = {
 $.each(config.data.datasets, function(i, dataset) {
     dataset.pointBorderColor = "rgba(0,0,0)";
     dataset.pointBorderWidth = 1;
+    dataset.lineTension = 0;
 });
 
 myLineChart = new Chart(ctx, config);

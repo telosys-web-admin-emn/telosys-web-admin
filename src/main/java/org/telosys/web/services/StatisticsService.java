@@ -80,7 +80,7 @@ public class StatisticsService {
      * @param request
      * @return HttpServletRequest
      */
-    public static HttpServletRequest buildChartData(HttpServletRequest request) {
+    public static void buildChartData(HttpServletRequest request) {
         Transformer transformer = new Transformer();
         Map<String, String> stats = transformer.getStatistics(Configuration.PATH_PREFIX);
         request.setAttribute(Configuration.AVERAGE_DISK_USAGE_STATS, stats.get(Configuration.AVERAGE_DISK_USAGE_STATS));
@@ -92,6 +92,5 @@ public class StatisticsService {
         request.setAttribute(Configuration.USERS_COUNT_STATS, stats.get(Configuration.USERS_COUNT_STATS));
         request.setAttribute(Configuration.MIN_YEAR, stats.get(Configuration.MIN_YEAR));
         request.setAttribute(Configuration.MAX_YEAR, stats.get(Configuration.MAX_YEAR));
-        return request;
     }
 }
