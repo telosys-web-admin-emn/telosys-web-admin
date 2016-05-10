@@ -3,9 +3,7 @@ package org.telosys.tools.stats;
 import org.junit.Before;
 import org.junit.Test;
 import org.telosys.tools.stats.impl.FilesystemStatsOverviewImpl;
-import org.telosys.tools.stats.impl.ModelStatsImpl;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -41,10 +39,4 @@ public class FilesystemStatsOverviewTest {
     public void testModelsCount() throws ParseException, IOException {
         assertEquals(6, impl.getModelsCount());
     }
-
-    @Test
-    public void testDiskUsage() throws ParseException, IOException {
-        assertEquals(29658442, impl.getDiskUsage());
-    }
-
 }

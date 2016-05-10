@@ -9,9 +9,6 @@ import org.telosys.admin.actions.UsersAction;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by alexa on 30/03/2016.
- */
 public class TelosysProvider extends SpecificActionProvider
 {
 
