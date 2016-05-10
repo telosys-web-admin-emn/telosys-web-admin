@@ -1,13 +1,6 @@
 # Telosys Web Admin
 Administration interface for [Telosys SaaS](https://github.com/telosys-saas/telosys-saas).
 
-## Dependencies
-All the dependencies of the project are referenced in the *pom.xml* but
-some of them are not available yet in the maven repository. You will need to download and
-install the *org.telosys.tools* dependencies one by one.
-
-You can find them [here](https://github.com/telosys-tools-bricks).
-
 ## Configuration
 Before launching Telosys Web Admin, you need to configure it so that it can
 detect the Telosys SaaS directory.
@@ -37,8 +30,5 @@ Open a terminal at the root of the project and type :
 
     mvn package
 
-You should now have a JAR file in the *target* directory.
-You can start the server by typing :
-
-    java -jar target/telosys-web-admin.jar
-
+You should now have a WAR file in the *target* directory.
+You can use this WAR file to deploy the project on your Tomcat (or equivalent) server.
