@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<div class="container">
+    <h1>User info</h1> <a class="waves-effect waves-light btn" th:href="@{/do/deleteUser(login=${user.login})}">Delete user</a>
 <div th:fragment="body">
     <div class="container">
         <h1>User info</h1>
