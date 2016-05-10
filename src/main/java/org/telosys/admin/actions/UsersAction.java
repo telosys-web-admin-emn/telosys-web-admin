@@ -53,11 +53,12 @@ public class UsersAction extends GenericAction
 			InputStream is = PathHelper.class.getResourceAsStream("/META-INF/webadmin.properties");
 			Configuration conf = new Configuration(is);
 			httpServletRequest.setAttribute("quota", conf.getDiskUsageQuota());
+			httpServletRequest.setAttribute("title", "Users");
 		} catch(IOException | ParseException e)
 		{
 			e.printStackTrace();
 		}
-		return "users";
+		return "users : layout";
 	}
 
 	/**

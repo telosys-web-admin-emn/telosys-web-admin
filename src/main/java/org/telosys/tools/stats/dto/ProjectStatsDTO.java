@@ -5,7 +5,6 @@ import org.telosys.tools.stats.ProjectStats;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +23,12 @@ public class ProjectStatsDTO {
     private String creationDate;
     private String lastGenerationDate;
     private int generationsCount;
+	private long diskUsage;
 
 
     public ProjectStatsDTO(Map<String, Integer> fileTypes, String projectName, List<String> bundlesNames,
                            int modelsCount, List<String> modelsNames, String diskUsageMB, int bundlesCount, String creationDate,
-                           String lastGenerationDate, int generationsCount) {
+                           String lastGenerationDate, int generationsCount, long diskUsage) {
         this.fileTypes = fileTypes;
         this.projectName = projectName;
         this.bundlesNames = bundlesNames;
@@ -39,13 +39,14 @@ public class ProjectStatsDTO {
         this.creationDate = creationDate;
         this.lastGenerationDate = lastGenerationDate;
         this.generationsCount = generationsCount;
+	    this.diskUsage = diskUsage;
     }
 
     public static ProjectStatsDTO fromProjectStats(ProjectStats stats, String datePattern) throws IOException {
         DateFormat sdf = new SimpleDateFormat(datePattern);
         ProjectStatsDTO dto = new ProjectStatsDTO(stats.getCountFileTypes(), stats.getProjectName(), stats.getBundlesNames(),
                 stats.getModelsCount(), stats.getModelsNames(), stats.getDiskUsageMB(), stats.getBundlesCount(),
-                sdf.format(stats.getCreationDate()), sdf.format(stats.getLastGenerationDate()), stats.getGenerationsCount());
+                sdf.format(stats.getCreationDate()), sdf.format(stats.getLastGenerationDate()), stats.getGenerationsCount(), stats.getDiskUsage());
         return dto;
     }
 
@@ -128,4 +129,14 @@ public class ProjectStatsDTO {
     public void setBundlesCount(int bundlesCount) {
         this.bundlesCount = bundlesCount;
     }
+
+	public long getDiskUsage()
+	{
+		return diskUsage;
+	}
+
+	public void setDiskUsage(long diskUsage)
+	{
+		this.diskUsage = diskUsage;
+	}
 }

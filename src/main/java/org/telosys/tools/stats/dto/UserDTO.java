@@ -6,9 +6,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by alexa on 04/05/2016.
- */
 public class UserDTO {
 
     private String login;

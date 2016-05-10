@@ -1,90 +1,121 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
-   <head>
-      <meta charset="UTF-8"/>
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-      <link rel="stylesheet" th:href="@{/WEB-CONTENT/materialize/css/materialize.css}"/>
-      <link rel="stylesheet" th:href="@{/WEB-CONTENT/css/main.css}"/>
-      <title>Users</title>
-   </head>
-   <body>
-      <div th:include="header :: hnav"></div>
-      <div class="container">
-         <!-- comment -->
-         <h1 class="center-align">Users</h1>
-         <div class="row">
+<head>
+    <meta charset="UTF-8"/>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/WEB-CONTENT/materialize/css/materialize.css}"/>
+    <link rel="stylesheet" th:href="@{/WEB-CONTENT/css/main.css}"/>
+    <title>Users</title>
+</head>
+<body>
+
+<div th:fragment="body">
+    <div class="container">
+        <!-- comment -->
+        <h1 class="center-align">Users</h1>
+        <div class="row">
             <!--<form method="POST" th:attr="action = ${currentUrl}">-->
             <form method="GET">
-               <div class="input-field col s3">
-                  <input placeholder="Login" type="text" th:attr="id = ${SEARCH_BY_LOGIN}, name = ${SEARCH_BY_LOGIN}, value = ${#httpServletRequest.getParameter(SEARCH_BY_LOGIN)}" class="validate"/>
-                  <label th:attr="for = ${SEARCH_BY_LOGIN}">Search user login</label>
-               </div>
-               <div class="input-field col s3">
-                  <select th:attr="name = ${SEARCH_BY_IS_CONNECTED}">
-                     <option value="" disabled="disabled" selected="selected">Choose your option</option>
-                     <option value="all">All</option>
-                     <option value="online">Online</option>
-                     <option value="offline">Offline</option>
-                  </select>
-                  <label>Connected</label>
-               </div>
-               <div class="col s3">
-                  <label th:attr="for = ${SEARCH_BY_BEGINNING_CREATION_DATE}">From creation date</label>
-                  <input type="date" class="datepicker" th:attr="name = ${SEARCH_BY_BEGINNING_CREATION_DATE}, id = ${SEARCH_BY_BEGINNING_CREATION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_BEGINNING_CREATION_DATE)}"/>
-               </div>
-               <div class="col s3">
-                  <label th:attr="for = ${SEARCH_BY_ENDING_CREATION_DATE}">To creation date</label>
-                  <input type="date" class="datepicker" th:attr="name = ${SEARCH_BY_ENDING_CREATION_DATE}, id = ${SEARCH_BY_ENDING_CREATION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_ENDING_CREATION_DATE)}"/>
-               </div>
-               <div class="col s3">
-                  <label th:attr="for = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}">From last connection date</label>
-                  <input type="date" class="datepicker" th:attr="name = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}, id = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE)}"/>
-               </div>
-               <div class="col s3">
-                  <label th:attr="for = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}">To last connection date</label>
-                  <input type="date" class="datepicker" th:attr="name = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}, id = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_ENDING_LAST_CONNECTION_DATE)}"/>
-               </div>
-               <button class="btn waves-effect waves-light" type="submit">Submit
-               <i class="material-icons right">send</i>
-               </button>
+                <div class="input-field col s3">
+                    <input placeholder="Login" type="text"
+                           th:attr="id = ${SEARCH_BY_LOGIN}, name = ${SEARCH_BY_LOGIN}, value = ${#httpServletRequest.getParameter(SEARCH_BY_LOGIN)}"
+                           class="validate"/>
+                    <label th:attr="for = ${SEARCH_BY_LOGIN}">Search user login</label>
+                </div>
+                <div class="input-field col s3">
+                    <select th:attr="name = ${SEARCH_BY_IS_CONNECTED}">
+                        <option value="" disabled="disabled" selected="selected">Choose your option</option>
+                        <option value="all">All</option>
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                    </select>
+                    <label>Connected</label>
+                </div>
+                <div class="col s3">
+                    <label th:attr="for = ${SEARCH_BY_BEGINNING_CREATION_DATE}">From creation date</label>
+                    <input type="date" class="datepicker"
+                           th:attr="name = ${SEARCH_BY_BEGINNING_CREATION_DATE}, id = ${SEARCH_BY_BEGINNING_CREATION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_BEGINNING_CREATION_DATE)}"/>
+                </div>
+                <div class="col s3">
+                    <label th:attr="for = ${SEARCH_BY_ENDING_CREATION_DATE}">To creation date</label>
+                    <input type="date" class="datepicker"
+                           th:attr="name = ${SEARCH_BY_ENDING_CREATION_DATE}, id = ${SEARCH_BY_ENDING_CREATION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_ENDING_CREATION_DATE)}"/>
+                </div>
+                <div class="col s3">
+                    <label th:attr="for = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}">From last connection date</label>
+                    <input type="date" class="datepicker"
+                           th:attr="name = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}, id = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE)}"/>
+                </div>
+                <div class="col s3">
+                    <label th:attr="for = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}">To last connection date</label>
+                    <input type="date" class="datepicker"
+                           th:attr="name = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}, id = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_ENDING_LAST_CONNECTION_DATE)}"/>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit">Submit
+                    <i class="material-icons right">send</i>
+                </button>
             </form>
-         </div>
-         <table class="bordered striped responsive-table">
+        </div>
+        <table class="bordered striped responsive-table">
             <thead>
-               <tr>
-                  <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, LOGIN_FILTER)}">Login (id)</a></th>
-                  <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, CREATION_DATE_FILTER)}">CreationDate</a></th>
-                  <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, LAST_CONNECTION_DATE_FILTER)}">Last login date</a></th>
-                  <th>Connected</th>
-                  <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, MAIL_FILTER)}">Mail</a></th>
-                  <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, DISK_USAGE_FILTER)}">Disk space (MB)</a></th>
-                  <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, PROJECTS_COUNT_FILTER)}">Projects count</a></th>
-                  <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, MODELS_COUNT_FILTER)}">Models count</a></th>
-                  <th><a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, GENERATIONS_COUNT_FILTER)}">Generations count</a></th>
-               </tr>
+            <tr>
+                <th>
+                    <a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, LOGIN_FILTER)}">Login
+                        (id)</a></th>
+                <th>
+                    <a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, CREATION_DATE_FILTER)}">CreationDate</a>
+                </th>
+                <th>
+                    <a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, LAST_CONNECTION_DATE_FILTER)}">Last
+                        login date</a></th>
+                <th>Connected</th>
+                <th>
+                    <a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, MAIL_FILTER)}">Mail</a>
+                </th>
+                <th>
+                    <a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, DISK_USAGE_FILTER)}">Disk
+                        space (MB)</a></th>
+                <th>
+                    <a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, PROJECTS_COUNT_FILTER)}">Projects
+                        count</a></th>
+                <th>
+                    <a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, MODELS_COUNT_FILTER)}">Models
+                        count</a></th>
+                <th>
+                    <a th:href="${filterSorter.getUrlWithSorterWithFilter(currentUrl, #httpServletRequest, GENERATIONS_COUNT_FILTER)}">Generations
+                        count</a></th>
+            </tr>
             </thead>
             <tr th:each="user : ${users}">
-               <td><a th:text="${user.login}" th:href="@{/do/user(username=${user.login})}"></a></td>
-               <td th:text="${user.creationDate}"></td>
-               <td th:text="${user.lastConnectionDate}"></td>
-               <td>Yes</td>
-               <td th:text="${user.mail}"></td>
-               <td th:class="${user.realDiskUsage} > ${quota}? 'bad-quota' : ''" th:text="${user.diskUsageMB}"></td>
-               <td th:text="${user.projectsCount}"></td>
-               <td th:text="${user.modelsCount}"></td>
-               <td th:text="${user.generationsCount}"></td>
+                <td><a th:text="${user.login}" th:href="@{/do/user(username=${user.login})}"></a></td>
+                <td th:text="${user.creationDate}"></td>
+                <td th:text="${user.lastConnectionDate}"></td>
+                <td>Yes</td>
+                <td th:text="${user.mail}"></td>
+                <td th:class="${user.realDiskUsage} > ${quota}? 'bad-quota' : ''" th:text="${user.diskUsageMB}"></td>
+                <td th:text="${user.projectsCount}"></td>
+                <td th:text="${user.modelsCount}"></td>
+                <td th:text="${user.generationsCount}"></td>
             </tr>
-         </table>
-         <ul th:if="${maxPage} != 1" class="pagination center-align">
-            <li th:class="${currentPage} == 1 ? disabled : waves-effect"><a th:if="${currentPage} != 1" th:href="${paginator.getPreviousPage(#httpServletRequest)}"><i class="material-icons">chevron_left</i></a></li>
-            <li th:class="${i} == ${currentPage} ? active : waves-effect" th:each="i : ${#numbers.sequence(1, maxPage)}"><a th:href="${paginator.getPage(#httpServletRequest, i)}" th:text="${i}"></a></li>
-            <li th:class="${maxPage} == ${currentPage} ? disabled : waves-effect"><a th:if="${currentPage} != ${maxPage}" th:href="${paginator.getNextPage(#httpServletRequest)}"><i class="material-icons">chevron_right</i></a></li>
-         </ul>
-      </div>
-      <div th:include="footer :: foot"></div>
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.js"></script>
-      <script type="text/javascript" th:src="@{/WEB-CONTENT/materialize/js/materialize.js}"></script>
-      <script type="text/javascript" th:src="@{/WEB-CONTENT/js/selectInitializer.js}"></script>
-      <script type="text/javascript" th:src="@{/WEB-CONTENT/js/datePickerInitializer.js}"></script>
-   </body>
+        </table>
+        <ul th:if="${maxPage} != 1" class="pagination center-align">
+            <li th:class="${currentPage} == 1 ? disabled : waves-effect"><a th:if="${currentPage} != 1"
+                                                                            th:href="${paginator.getPreviousPage(#httpServletRequest)}"><i
+                    class="material-icons">chevron_left</i></a></li>
+            <li th:class="${i} == ${currentPage} ? active : waves-effect"
+                th:each="i : ${#numbers.sequence(1, maxPage)}"><a
+                    th:href="${paginator.getPage(#httpServletRequest, i)}" th:text="${i}"></a></li>
+            <li th:class="${maxPage} == ${currentPage} ? disabled : waves-effect"><a
+                    th:if="${currentPage} != ${maxPage}"
+                    th:href="${paginator.getNextPage(#httpServletRequest)}"><i
+                    class="material-icons">chevron_right</i></a></li>
+        </ul>
+    </div>
+</div>
+
+<div th:fragment="js">
+    <script type="text/javascript" th:src="@{/WEB-CONTENT/js/selectInitializer.js}"></script>
+    <script type="text/javascript" th:src="@{/WEB-CONTENT/js/datePickerInitializer.js}"></script>
+</div>
+</body>
 </html>

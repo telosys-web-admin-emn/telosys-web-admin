@@ -9,124 +9,119 @@
 </head>
 
 <body>
-<div th:include="header :: hnav"></div>
 
-
-<div class="container">
-    <div class="row">
-        <div class="col s12 m12">
-            <div class="card">
-                <div class="card-content">
-                    <h3 style="margin-top:0">Statistics</h3>
-                    <div class="half-width">
-                        <div class="statistics">
-                            <i class="medium-icon material-icons">account_box</i>
-                            <strong>Users : </strong><span th:text="${usersCount}"></span>
-                        </div>
-                        <div class="statistics">
-                            <i class="medium-icon material-icons">folder_shared</i>
-                            <strong>Projects : </strong><span th:text="${projectsCount}"></span>
-                        </div>
-                        <div class="statistics">
-                            <i class="medium-icon material-icons">view_module</i>
-                            <strong>Models : </strong><span th:text="${modelsCount}"></span>
-                        </div>
-                        <div class="statistics">
-                            <i class="medium-icon material-icons">data_usage</i>
-                            <strong>Disk usage : </strong><span th:text="${diskUsage}"></span> MB
-                        </div>
-                    </div>
-                    <div class="half-width">
-                        <div class="statistics">
-                            <strong>Average projects / user : </strong>
-                            <span th:text="${averageProjects}"></span>
-                        </div>
-                        <div class="statistics">
-                            <strong>Average models / user : </strong>
-                            <span th:text="${averageModels}"></span>
-                        </div>
-                        <div class="statistics">
-                            <strong>Average disk usage / user : </strong>
-                            <span th:text="${averageDiskUsage}"></span> MB
-                        </div>
-                    </div>
-                    <span th:text="${filetype}"></span>
-                    <br/>
-                    <div class="input-field col s4">
-                        <select id="yearFilter" multiple="multiple">
-                            <option th:if="${minYear} == '' or ${maxYear} == ''" disabled="disabled">Aucune</option>
-                            <div th:if="${minYear} != '' and ${maxYear} != ''">
-                            <option  th:each="i : ${#numbers.sequence(minYear, maxYear)}" th:value="${i}" th:text="${i}"></option>
-
+<div th:fragment="body">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 style="margin-top:0">Statistics</h3>
+                        <div class="half-width">
+                            <div class="statistics">
+                                <i class="medium-icon material-icons">account_box</i>
+                                <strong>Users : </strong><span th:text="${usersCount}"></span>
                             </div>
-                        </select>
-                        <label>Filter by year(s)</label>
-                    </div>
-                    <div class="input-field col s4">
-                        <select id="monthFilter" multiple="multiple">
-                            <option value="" disabled="disabled" selected="selected">Choose month(s)</option>
-                            <option value="0">January</option>
-                            <option value="1">February</option>
-                            <option value="2">March</option>
-                            <option value="3">April</option>
-                            <option value="4">May</option>
-                            <option value="5">June</option>
-                            <option value="6">July</option>
-                            <option value="7">August</option>
-                            <option value="8">September</option>
-                            <option value="9">October</option>
-                            <option value="10">November</option>
-                            <option value="11">December</option>
-                        </select>
-                        <label>Filter by month(s)</label>
-                    </div>
-                    <div class="input-field col s4">
-                        <select id="dayFilter" multiple="multiple">
-                            <option value="" disabled="disabled" selected="selected">Choose day(s)</option>
-                            <option th:each="i : ${#numbers.sequence(1, 31)}" th:value="${i}" th:text="${i}"></option>
-                        </select>
-                        <label>Filter by day(s)</label>
-                    </div>
-                    <!--<h4>Historic per month </h4>
-                    <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
-                        an historic</a></div>-->
-                    <canvas id="historyChart" width="600" height="400"></canvas>
-                    <!--<img style="width: 100%;height: auto" th:src="@{/WEB-CONTENT/img/ChartJS.png}"/>-->
-                </div>
+                            <div class="statistics">
+                                <i class="medium-icon material-icons">folder_shared</i>
+                                <strong>Projects : </strong><span th:text="${projectsCount}"></span>
+                            </div>
+                            <div class="statistics">
+                                <i class="medium-icon material-icons">view_module</i>
+                                <strong>Models : </strong><span th:text="${modelsCount}"></span>
+                            </div>
+                            <div class="statistics">
+                                <i class="medium-icon material-icons">data_usage</i>
+                                <strong>Disk usage : </strong><span th:text="${diskUsage}"></span> MB
+                            </div>
+                        </div>
+                        <div class="half-width">
+                            <div class="statistics">
+                                <strong>Average projects / user : </strong>
+                                <span th:text="${averageProjects}"></span>
+                            </div>
+                            <div class="statistics">
+                                <strong>Average models / user : </strong>
+                                <span th:text="${averageModels}"></span>
+                            </div>
+                            <div class="statistics">
+                                <strong>Average disk usage / user : </strong>
+                                <span th:text="${averageDiskUsage}"></span> MB
+                            </div>
+                        </div>
+                        <span th:text="${filetype}"></span>
+                        <br/>
+                        <div class="input-field col s4">
+                            <select id="yearFilter" multiple="multiple">
+                                <option th:if="${minYear} == '' or ${maxYear} == ''" disabled="disabled">Aucune</option>
+                                <div th:if="${minYear} != '' and ${maxYear} != ''">
+                                    <option th:each="i : ${#numbers.sequence(minYear, maxYear)}" th:value="${i}"
+                                            th:text="${i}"></option>
 
+                                </div>
+                            </select>
+                            <label>Filter by year(s)</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <select id="monthFilter" multiple="multiple">
+                                <option value="" disabled="disabled" selected="selected">Choose month(s)</option>
+                                <option value="0">January</option>
+                                <option value="1">February</option>
+                                <option value="2">March</option>
+                                <option value="3">April</option>
+                                <option value="4">May</option>
+                                <option value="5">June</option>
+                                <option value="6">July</option>
+                                <option value="7">August</option>
+                                <option value="8">September</option>
+                                <option value="9">October</option>
+                                <option value="10">November</option>
+                                <option value="11">December</option>
+                            </select>
+                            <label>Filter by month(s)</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <select id="dayFilter" multiple="multiple">
+                                <option value="" disabled="disabled" selected="selected">Choose day(s)</option>
+                                <option th:each="i : ${#numbers.sequence(1, 31)}" th:value="${i}"
+                                        th:text="${i}"></option>
+                            </select>
+                            <label>Filter by day(s)</label>
+                        </div>
+                        <!--<h4>Historic per month </h4>
+                        <div><a id="choose-historic" class='dropdown-button btn' href='#' data-activates='historic-choices'>Choose
+                            an historic</a></div>-->
+                        <canvas id="historyChart" width="600" height="400"></canvas>
+                        <!--<img style="width: 100%;height: auto" th:src="@{/WEB-CONTENT/img/ChartJS.png}"/>-->
+                    </div>
+
+                </div>
             </div>
         </div>
+
     </div>
-
 </div>
-<!--<ul id='historic-choices' class='dropdown-content'>
-    <li><a href="#!" onclick="changeHistoric('Number of users')" class='historic-choice'>Number of users</a></li>
-    <li><a href="#!" onclick="changeHistoric('Number of generations')" class='historic-choice'>Number of generations</a>
-    </li>
-    <li><a href="#!" onclick="changeHistoric('Number of created projects')" class='historic-choice'>Number of created
-        projects</a></li>
-</ul>-->
-<div th:include="footer :: foot"></div>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
-<script type="text/javascript" th:src="@{/WEB-CONTENT/materialize/js/materialize.js}"></script>
-<script type="text/javascript" th:src="@{/WEB-CONTENT/js/moment.min.js}"></script>
-<script type="text/javascript" th:src="@{/WEB-CONTENT/js/Chart.js}"></script>
-<script type="text/javascript" th:src="@{/WEB-CONTENT/js/selectInitializer.js}"></script>
+<div th:fragment="js">
+    <script type="text/javascript" th:src="@{/WEB-CONTENT/js/moment.min.js}"></script>
+    <script type="text/javascript" th:src="@{/WEB-CONTENT/js/Chart.js}"></script>
+    <script type="text/javascript" th:src="@{/WEB-CONTENT/js/selectInitializer.js}"></script>
 
-<script type="text/javascript" th:inline="javascript">
+    <script type="text/javascript" th:inline="javascript">
 
-    // retrieve data and store it in JS objects
-    var averageDiskUsageStats = JSON.parse([[${averageDiskUsageStatsPoints}]]);
-    var modelsCountStats = JSON.parse([[${modelsCountStatsPoints}]]);
-    var usersCountStats = JSON.parse([[${usersCountStatsPoints}]]);
-    var diskUsageStats = JSON.parse([[${diskUsageStatsPoints}]]);
-    var projectsCountStats = JSON.parse([[${projectsCountStatsPoints}]]);
-    var averageModelsStats = JSON.parse([[${averageModelsStatsPoints}]]);
-    var averageProjectsStats = JSON.parse([[${averageProjectsStatsPoints}]]);
+        // retrieve data and store it in JS objects
+        var averageDiskUsageStats = JSON.parse([[${averageDiskUsageStatsPoints}]]);
+        var modelsCountStats = JSON.parse([[${modelsCountStatsPoints}]]);
+        var usersCountStats = JSON.parse([[${usersCountStatsPoints}]]);
+        var diskUsageStats = JSON.parse([[${diskUsageStatsPoints}]]);
+        var projectsCountStats = JSON.parse([[${projectsCountStatsPoints}]]);
+        var averageModelsStats = JSON.parse([[${averageModelsStatsPoints}]]);
+        var averageProjectsStats = JSON.parse([[${averageProjectsStatsPoints}]]);
 
-</script>
+    </script>
 
-<script th:src="@{/WEB-CONTENT/js/dashboard-chart.js}"></script>
+    <script th:src="@{/WEB-CONTENT/js/dashboard-chart.js}"></script>
+</div>
+
 </body>
 </html>

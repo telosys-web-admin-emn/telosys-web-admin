@@ -29,11 +29,12 @@ public class StatisticsAction extends GenericAction {
                 if (!key.isEmpty())
                     cleanProjectsTypes.put(key,value);
             });
+	        httpServletRequest.setAttribute("title", "Statistics");
             httpServletRequest.setAttribute("filesTypes", cleanProjectsTypes);
             StatisticsService.buildChartData(httpServletRequest);
         } catch (IOException | ArithmeticException | ParseException e ) {
             e.printStackTrace();
         }
-        return "statistics";
+        return "statistics : layout";
     }
 }

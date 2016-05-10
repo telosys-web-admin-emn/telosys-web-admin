@@ -8,6 +8,7 @@ import org.telosys.tools.users.UsersManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class UserAction extends GenericAction
 				if(myUser == null || usersStats == null)
 				{
 					request.setAttribute("erreur", "Impossible de trouver l'utilisateur.");
-					return "erreur";
+					return "erreur : layout";
 				}
 				request.setAttribute("user", UserDTO.fromUser(myUser, pathHelper.getViewDateFormat()));
 				request.setAttribute("userStats", UserStatsDTO.fromUserStats(usersStats, pathHelper.getViewDateFormat()));
@@ -61,15 +62,20 @@ public class UserAction extends GenericAction
 					modelsDTO.add(ModelStatsDTO.fromModelStats(modelStats, pathHelper.getViewDateFormat()));
 				}
 				request.setAttribute("modelStats", modelsDTO);
+
+				InputStream is = PathHelper.class.getResourceAsStream("/META-INF/webadmin.properties");
+				Configuration conf = new Configuration(is);
+				request.setAttribute("quota", conf.getDiskUsageQuota());
+				request.setAttribute("title", "User: " + userName);
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 			request.setAttribute("error", e.getClass().getName());
-			return "error";
+			return "error : layout";
 		}
 
-		return "user";
+		return "user : layout";
 	}
 }

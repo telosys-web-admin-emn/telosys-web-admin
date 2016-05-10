@@ -8,158 +8,158 @@
     <title>User info</title>
 </head>
 <body>
-<div th:include="header :: hnav"></div>
 
-<div class="container">
-    <h1>User info</h1>
+<div th:fragment="body">
+    <div class="container">
+        <h1>User info</h1>
 
-    <table class="bordered striped responsive-table user-info">
-        <tr>
-            <td>Login</td>
-            <td th:text="${user.login}"></td>
-        </tr>
-        <tr>
-            <td>Mail</td>
-            <td th:text="${user.mail}"></td>
-        </tr>
-        <tr>
-            <td>Creation date</td>
-            <td th:text="${user.creationDate}"></td>
-        </tr>
-        <tr>
-            <td>Country (origin browser)</td>
-            <td th:text="${user.country}"></td>
-        </tr>
-        <tr>
-            <td>Language (origin browser)</td>
-            <td th:text="${user.language}"></td>
-        </tr>
-        <tr>
-            <td>Last login</td>
-            <td th:text="${user.lastConnectionDate}"></td>
-        </tr>
-        <tr>
-            <td>Generations count</td>
-            <td th:text="${userStats.generationsCount}"></td>
-        </tr>
-        <tr>
-            <td>Disk space used (MB)</td>
-            <td th:text="${userStats.diskUsageMB}"></td>
-        </tr>
-        <tr>
-            <td>Projects count</td>
-            <td th:text="${userStats.projectsCount}"></td>
-        </tr>
-        <tr>
-            <td>Models count</td>
-            <td th:text="${userStats.modelsCount}"></td>
-        </tr>
-        <tr>
-            <td>Bundles count</td>
-            <td th:text="${userStats.bundlesCount}"></td>
-        </tr>
-    </table>
+        <table class="bordered striped responsive-table user-info">
+            <tr>
+                <td>Login</td>
+                <td th:text="${user.login}"></td>
+            </tr>
+            <tr>
+                <td>Mail</td>
+                <td th:text="${user.mail}"></td>
+            </tr>
+            <tr>
+                <td>Creation date</td>
+                <td th:text="${user.creationDate}"></td>
+            </tr>
+            <tr>
+                <td>Country (origin browser)</td>
+                <td th:text="${user.country}"></td>
+            </tr>
+            <tr>
+                <td>Language (origin browser)</td>
+                <td th:text="${user.language}"></td>
+            </tr>
+            <tr>
+                <td>Last login</td>
+                <td th:text="${user.lastConnectionDate}"></td>
+            </tr>
+            <tr>
+                <td>Generations count</td>
+                <td th:text="${userStats.generationsCount}"></td>
+            </tr>
+            <tr>
+                <td>Disk space used (MB)</td>
+                <td th:class="${userStats.realDiskUsage} > ${quota}? 'bad-quota' : ''" th:text="${userStats.diskUsageMB}"></td>
+            </tr>
+            <tr>
+                <td>Projects count</td>
+                <td th:text="${userStats.projectsCount}"></td>
+            </tr>
+            <tr>
+                <td>Models count</td>
+                <td th:text="${userStats.modelsCount}"></td>
+            </tr>
+            <tr>
+                <td>Bundles count</td>
+                <td th:text="${userStats.bundlesCount}"></td>
+            </tr>
+        </table>
 
-    <br/>
+        <br/>
 
 
-    <ul class="collapsible" data-collapsible="expandable">
-        <li>
-            <div class="collapsible-header"><i class="material-icons">work</i> User's Projects</div>
-            <div class="collapsible-body">
+        <ul class="collapsible" data-collapsible="expandable">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">work</i> User's Projects</div>
+                <div class="collapsible-body">
 
-                <table class="bordered striped responsive-table">
-                    <thead>
-                    <tr>
-                        <th>Project Name</th>
-                        <th>Creation Date</th>
-                        <th>Last generation date</th>
-                        <th># Generations</th>
-                        <th># Bundles</th>
-                        <th>Disk Space (MB)</th>
-                    </tr>
-                    </thead>
+                    <table class="bordered striped responsive-table">
+                        <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Creation Date</th>
+                            <th>Last generation date</th>
+                            <th># Generations</th>
+                            <th># Bundles</th>
+                            <th>Disk Space (MB)</th>
+                        </tr>
+                        </thead>
 
-                    <tbody>
-                    <tr th:each="project : ${projectStats}">
-                        <td th:text="${project.projectName}"></td>
-                        <td th:text="${project.creationDate}"></td>
-                        <td th:text="${project.lastGenerationDate}"></td>
-                        <td th:text="${project.generationsCount}"></td>
-                        <td th:text="${project.bundlesCount}"></td>
-                        <td th:text="${project.diskUsageMB}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </li>
+                        <tbody>
+                        <tr th:each="project : ${projectStats}">
+                            <td th:text="${project.projectName}"></td>
+                            <td th:text="${project.creationDate}"></td>
+                            <td th:text="${project.lastGenerationDate}"></td>
+                            <td th:text="${project.generationsCount}"></td>
+                            <td th:text="${project.bundlesCount}"></td>
+                            <td th:class="${project.diskUsage} > ${quota}? 'bad-quota' : ''" th:text="${project.diskUsageMB}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </li>
 
-        <li>
-            <div class="collapsible-header"><i class="material-icons">description</i> User's Models</div>
-            <div class="collapsible-body">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">description</i> User's Models</div>
+                <div class="collapsible-body">
 
-                <table class="bordered striped responsive-table">
-                    <thead>
-                    <tr>
-                        <th>Project Name</th>
-                        <th>Model Name</th>
-                        <th>Creation Date</th>
-                        <th>Last generation date</th>
-                    </tr>
-                    </thead>
+                    <table class="bordered striped responsive-table">
+                        <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Model Name</th>
+                            <th>Creation Date</th>
+                            <th>Last generation date</th>
+                        </tr>
+                        </thead>
 
-                    <tbody>
-                    <tr th:each="model : ${modelStats}">
-                        <td th:text="${model.projectName}"></td>
-                        <td th:text="${model.modelName}"></td>
-                        <td th:text="${model.lastModifiedDate}"></td>
-                        <td th:text="${model.creationDate}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                        <tbody>
+                        <tr th:each="model : ${modelStats}">
+                            <td th:text="${model.projectName}"></td>
+                            <td th:text="${model.modelName}"></td>
+                            <td th:text="${model.lastModifiedDate}"></td>
+                            <td th:text="${model.creationDate}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-            </div>
-        </li>
+                </div>
+            </li>
 
-        <li>
-            <div class="collapsible-header"><i class="material-icons">library_books</i> User's Bundles</div>
-            <div class="collapsible-body">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">library_books</i> User's Bundles</div>
+                <div class="collapsible-body">
 
-                <table class="bordered striped responsive-table">
-                    <thead>
-                    <tr>
-                        <th>Project Name</th>
-                        <th>Bundle Name</th>
-                        <th>Installation Date</th>
-                        <th># Generations</th>
-                    </tr>
-                    </thead>
+                    <table class="bordered striped responsive-table">
+                        <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Bundle Name</th>
+                            <th>Installation Date</th>
+                            <th># Generations</th>
+                        </tr>
+                        </thead>
 
-                    <tbody>
-                    <tr th:each="bundle : ${bundleStats}">
-                        <td th:text="${bundle.projectName}"></td>
-                        <td th:text="${bundle.bundleName}"></td>
-                        <td th:text="${bundle.installationDate}"></td>
-                        <td th:text="${bundle.generationsCount}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                        <tbody>
+                        <tr th:each="bundle : ${bundleStats}">
+                            <td th:text="${bundle.projectName}"></td>
+                            <td th:text="${bundle.bundleName}"></td>
+                            <td th:text="${bundle.installationDate}"></td>
+                            <td th:text="${bundle.generationsCount}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-            </div>
-        </li>
-    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
 
-<div th:include="footer :: foot"></div>
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
-<script type="text/javascript" th:src="@{/WEB-CONTENT/materialize/js/materialize.js}"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.collapsible').collapsible({
-            accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+<div th:fragment="js">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.collapsible').collapsible({
+                accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+            });
         });
-    });
-</script>
+    </script>
+</div>
+
 </body>
 </html>
