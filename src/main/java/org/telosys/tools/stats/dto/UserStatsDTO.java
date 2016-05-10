@@ -6,9 +6,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-/**
- * Created by alexa on 04/05/2016.
- */
 public class UserStatsDTO {
 
 
@@ -25,11 +22,12 @@ public class UserStatsDTO {
     private List<String> bundlesNames;
     private String diskUsageMB;
     private int generationsCount;
+	private long realDiskUsage;
 
     public UserStatsDTO(String login, String mail, String lastConnectionDate, String country, String language, int projectsCount,
                         int modelsCount, List<String> modelsNames, int bundlesCount, String creationDate, List<String> bundlesNames,
                         String diskUsageMB,
-                        int generationsCount) {
+                        int generationsCount, long realDiskUsage) {
         this.login = login;
         this.mail = mail;
         this.lastConnectionDate = lastConnectionDate;
@@ -43,6 +41,7 @@ public class UserStatsDTO {
         this.bundlesNames = bundlesNames;
         this.diskUsageMB = diskUsageMB;
         this.generationsCount = generationsCount;
+	    this.realDiskUsage = realDiskUsage;
     }
 
     public static UserStatsDTO fromUserStats(UserStats stats, String pattern) {
@@ -50,7 +49,7 @@ public class UserStatsDTO {
         UserStatsDTO dto = new UserStatsDTO(stats.getLogin(), stats.getMail(), sdf.format(stats.getLastConnectionDate()), stats.getCountry(),
                 stats.getLanguage(), stats.getProjectsCount(), stats.getModelsCount(), stats.getModelsNames(),
                 stats.getBundlesCount(), sdf.format(stats.getCreationDate()), stats.getBundlesNames(), stats.getDiskUsageMB(),
-                stats.getGenerationsCount());
+                stats.getGenerationsCount(), stats.getDiskUsage());
         return dto;
     }
 
@@ -157,4 +156,12 @@ public class UserStatsDTO {
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
+
+	public long getRealDiskUsage() {
+		return realDiskUsage;
+	}
+
+	public void setRealDiskUsage(long usage) {
+		realDiskUsage = usage;
+	}
 }

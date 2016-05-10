@@ -30,3 +30,7 @@
 .collapsible-body table {
     margin-bottom: 10px;
 }
+
+.bad-quota {
+    color: #a21318;
+}

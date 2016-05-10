@@ -69,7 +69,7 @@
                <td th:text="${user.lastConnectionDate}"></td>
                <td>Yes</td>
                <td th:text="${user.mail}"></td>
-               <td th:text="${user.diskUsageMB}"></td>
+               <td th:class="${user.realDiskUsage} > ${quota}? 'bad-quota' : ''" th:text="${user.diskUsageMB}"></td>
                <td th:text="${user.projectsCount}"></td>
                <td th:text="${user.modelsCount}"></td>
                <td th:text="${user.generationsCount}"></td>

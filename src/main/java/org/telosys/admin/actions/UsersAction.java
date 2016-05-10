@@ -3,6 +3,7 @@ package org.telosys.admin.actions;
 import org.nanoj.web.tinymvc.GenericAction;
 import org.telosys.admin.actions.helper.FilterSorter;
 import org.telosys.admin.actions.helper.Paginator;
+import org.telosys.tools.stats.Configuration;
 import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.dto.UserStatsDTO;
 import org.telosys.tools.stats.impl.UsersStatsImpl;
@@ -10,7 +11,9 @@ import org.telosys.web.services.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.util.Comparator;
 import java.util.List;
@@ -47,6 +50,9 @@ public class UsersAction extends GenericAction
 					.map(u -> UserStatsDTO.fromUserStats(u, pathHelper.getViewDateFormat()))
 					.collect(Collectors.toList());
 			httpServletRequest.setAttribute("users", usersDTO);
+			InputStream is = PathHelper.class.getResourceAsStream("/META-INF/webadmin.properties");
+			Configuration conf = new Configuration(is);
+			httpServletRequest.setAttribute("quota", conf.getDiskUsageQuota());
 		} catch(IOException | ParseException e)
 		{
 			e.printStackTrace();
