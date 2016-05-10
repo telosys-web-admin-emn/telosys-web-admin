@@ -8,9 +8,9 @@ public class Helper {
      * Check whether the history directory exists or not. If not, we create it
      */
     public static void checkHistoryDirectory(){
-        File historyDir = new File(Configuration.HISTORY_FOLDER_PATH);
+        File historyDir = new File(Configuration.PATH_PREFIX + File.separator + Configuration.HISTORY_FOLDER_PATH);
         if(!historyDir.exists() || !historyDir.isDirectory()) {
-            historyDir.mkdir();
+            historyDir.mkdirs();
         }
     }
 }

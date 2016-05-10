@@ -14,5 +14,5 @@ public class Configuration {
     public static final String AVERAGE_PROJECTS_STATS = "averageProjectsStatsPoints";
     public static final String MIN_YEAR = "minYear";
     public static final String MAX_YEAR = "maxYear";
-    public static final String PATH_PREFIX = "C:\\Users\\alexa\\IdeaProjects\\telosys-web-admin";
+    public static final String PATH_PREFIX = "D:\\EMN\\annee2\\projet_integrateur\\workspace\\telosys-web-admin";
 }

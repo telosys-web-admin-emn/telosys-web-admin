@@ -47,7 +47,7 @@ public class StatisticsSnapshotGenerator {
      * Generate random history files with random values for test purpose
      * @param historiesNumber
      */
-    public static void generateRandomHistories(int historiesNumber) {
+    public static void generateRandomHistories(int historiesNumber){
         for (int i = 0; i < historiesNumber; i++) {
             try {
                 Properties properties = new Properties();

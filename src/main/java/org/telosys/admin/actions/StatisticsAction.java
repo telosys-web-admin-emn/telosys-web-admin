@@ -34,6 +34,6 @@ public class StatisticsAction extends GenericAction {
         } catch (IOException | ArithmeticException | ParseException e ) {
             e.printStackTrace();
         }
-      return "statistics";
+        return "statistics";
     }
 }
