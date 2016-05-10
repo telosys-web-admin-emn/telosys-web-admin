@@ -30,6 +30,8 @@ public class StatisticsSnapshotGenerator {
             properties.setProperty(StatisticsService.AVERAGE_DISK_USAGE, counts.get(StatisticsService.AVERAGE_DISK_USAGE).toString());
             properties.setProperty(StatisticsService.AVERAGE_MODELS, counts.get(StatisticsService.AVERAGE_MODELS).toString());
             properties.setProperty(StatisticsService.AVERAGE_PROJECTS, counts.get(StatisticsService.AVERAGE_PROJECTS).toString());
+            // ensure the history directory exists
+            Helper.checkHistoryDirectory();
             String fileName = new Date().getTime()+".properties";
             String path = Configuration.HISTORY_FOLDER_PATH + fileName;
             File file = new File(path);
@@ -56,6 +58,8 @@ public class StatisticsSnapshotGenerator {
                 properties.setProperty(StatisticsService.AVERAGE_DISK_USAGE, getRandomInt());
                 properties.setProperty(StatisticsService.AVERAGE_MODELS, getRandomDouble());
                 properties.setProperty(StatisticsService.AVERAGE_PROJECTS, getRandomDouble());
+                // ensure the history directory exists
+                Helper.checkHistoryDirectory();
                 String fileName = getRandomTimestamp()+".properties";
                 String path = Configuration.PATH_PREFIX + File.separator + Configuration.HISTORY_FOLDER_PATH + fileName;
                 File file = new File(path);
