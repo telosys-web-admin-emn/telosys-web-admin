@@ -48,8 +48,11 @@ public class PathHelper
 
 	public PathHelper(Configuration configuration) {
 		this.conf = configuration;
-		this.rootPath = configuration.getTelosysFsLocation();
-		this.root = new File(rootPath);
+		this.root = new File(configuration.getTelosysFsLocation());
+		if(!root.exists()) {
+			throw new IllegalArgumentException("Impossible to find the resource folder: " + root.getAbsolutePath());
+		}
+		this.rootPath = root.getAbsolutePath();
 	}
 
 	/*****************************
