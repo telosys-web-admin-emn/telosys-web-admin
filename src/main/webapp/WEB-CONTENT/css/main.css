@@ -34,3 +34,15 @@
 .bad-quota {
     color: #a21318;
 }
+
+.tabs .tab a {
+    color: #1676db;
+}
+
+.tabs .tab a:hover {
+    color: #1565ca;
+}
+
+.tabs .indicator {
+    background-color: #1676db;
+}
