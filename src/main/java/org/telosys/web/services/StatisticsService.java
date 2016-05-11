@@ -49,11 +49,11 @@ public class StatisticsService {
         } catch(ParseException | IOException e) {
             e.printStackTrace();
         }
-        long diskUsage = Math.round(statsOverview.getDiskUsage()/ FileUnit.MEGABYTE);
+        long diskUsage = statsOverview.getDiskUsage();
         double averageProjects = projectsCount * 1d / usersCount;
         double averageModels = modelsCount * 1d / usersCount;
-        long averageDiskUsage = Math.round(diskUsage / usersCount);
-        return new StatisticsDTO(usersCount, diskUsage, modelsCount,
+        double averageDiskUsage = diskUsage * 1d / usersCount / FileUnit.MEGABYTE;
+        return new StatisticsDTO(usersCount, Math.round(diskUsage / FileUnit.MEGABYTE), modelsCount,
                 projectsCount, averageDiskUsage, averageModels, averageProjects);
     }
 
