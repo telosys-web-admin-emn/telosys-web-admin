@@ -5,6 +5,7 @@ import org.telosys.history.Transformer;
 import org.telosys.tools.helper.FileUnit;
 import org.telosys.tools.stats.FilesystemStatsOverview;
 import org.telosys.tools.stats.StatsProviderFactory;
+import org.telosys.tools.stats.dto.StatisticsDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -26,26 +27,17 @@ public class StatisticsService {
      * @param request
      * @return HttpServletRequest updated
      */
-    public static HttpServletRequest buildCounts(HttpServletRequest request) {
-        Map<String, Number> counts = computeCounts();
-        request.setAttribute(StatisticsService.USERS_COUNT, counts.get(USERS_COUNT));
-        request.setAttribute(StatisticsService.PROJECTS_COUNT, counts.get(PROJECTS_COUNT));
-        request.setAttribute(StatisticsService.MODELS_COUNT, counts.get(MODELS_COUNT));
-        request.setAttribute(StatisticsService.DISK_USAGE, counts.get(DISK_USAGE));
-
-        request.setAttribute(StatisticsService.AVERAGE_PROJECTS, counts.get(AVERAGE_PROJECTS));
-        request.setAttribute(StatisticsService.AVERAGE_MODELS, counts.get(AVERAGE_MODELS));
-        request.setAttribute(StatisticsService.AVERAGE_DISK_USAGE, counts.get(AVERAGE_DISK_USAGE));
-        return request;
+    public static void buildCounts(HttpServletRequest request) {
+        StatisticsDTO counts = computeCounts();
+        request.setAttribute("statistics", counts);
     }
 
     /**
      * Compute the counts
      * @return Map containing the counts
      */
-    public static Map<String, Number> computeCounts() {
+    public static StatisticsDTO computeCounts() {
         FilesystemStatsOverview statsOverview = StatsProviderFactory.getStatsProvider().getFilesystemStatsOverview();
-        HashMap<String, Number> counts = new HashMap<>();
         int usersCount = 0;
         int projectsCount = 0;
         int modelsCount = 0;
@@ -54,25 +46,15 @@ public class StatisticsService {
             usersCount = statsOverview.getUsersCount();
             projectsCount = statsOverview.getProjectsCount();
             modelsCount = statsOverview.getModelsCount();
-        } catch(ParseException e) {
-            e.printStackTrace();
-        } catch(IOException e) {
+        } catch(ParseException | IOException e) {
             e.printStackTrace();
         }
         long diskUsage = Math.round(statsOverview.getDiskUsage()/ FileUnit.MEGABYTE);
-        //Need to multiply by 1.0 to cast in double ) have a double result
-        double averageProjects = projectsCount * 1.0 / usersCount;
-        double averageModels = modelsCount * 1.0 / usersCount;
+        double averageProjects = projectsCount * 1d / usersCount;
+        double averageModels = modelsCount * 1d / usersCount;
         long averageDiskUsage = Math.round(diskUsage / usersCount);
-        counts.put(USERS_COUNT, usersCount);
-        counts.put(PROJECTS_COUNT, projectsCount);
-        counts.put(MODELS_COUNT, modelsCount);
-        counts.put(DISK_USAGE, diskUsage);
-        counts.put(AVERAGE_DISK_USAGE, averageDiskUsage);
-        counts.put(AVERAGE_PROJECTS, averageProjects);
-        counts.put(AVERAGE_MODELS, averageModels);
-
-        return counts;
+        return new StatisticsDTO(usersCount, diskUsage, modelsCount,
+                projectsCount, averageDiskUsage, averageModels, averageProjects);
     }
 
     /**

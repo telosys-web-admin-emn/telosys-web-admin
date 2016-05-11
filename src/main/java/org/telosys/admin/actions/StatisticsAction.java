@@ -21,7 +21,7 @@ public class StatisticsAction extends GenericAction {
         FilesystemStatsOverview statsOverview = StatsProviderFactory.getStatsProvider().getFilesystemStatsOverview();
 
         try {
-            httpServletRequest = StatisticsService.buildCounts(httpServletRequest);
+            StatisticsService.buildCounts(httpServletRequest);
             // On récupère chaque type fichier
             Map<String,Integer> usersProjectsTypes = statsOverview.getCountFileTypes();
             Map<String,Integer> cleanProjectsTypes = new HashMap<>();
