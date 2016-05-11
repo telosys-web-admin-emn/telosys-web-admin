@@ -49,7 +49,7 @@
                                 <span th:text="${statistics.averageDiskUsageMB}"></span> MB
                             </div>
                         </div>
-                        <span th:text="${filetype}"></span>
+                        <canvas id="filesTypesCharts" style="width: 300px; height:300px;"></canvas>
                         <br/>
                         <div class="input-field col s4">
                             <select id="yearFilter" multiple="multiple">
@@ -113,6 +113,7 @@
         var projectsCountStats = JSON.parse([[${projectsCountStatsPoints}]]);
         var averageModelsStats = JSON.parse([[${averageModelsStatsPoints}]]);
         var averageProjectsStats = JSON.parse([[${averageProjectsStatsPoints}]]);
+        var filesTypesData = [[${filesTypes}]];
 
     </script>
 

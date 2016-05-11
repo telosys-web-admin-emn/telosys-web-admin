@@ -1,3 +1,4 @@
+var CSS_COLOR_NAMES = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
 var timeFormat = 'MM/DD/YYYY HH:mm';
 var ctx = document.getElementById("historyChart").getContext("2d");
 var myLineChart = null;
@@ -257,26 +258,27 @@ $.each(config.data.datasets, function(i, dataset) {
 });
 
 myLineChart = new Chart(ctx, config);
-/**var ctxPieChart = document.getElementById("pieChart").getContext("2d");
- var myObject = [[${filesTypes}]];
+ var ctxPieChart = document.getElementById("filesTypesCharts").getContext("2d");
  var labels = [];
  var data=[];
- for(var key in myObject)
+ for(var key in filesTypesData)
  {
      labels.push(key);
-     data.push(myObject[key]);
+     data.push(filesTypesData[key]);
  }
  var chartData = {
-        labels: labels,
-        datasets: [
-            {
-                data: data,
-            }]
-    };
- console.log(chartData);
+     labels: labels,
+     datasets: [{
+            data: data,
+            backgroundColor: CSS_COLOR_NAMES
+        }
+     ]
+ };
  var myPieChart = new Chart(ctxPieChart,{
-        type: 'pie',
-        data: chartData,
-        options : {segmentShowStroke : false,
-            animateScale : true}
-    });**/
+     type: 'pie',
+     data: chartData,
+     options : {
+         segmentShowStroke : false,
+        animateScale : true
+     }
+ });
