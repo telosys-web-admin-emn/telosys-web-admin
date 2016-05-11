@@ -1,5 +1,6 @@
 package org.telosys.history;
 
+import org.telosys.tools.stats.dto.StatisticsDTO;
 import org.telosys.web.services.StatisticsService;
 
 import java.io.File;
@@ -20,16 +21,16 @@ public class StatisticsSnapshotGenerator {
      * Get all counters values and store it into a property file
      */
     public static void generateHistory(){
-        Map<String, Number> counts = StatisticsService.computeCounts();
+        StatisticsDTO counts = StatisticsService.computeCounts();
         try {
             Properties properties = new Properties();
-            properties.setProperty(StatisticsService.USERS_COUNT, counts.get(StatisticsService.USERS_COUNT).toString());
-            properties.setProperty(StatisticsService.PROJECTS_COUNT, counts.get(StatisticsService.PROJECTS_COUNT).toString());
-            properties.setProperty(StatisticsService.MODELS_COUNT, counts.get(StatisticsService.MODELS_COUNT).toString());
-            properties.setProperty(StatisticsService.DISK_USAGE, counts.get(StatisticsService.DISK_USAGE).toString());
-            properties.setProperty(StatisticsService.AVERAGE_DISK_USAGE, counts.get(StatisticsService.AVERAGE_DISK_USAGE).toString());
-            properties.setProperty(StatisticsService.AVERAGE_MODELS, counts.get(StatisticsService.AVERAGE_MODELS).toString());
-            properties.setProperty(StatisticsService.AVERAGE_PROJECTS, counts.get(StatisticsService.AVERAGE_PROJECTS).toString());
+            properties.setProperty(StatisticsService.USERS_COUNT, counts.getUsersCount());
+            properties.setProperty(StatisticsService.PROJECTS_COUNT, counts.getProjectsCount());
+            properties.setProperty(StatisticsService.MODELS_COUNT, counts.getModelsCount());
+            properties.setProperty(StatisticsService.DISK_USAGE, counts.getDiskUsage());
+            properties.setProperty(StatisticsService.AVERAGE_DISK_USAGE, counts.getAverageDiskUsageMB());
+            properties.setProperty(StatisticsService.AVERAGE_MODELS, counts.getAverageModels());
+            properties.setProperty(StatisticsService.AVERAGE_PROJECTS, counts.getAverageProjects());
             // ensure the history directory exists
             Helper.checkHistoryDirectory();
             String fileName = new Date().getTime()+".properties";
