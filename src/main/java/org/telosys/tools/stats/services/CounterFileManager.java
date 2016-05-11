@@ -37,8 +37,8 @@ public class CounterFileManager {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String count = reader.readLine();
 			return Integer.parseInt(count);
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			//e.printStackTrace();
 			return 0;
 		}
 	}
