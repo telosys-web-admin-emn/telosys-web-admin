@@ -7,9 +7,6 @@ import java.io.InputStream;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 
-/**
- * Created by maeln on 04/02/16.
- */
 public class PathHelper
 {
 	/*****************************
