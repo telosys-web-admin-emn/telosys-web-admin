@@ -20,33 +20,33 @@
                         <div class="half-width">
                             <div class="statistics">
                                 <i class="medium-icon material-icons">account_box</i>
-                                <strong>Users : </strong><span th:text="${usersCount}"></span>
+                                <strong>Users : </strong><span th:text="${statistics.usersCount}"></span>
                             </div>
                             <div class="statistics">
                                 <i class="medium-icon material-icons">folder_shared</i>
-                                <strong>Projects : </strong><span th:text="${projectsCount}"></span>
+                                <strong>Projects : </strong><span th:text="${statistics.projectsCount}"></span>
                             </div>
                             <div class="statistics">
                                 <i class="medium-icon material-icons">view_module</i>
-                                <strong>Models : </strong><span th:text="${modelsCount}"></span>
+                                <strong>Models : </strong><span th:text="${statistics.modelsCount}"></span>
                             </div>
                             <div class="statistics">
                                 <i class="medium-icon material-icons">data_usage</i>
-                                <strong>Disk usage : </strong><span th:text="${diskUsage}"></span> MB
+                                <strong>Disk usage : </strong><span th:text="${statistics.diskUsage}"></span> MB
                             </div>
                         </div>
                         <div class="half-width">
                             <div class="statistics">
                                 <strong>Average projects / user : </strong>
-                                <span th:text="${averageProjects}"></span>
+                                <span th:text="${statistics.averageProjects}"></span>
                             </div>
                             <div class="statistics">
                                 <strong>Average models / user : </strong>
-                                <span th:text="${averageModels}"></span>
+                                <span th:text="${statistics.averageModels}"></span>
                             </div>
                             <div class="statistics">
                                 <strong>Average disk usage / user : </strong>
-                                <span th:text="${averageDiskUsage}"></span> MB
+                                <span th:text="${statistics.averageDiskUsageMB}"></span> MB
                             </div>
                         </div>
                         <span th:text="${filetype}"></span>
