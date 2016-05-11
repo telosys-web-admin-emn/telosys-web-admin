@@ -13,6 +13,8 @@
     <div class="container">
         <h1>User info</h1>
 
+        <a class="waves-effect waves-light btn" th:href="@{/do/deleteUser(login=${user.login})}">Delete user</a>
+
         <table class="bordered striped responsive-table user-info">
             <tr>
                 <td>Login</td>
@@ -44,7 +46,8 @@
             </tr>
             <tr>
                 <td>Disk space used (MB)</td>
-                <td th:class="${userStats.realDiskUsage} > ${quota}? 'bad-quota' : ''" th:text="${userStats.diskUsageMB}"></td>
+                <td th:class="${userStats.realDiskUsage} > ${quota}? 'bad-quota' : ''"
+                    th:text="${userStats.diskUsageMB}"></td>
             </tr>
             <tr>
                 <td>Projects count</td>
@@ -87,7 +90,8 @@
                             <td th:text="${project.lastGenerationDate}"></td>
                             <td th:text="${project.generationsCount}"></td>
                             <td th:text="${project.bundlesCount}"></td>
-                            <td th:class="${project.diskUsage} > ${quota}? 'bad-quota' : ''" th:text="${project.diskUsageMB}"></td>
+                            <td th:class="${project.diskUsage} > ${quota}? 'bad-quota' : ''"
+                                th:text="${project.diskUsageMB}"></td>
                         </tr>
                         </tbody>
                     </table>

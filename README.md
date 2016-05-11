@@ -1,4 +1,4 @@
-# Telosys Web Admin
+# Telosys Web Admin ![TravisCI buils status](https://travis-ci.org/telosys-web-admin-emn/telosys-web-admin.svg?branch=master)
 Administration interface for [Telosys SaaS](https://github.com/telosys-saas/telosys-saas).
 
 ## Configuration
