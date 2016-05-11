@@ -8,16 +8,12 @@
 </head>
 <body>
 
-<div th:include="header :: hnav"></div>
-
-<div class="container">
-    <h3>An error occured :</h3>
-    <p th:text="${error}"></p>
+<div th:fragment="body">
+    <div class="container">
+        <h3>An error occured :</h3>
+        <p th:text="${error}"></p>
+    </div>
 </div>
 
-<div th:include="footer :: foot"></div>
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
-<script type="text/javascript" th:src="@{/WEB-CONTENT/materialize/js/materialize.js}"></script>
 </body>
 </html>

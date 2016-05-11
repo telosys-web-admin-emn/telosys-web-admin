@@ -61,7 +61,10 @@ public class UsersStatsImpl implements UserStats {
 	@Override
 	public int getProjectsCount() {
 		if (this.userDir.exists()) {
-			return this.userDir.listFiles(File::isDirectory).length;
+			File[] f = this.userDir.listFiles(File::isDirectory);
+			if(f!=null)
+				return f.length;
+			return 0;
 		}
 		return 0;
 	}
@@ -69,10 +72,16 @@ public class UsersStatsImpl implements UserStats {
 	@Override
 	public List<String> getProjectsNames() {
 		if (this.userDir.exists()) {
-			return asList(this.userDir.listFiles())
-				.stream()
-				.map(File::getName)
-				.collect(toList());
+			File[] f = this.userDir.listFiles(File::isDirectory);
+			if(f!=null)
+			{
+				ArrayList<String> names = new ArrayList<>();
+				for(File p : f)
+				{
+					names.add(p.getName());
+				}
+				return names;
+			}
 		}
 		return new ArrayList<String>();
 	}
@@ -82,8 +91,9 @@ public class UsersStatsImpl implements UserStats {
 		int count = 0;
 		if (this.userDir.exists()) {
 			for (String project : this.getProjectsNames()) {
-				count += pathHelper.getTelosysDir(user.getLogin(), project)
-						.listFiles(pathHelper::isModel).length;
+				File[] files = pathHelper.getTelosysDir(user.getLogin(), project).listFiles(pathHelper::isModel);
+				if(files != null)
+					count += files.length;
 			}
 		}
 		return count;
@@ -95,8 +105,12 @@ public class UsersStatsImpl implements UserStats {
 		if(this.userDir.exists()) {
 			for (String project : this.getProjectsNames()) {
 				File telosys = pathHelper.getTelosysDir(user.getLogin(), project);
-				modelsNames.addAll(stream(telosys.listFiles(pathHelper::isModel))
-						.map(pathHelper::getModelName).collect(toList()));
+				File[] models = telosys.listFiles(pathHelper::isModel);
+				if(models != null)
+				{
+					for(File m : models)
+						modelsNames.add(pathHelper.getModelName(m));
+				}
 			}
 		}
 		return modelsNames;
@@ -108,7 +122,9 @@ public class UsersStatsImpl implements UserStats {
 		if (this.userDir.exists()) {
 			for(File project:this.userDir.listFiles()){
 				File templatesDir = new File(project.getAbsolutePath() + "/TelosysTools/templates");
-				count += templatesDir.listFiles(File::isDirectory).length;
+				File[] f = templatesDir.listFiles(File::isDirectory);
+				if(f != null)
+					count += f.length;
 				
 			}
 		}
@@ -121,10 +137,12 @@ public class UsersStatsImpl implements UserStats {
 		if (this.userDir.exists()) {
 			for(File project:this.userDir.listFiles()){
 				File templatesDir = new File(project.getAbsolutePath() + "/TelosysTools/templates");
-				bundlesNames.addAll(asList(templatesDir.listFiles(File::isDirectory))
-						.stream()
-						.map(File::getName)
-						.collect(toList()));
+				File[] f = templatesDir.listFiles(File::isDirectory);
+				if(f != null)
+				{
+					for(File b : f)
+						bundlesNames.add(b.getName());
+				}
 			}
 		}
 		return bundlesNames;
