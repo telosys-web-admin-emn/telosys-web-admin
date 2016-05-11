@@ -72,7 +72,7 @@ public class UserAction extends GenericAction
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			request.setAttribute("error", e.getClass().getName());
+			request.setAttribute("error", "Cannot load user, error : " + e.getLocalizedMessage());
 			return "error : layout";
 		}
 
