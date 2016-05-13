@@ -226,7 +226,7 @@ var config = {
         responsive: true,
         title:{
             display:true,
-            text:"Historic"
+            text:"History"
         },
         scales: {
             xAxes: [{

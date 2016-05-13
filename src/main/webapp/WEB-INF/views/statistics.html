@@ -16,7 +16,7 @@
             <div class="col s12 m12">
                 <div class="card">
                     <div class="card-content">
-                        <h3 style="margin-top:0">Statistics</h3>
+                        <h4>Statistics</h4>
                         <div class="half-width">
                             <div class="statistics">
                                 <i class="medium-icon material-icons">account_box</i>
@@ -49,11 +49,15 @@
                                 <span th:text="${statistics.averageDiskUsageMB}"></span> MB
                             </div>
                         </div>
+                        <div class="divider margin-top-20"></div>
+                        <h4>Distribution of file types</h4>
                         <canvas id="filesTypesCharts" style="width: 300px; height:300px;"></canvas>
-                        <br/>
+                        <div class="divider margin-top-20"></div>
+                        <h4>Stats history</h4>
                         <div class="input-field col s4">
                             <select id="yearFilter" multiple="multiple">
                                 <option th:if="${minYear} == '' or ${maxYear} == ''" disabled="disabled">Aucune</option>
+                                <option th:if="${minYear} != '' or ${maxYear} != ''" disabled="disabled">Choose year(s)</option>
                                 <div th:if="${minYear} != '' and ${maxYear} != ''">
                                     <option th:each="i : ${#numbers.sequence(minYear, maxYear)}" th:value="${i}"
                                             th:text="${i}"></option>
