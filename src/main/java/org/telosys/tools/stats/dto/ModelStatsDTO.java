@@ -5,6 +5,7 @@ import org.telosys.tools.stats.ModelStats;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ModelStatsDTO {
 
@@ -21,10 +22,23 @@ public class ModelStatsDTO {
         this.creationDate = creationDate;
     }
 
-    public static ModelStatsDTO fromModelStats(ModelStats stats, String datePattern) throws IOException {
+    public static ModelStatsDTO fromModelStats(ModelStats stats, String datePattern){
         DateFormat sdf = new SimpleDateFormat(datePattern);
-        ModelStatsDTO dto = new ModelStatsDTO(stats.getProjectName(), stats.getModelName(), sdf.format(stats.getLastModifiedDate()),
-                sdf.format(stats.getCreationDate()));
+        String notApplicable = "n/a";
+        String lastModifiedDate = notApplicable;
+        try {
+            lastModifiedDate = sdf.format(stats.getLastModifiedDate());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        String creationDate = notApplicable;
+        try {
+            creationDate = sdf.format(stats.getCreationDate());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        ModelStatsDTO dto = new ModelStatsDTO(stats.getProjectName(), stats.getModelName(), lastModifiedDate,
+                creationDate);
         return dto;
     }
 
