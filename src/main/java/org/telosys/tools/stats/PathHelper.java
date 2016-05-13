@@ -37,7 +37,7 @@ public class PathHelper
 			InputStream is = PathHelper.class.getResourceAsStream("/META-INF/webadmin.properties");
 			Configuration conf = new Configuration(is);
 			instance = new PathHelper(conf);
-		} catch(IOException e) {
+		} catch(Exception e) {
 			System.err.println("Failed to parse webadmin.properties in META-INF");
 			e.printStackTrace();
 		}
