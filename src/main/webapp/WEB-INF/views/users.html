@@ -13,49 +13,63 @@
     <div class="container">
         <!-- comment -->
         <h1 class="center-align">Users</h1>
-        <div class="row">
-            <!--<form method="POST" th:attr="action = ${currentUrl}">-->
-            <form method="GET">
-                <div class="input-field col s3">
-                    <input placeholder="Login" type="text"
-                           th:attr="id = ${SEARCH_BY_LOGIN}, name = ${SEARCH_BY_LOGIN}, value = ${#httpServletRequest.getParameter(SEARCH_BY_LOGIN)}"
-                           class="validate"/>
-                    <label th:attr="for = ${SEARCH_BY_LOGIN}">Search user login</label>
-                </div>
-                <div class="input-field col s3">
-                    <select th:attr="name = ${SEARCH_BY_IS_CONNECTED}">
-                        <option value="" disabled="disabled" selected="selected">Choose your option</option>
-                        <option value="all">All</option>
-                        <option value="online">Online</option>
-                        <option value="offline">Offline</option>
-                    </select>
-                    <label>Connected</label>
-                </div>
-                <div class="col s3">
-                    <label th:attr="for = ${SEARCH_BY_BEGINNING_CREATION_DATE}">From creation date</label>
-                    <input type="date" class="datepicker"
-                           th:attr="name = ${SEARCH_BY_BEGINNING_CREATION_DATE}, id = ${SEARCH_BY_BEGINNING_CREATION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_BEGINNING_CREATION_DATE)}"/>
-                </div>
-                <div class="col s3">
-                    <label th:attr="for = ${SEARCH_BY_ENDING_CREATION_DATE}">To creation date</label>
-                    <input type="date" class="datepicker"
-                           th:attr="name = ${SEARCH_BY_ENDING_CREATION_DATE}, id = ${SEARCH_BY_ENDING_CREATION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_ENDING_CREATION_DATE)}"/>
-                </div>
-                <div class="col s3">
-                    <label th:attr="for = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}">From last connection date</label>
-                    <input type="date" class="datepicker"
-                           th:attr="name = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}, id = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE)}"/>
-                </div>
-                <div class="col s3">
-                    <label th:attr="for = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}">To last connection date</label>
-                    <input type="date" class="datepicker"
-                           th:attr="name = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}, id = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_ENDING_LAST_CONNECTION_DATE)}"/>
-                </div>
-                <button class="btn waves-effect waves-light" type="submit">Submit
-                    <i class="material-icons right">send</i>
-                </button>
-            </form>
-        </div>
+            <ul class="collapsible col s12" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">search</i>Search users</div>
+                    <div class="collapsible-body">
+                        <div class="container">
+                        <!--<form method="POST" th:attr="action = ${currentUrl}">-->
+                        <form method="GET" class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input type="text" th:attr="id = ${SEARCH_BY_LOGIN}, name = ${SEARCH_BY_LOGIN}, value = ${#httpServletRequest.getParameter(SEARCH_BY_LOGIN)}"
+                                           class="validate"/>
+                                    <label th:attr="for = ${SEARCH_BY_LOGIN}">Search user login</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <select th:attr="name = ${SEARCH_BY_IS_CONNECTED}">
+                                        <option value="" disabled="disabled" selected="selected">Choose your option</option>
+                                        <option value="all">All</option>
+                                        <option value="online">Online</option>
+                                        <option value="offline">Offline</option>
+                                    </select>
+                                    <label>Connected</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s6">
+                                    <label th:attr="for = ${SEARCH_BY_BEGINNING_CREATION_DATE}">From creation date</label>
+                                    <input type="date" class="datepicker"
+                                           th:attr="name = ${SEARCH_BY_BEGINNING_CREATION_DATE}, id = ${SEARCH_BY_BEGINNING_CREATION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_BEGINNING_CREATION_DATE)}"/>
+                                </div>
+                                <div class="col s6">
+                                    <label th:attr="for = ${SEARCH_BY_ENDING_CREATION_DATE}">To creation date</label>
+                                    <input type="date" class="datepicker"
+                                           th:attr="name = ${SEARCH_BY_ENDING_CREATION_DATE}, id = ${SEARCH_BY_ENDING_CREATION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_ENDING_CREATION_DATE)}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s6">
+                                    <label th:attr="for = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}">From last connection date</label>
+                                    <input type="date" class="datepicker"
+                                           th:attr="name = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}, id = ${SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_BEGINNING_LAST_CONNECTION_DATE)}"/>
+                                </div>
+                                <div class="col s6">
+                                    <label th:attr="for = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}">To last connection date</label>
+                                    <input type="date" class="datepicker"
+                                           th:attr="name = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}, id = ${SEARCH_BY_ENDING_LAST_CONNECTION_DATE}, value = ${#httpServletRequest.getParameter(SEARCH_BY_ENDING_LAST_CONNECTION_DATE)}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn waves-effect waves-light" type="submit">Search
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         <table class="bordered striped responsive-table">
             <thead>
             <tr>

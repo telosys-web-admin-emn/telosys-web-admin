@@ -277,8 +277,4 @@ myLineChart = new Chart(ctx, config);
  var myPieChart = new Chart(ctxPieChart,{
      type: 'pie',
      data: chartData,
-     options : {
-         segmentShowStroke : false,
-        animateScale : true
-     }
  });
