@@ -60,29 +60,45 @@ public class ProjectStatsImpl implements ProjectStats {
 	@Override
 	public int getBundlesCount() {
 		File templatesDir = pathHelper.getBundlesDir(user, name);
-		return templatesDir.listFiles(File::isDirectory).length;
+		if(!templatesDir.exists()) {
+			return 0;
+		} else {
+			return templatesDir.listFiles(File::isDirectory).length;
+		}
 	}
 
 	@Override
 	public List<String> getBundlesNames() {
 		File templatesDir = pathHelper.getBundlesDir(user, name);
-		return Arrays.stream(templatesDir.listFiles(File::isDirectory))
-				.map(File::getName)
-				.collect(toList());
+		if(!templatesDir.exists()) {
+			return new ArrayList<String>();
+		} else {
+			return Arrays.stream(templatesDir.listFiles(File::isDirectory))
+					.map(File::getName)
+					.collect(toList());
+		}
 	}
 
 	@Override
 	public int getModelsCount() {
 		File telosysDir = pathHelper.getTelosysDir(user, name);
-		return telosysDir.listFiles(f -> f.getName().endsWith(pathHelper.getModelExtension())).length;
+		if(!telosysDir.exists()) {
+			return 0;
+		} else {
+			return telosysDir.listFiles(f -> f.getName().endsWith(pathHelper.getModelExtension())).length;
+		}
 	}
 
 	@Override
 	public List<String> getModelsNames() {
 		File telosysDir = pathHelper.getTelosysDir(user, name);
-		return Arrays.stream(telosysDir.listFiles(f -> f.getName().endsWith(pathHelper.getModelExtension())))
-				.map(f -> f.getName().replace(pathHelper.getModelExtension(), ""))
-				.collect(toList());
+		if(!telosysDir.exists()) {
+			return new ArrayList<String>();
+		} else {
+			return Arrays.stream(telosysDir.listFiles(f -> f.getName().endsWith(pathHelper.getModelExtension())))
+					.map(f -> f.getName().replace(pathHelper.getModelExtension(), ""))
+					.collect(toList());
+		}
 	}
 
 	@Override

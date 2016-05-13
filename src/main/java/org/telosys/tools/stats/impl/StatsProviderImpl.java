@@ -123,8 +123,10 @@ public class StatsProviderImpl implements StatsProvider
 
 		for(String projectName : userStats.getProjectsNames()) {
 			File templatesDir = pathHelper.getBundlesDir(userId, projectName);
-			for(File file : templatesDir.listFiles()) {
-				bundles.add(this.getBundleStats(userId, projectName, file.getName()));
+			if(templatesDir.exists()) {
+				for(File file : templatesDir.listFiles()) {
+					bundles.add(this.getBundleStats(userId, projectName, file.getName()));
+				}
 			}
 		}
 		return bundles;
