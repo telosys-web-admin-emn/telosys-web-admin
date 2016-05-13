@@ -8,9 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by alexa on 04/05/2016.
- */
 public class ProjectStatsDTO {
 
     private Map<String, Integer> fileTypes;

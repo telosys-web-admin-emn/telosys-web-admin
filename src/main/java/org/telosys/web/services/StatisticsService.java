@@ -25,7 +25,6 @@ public class StatisticsService {
     /**
      * Build the counts to add it to the HttpServletRequest
      * @param request
-     * @return HttpServletRequest updated
      */
     public static void buildCounts(HttpServletRequest request) {
         StatisticsDTO counts = computeCounts();
@@ -34,7 +33,7 @@ public class StatisticsService {
 
     /**
      * Compute the counts
-     * @return Map containing the counts
+     * @return StatisticsDTO
      */
     public static StatisticsDTO computeCounts() {
         FilesystemStatsOverview statsOverview = StatsProviderFactory.getStatsProvider().getFilesystemStatsOverview();
@@ -60,7 +59,6 @@ public class StatisticsService {
     /**
      * Build the chart data
      * @param request
-     * @return HttpServletRequest
      */
     public static void buildChartData(HttpServletRequest request) {
         Transformer transformer = new Transformer();

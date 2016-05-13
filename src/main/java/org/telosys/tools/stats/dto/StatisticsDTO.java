@@ -5,9 +5,6 @@ import org.telosys.tools.helper.FileUnit;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-/**
- * Created by alexa on 11/05/2016.
- */
 public class StatisticsDTO {
 
     private String usersCount;

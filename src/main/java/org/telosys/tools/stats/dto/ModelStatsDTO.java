@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-/**
- * Created by alexa on 04/05/2016.
- */
 public class ModelStatsDTO {
 
     private String projectName;

@@ -1,13 +1,11 @@
 package org.telosys.tools.stats.impl;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.io.FileUtils;
-import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.stats.FilesystemStatsOverview;
+import org.telosys.tools.stats.PathHelper;
 import org.telosys.tools.users.User;
 import org.telosys.tools.users.UsersFileDAO;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Comparator;
